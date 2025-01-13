@@ -36,7 +36,7 @@ public class RankingController {
             @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
             @RequestParam(value = "page", defaultValue = "1") int currentPage) {
 
-        // 로그인 사용자 정보 추가
+        // 로그인 사용자 정보 출력
         if (authUser != null) {
             log.info("Authenticated User: " + authUser.getUser().getName());
         }
@@ -54,43 +54,23 @@ public class RankingController {
             page.setRows(100);
             page.setIndex((currentPage - 1) * page.getRows());
 
-            // 전체 랭킹 리스트를 조회
+            // 전체 랭킹 리스트 조회
             List<Ranking> rankingListAll = rankingService.getAttendanceRanking(option, page);
 
             // 총 데이터 수
             int total = rankingService.count(option);
             page.setTotal(total);
 
-            // 검색어가 없으면 상위 100명만 추출하여 표시
+            // 상위 100명만 표시
             List<Ranking> rankingList = rankingListAll.stream()
                     .limit(100) // 상위 100명만
                     .collect(Collectors.toList());
 
-            // Response 데이터 구성
-            return new ResponseEntity<>(new RankingResponse(rankingList, rankingListAll, option, page, total), HttpStatus.OK);
+            return new ResponseEntity<>(rankingList, HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("출석 랭킹 조회 중 오류 발생", e);
             return new ResponseEntity<>("출석 랭킹 조회 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    // 응답 데이터를 위한 DTO
-    public static class RankingResponse {
-        private List<Ranking> rankingList;
-        private List<Ranking> rankingListAll;
-        private Option option;
-        private Page page;
-        private int total;
-
-        public RankingResponse(List<Ranking> rankingList, List<Ranking> rankingListAll, Option option, Page page, int total) {
-            this.rankingList = rankingList;
-            this.rankingListAll = rankingListAll;
-            this.option = option;
-            this.page = page;
-            this.total = total;
-        }
-
-        // getters and setters...
     }
 }
