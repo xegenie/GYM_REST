@@ -41,6 +41,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'com.google.zxing:core:3.5.2' // ZXing Core 추가
 	implementation 'com.google.zxing:javase:3.5.2' // ZXing Java SE 추가
+	// Springdoc openapi
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
 	// jwt 
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
