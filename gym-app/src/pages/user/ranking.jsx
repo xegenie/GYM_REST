@@ -2,7 +2,7 @@ import React from 'react'
 
 const ranking = () => {
   return (
-    <div>ranking</div>
+    <div>랭킹화면</div>
   )
 }
 
