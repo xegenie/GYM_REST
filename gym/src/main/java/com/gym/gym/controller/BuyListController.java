@@ -7,65 +7,68 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.BuyList;
+import com.gym.gym.domain.CustomUser;
 import com.gym.gym.domain.Page;
 import com.gym.gym.domain.Users;
 import com.gym.gym.service.BuyListService;
 import com.gym.gym.service.TrainerProfileService;
+import com.gym.gym.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
-@RequestMapping("/buy-list")
+@Controller
 @Slf4j
 public class BuyListController {
 
     @Autowired
-    private BuyListService buyListService;
-
+    BuyListService buyListService;
     @Autowired
-    private TrainerProfileService trainerProfileService;
+    UserService userService;
+    @Autowired
+    TrainerProfileService trainerProfileService;
 
     // 등록
-    @PostMapping
-    public String insert(@RequestBody BuyList buyList) throws Exception {
+    @PostMapping("/admin/sales/buyList/insert")
+    public String insert(BuyList buyList) throws Exception {
         int result = buyListService.insert(buyList);
-        return result > 0 ? "Success" : "Error: Insert Failed";
+        return result > 0 ? "redirect:/admin/sales/buyList" : "admin/sales/buyList/insert/?error";
     }
 
-    // 취소
-    @DeleteMapping("/{id}")
-    public String cancel(@PathVariable("id") int no) throws Exception {
+    // 캔슬
+    @PostMapping("/admin/sales/buyList/cancel")
+    public String cancel(@RequestParam("no") int no) throws Exception {
         int result = buyListService.cancel(no);
-        return result > 0 ? "Success" : "Error: Cancel Failed";
+        return result > 0 ? "redirect:/admin/sales/buyList" : "admin/sales/buyList/cancel/?error";
     }
 
     // 전체 리스트
-    @GetMapping
-    public ResponseWrapper<BuyList> list(@RequestParam(name = "keyword", defaultValue = "") String keyword, Page page) throws Exception {
+    @GetMapping("/admin/sales/buyList")
+    public String list(Model model, @RequestParam(name = "keyword", defaultValue = "") String keyword, Page page) throws Exception {
         List<BuyList> buyList = buyListService.list(keyword, page);
-        return new ResponseWrapper<>(buyList, page);
+        model.addAttribute("rows", page.getRows());
+        model.addAttribute("page", page);
+        model.addAttribute("buyList", buyList);
+        return "/admin/sales/buyList";
     }
 
     // 매출 조회
-    @GetMapping("/sales")
-    public SalesResponse salesList(
-            @RequestParam(value = "trainerNo", required = false) Integer trainerNo,
-            @RequestParam(value = "startYear", required = false) Integer startYear,
-            @RequestParam(value = "startMonth", required = false) Integer startMonth,
-            @RequestParam(value = "startDay", required = false) Integer startDay,
-            @RequestParam(value = "endYear", required = false) Integer endYear,
-            @RequestParam(value = "endMonth", required = false) Integer endMonth,
-            @RequestParam(value = "endDay", required = false) Integer endDay) throws Exception {
+    @GetMapping("/admin/sales/salesList")
+    public String salesList(@RequestParam(value = "trainerNo", required = false) Integer trainerNo,
+                            @RequestParam(value = "startYear", required = false) Integer startYear,
+                            @RequestParam(value = "startMonth", required = false) Integer startMonth,
+                            @RequestParam(value = "startDay", required = false) Integer startDay,
+                            @RequestParam(value = "endYear", required = false) Integer endYear,
+                            @RequestParam(value = "endMonth", required = false) Integer endMonth,
+                            @RequestParam(value = "endDay", required = false) Integer endDay,
+                            Model model) throws Exception {
 
         LocalDate today = LocalDate.now();
         startYear = (startYear != null) ? startYear : today.getYear();
@@ -78,77 +81,46 @@ public class BuyListController {
         String startDate = String.format("%d-%02d-%02d", startYear, startMonth, startDay);
         String endDate = String.format("%d-%02d-%02d", endYear, endMonth, endDay);
 
+        model.addAttribute("selectedStartYear", startYear);
+        model.addAttribute("selectedStartMonth", startMonth);
+        model.addAttribute("selectedStartDay", startDay);
+        model.addAttribute("selectedEndYear", endYear);
+        model.addAttribute("selectedEndMonth", endMonth);
+        model.addAttribute("selectedEndDay", endDay);
+
         List<BuyList> salesList = buyListService.salesList(trainerNo, startDate, endDate);
         List<Users> trainerUsers = trainerProfileService.trainerUsers();
 
-        return new SalesResponse(salesList, trainerUsers, trainerNo, startYear, startMonth, startDay, endYear, endMonth, endDay);
+        model.addAttribute("salesList", salesList);
+        model.addAttribute("trainerUsers", trainerUsers);
+        model.addAttribute("selectedTrainer", trainerNo);
+
+        return "/admin/sales/salesList";
     }
 
-    // 사용자별 리스트
-    @GetMapping("/user")
-    public MyListResponse listByUser(@RequestParam("userNo") Long userNo, Page page) throws Exception {
-        page.setRows(5);
-        List<BuyList> buyList = (userNo > 0) ? buyListService.listByUser(userNo, page) : new ArrayList<>();
-        List<BuyList> ticketBuyList = buyListService.ticketByUser(userNo);
 
+    // 마이 리스트
+    @GetMapping("/user/myPage/buyList")
+    public String listByUser(@AuthenticationPrincipal CustomUser userDetails, Model model, Page page) throws Exception {
+         page.setRows(5);
+        Long no = (userDetails != null) ? userDetails.getNo() : 0L;
+        List<BuyList> buyList = (no > 0) ? buyListService.listByUser(no, page) : new ArrayList<>();
+
+        List<BuyList> ticketBuyList = buyListService.ticketByUser(no);
+        
         List<BuyList> filteredList = ticketBuyList.stream()
-                .filter(b -> "정상".equals(b.getStatus()))
-                .sorted(Comparator.comparing(BuyList::getStartDate))
-                .collect(Collectors.toList());
+        .filter(b -> "정상".equals(b.getStatus()))
+        .sorted(Comparator.comparing(BuyList::getStartDate))
+        .collect(Collectors.toList());
+        
+        model.addAttribute("buyList", buyList);
+        model.addAttribute("rows", page.getRows());
+        model.addAttribute("page", page);
+        
+        model.addAttribute("ticketBuyList", ticketBuyList);
 
-        return new MyListResponse(buyList, ticketBuyList, filteredList.isEmpty() ? null : filteredList.get(0), page);
-    }
+        model.addAttribute("oldestBuyList", filteredList.isEmpty() ? null : filteredList.get(0));
 
-    // Response Wrappers
-    public static class ResponseWrapper<T> {
-        private List<T> data;
-        private Page page;
-
-        public ResponseWrapper(List<T> data, Page page) {
-            this.data = data;
-            this.page = page;
-        }
-
-        // Getters and setters omitted for brevity
-    }
-
-    public static class SalesResponse {
-        private List<BuyList> salesList;
-        private List<Users> trainerUsers;
-        private Integer selectedTrainer;
-        private Integer selectedStartYear, selectedStartMonth, selectedStartDay;
-        private Integer selectedEndYear, selectedEndMonth, selectedEndDay;
-
-        public SalesResponse(List<BuyList> salesList, List<Users> trainerUsers, Integer selectedTrainer,
-                             Integer selectedStartYear, Integer selectedStartMonth, Integer selectedStartDay,
-                             Integer selectedEndYear, Integer selectedEndMonth, Integer selectedEndDay) {
-            this.salesList = salesList;
-            this.trainerUsers = trainerUsers;
-            this.selectedTrainer = selectedTrainer;
-            this.selectedStartYear = selectedStartYear;
-            this.selectedStartMonth = selectedStartMonth;
-            this.selectedStartDay = selectedStartDay;
-            this.selectedEndYear = selectedEndYear;
-            this.selectedEndMonth = selectedEndMonth;
-            this.selectedEndDay = selectedEndDay;
-        }
-
-        // Getters and setters omitted for brevity
-    }
-
-    public static class MyListResponse {
-        private List<BuyList> buyList;
-        private List<BuyList> ticketBuyList;
-        private BuyList oldestBuyList;
-        private Page page;
-
-        public MyListResponse(List<BuyList> buyList, List<BuyList> ticketBuyList, BuyList oldestBuyList, Page page) {
-            this.buyList = buyList;
-            this.ticketBuyList = ticketBuyList;
-            this.oldestBuyList = oldestBuyList;
-            this.page = page;
-        }
-
-        // Getters and setters omitted for brevity
+        return "/user/myPage/buyList";
     }
 }
