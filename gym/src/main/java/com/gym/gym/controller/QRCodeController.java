@@ -36,7 +36,13 @@ public class QRCodeController {
     private BuyListService buyListService;
 
     @PostMapping
-    public ResponseEntity<?> generateQRCode(@AuthenticationPrincipal CustomUser user) throws Exception{
+    public ResponseEntity<?> generateQRCode(@AuthenticationPrincipal CustomUser user) throws Exception {
+
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("사용자 정보를 불러오지 못했습니다.");
+        }
+
         QRcode qrCode = new QRcode();
         Long no = user.getNo();
         log.info(no + " 유저번호");
@@ -51,7 +57,7 @@ public class QRCodeController {
         // 날짜 가져오기
         if (buyList == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("티켓이 없거나 만료되었습니다");
+                    .body("티켓이 없거나 만료되었습니다");
         }
 
         // 티켓이 만료되었으면
@@ -62,7 +68,7 @@ public class QRCodeController {
 
         if (endDateTime.isBefore(currentDateTime)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("티켓이 만료되었습니다. 새로운 티켓을 구입해주세요.");
+                    .body("티켓이 만료되었습니다. 새로운 티켓을 구입해주세요.");
         }
 
         // 티켓이 있으면서 만료기간 남았다면 QR 코드 생성
@@ -73,7 +79,7 @@ public class QRCodeController {
             } catch (Exception e) {
                 log.error("QR 코드 생성 중 오류 발생", e);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("QR 코드 생성 중 오류가 발생했습니다.");
+                        .body("QR 코드 생성 중 오류가 발생했습니다.");
             }
 
             byte[] imageBytes = qrCodeOutputStream.toByteArray();
@@ -88,7 +94,7 @@ public class QRCodeController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body("티켓이 없거나 만료되었습니다.");
+                .body("티켓이 없거나 만료되었습니다.");
     }
 
     @PostMapping("/delete")
