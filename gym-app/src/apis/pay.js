@@ -1,18 +1,16 @@
 import api from './api'
 
-// 이용권 선택 페이지
-export const join = (data) => api.post(`/users`, data)
+// 티켓 기간
+export const ticketDate = () => api.get(`/user/ticketDate`)
 
 // 트레이너 목록
-export const login = (username, password) => {
-    return api.get(`/login?username=${username}&password=${password}`)
-}
+export const trainerList = () => api.get(`user/ticket/trainerList`)
 
 // 일반 이용권 목록
-export const info = () => api.get(`/users/info`)
+export const normal = () => api.get(`/user/ticket/normal`)
 
 // 결제
-export const update = (data) => api.put(`/user`, data)
+export const paying = () => api.post(`/user/pay/paying`)
 
 // 결제 결과 페이지
-export const remove = (username) => api.delete(`/users/${username}`)
+export const remove = () => api.delete(`/user/pay/payresult`)

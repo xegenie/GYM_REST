@@ -45,8 +45,8 @@ public class PayController {
     private UserService userService;
 
     // 이용권 선택 (REST API)
-    @GetMapping("/ticket/choice")
-    public ResponseEntity<Map<String, Object>> choice(@AuthenticationPrincipal CustomUser userDetails) throws Exception {
+    @GetMapping("/ticketDate")
+    public ResponseEntity<Map<String, Object>> ticketDate(@AuthenticationPrincipal CustomUser userDetails) throws Exception {
 
         Long no = userDetails != null ? userDetails.getNo() : 0L;
         List<BuyList> buyList = buyListService.ticketByUser(no);

@@ -82,9 +82,9 @@ public class TrainerProfileController {
      * 선택된 트레이너 번호 조회
      */
     @GetMapping("/getTrainerNo")
-    public ResponseEntity<Long> getTrainerNo(@RequestParam("trainerId") Long trainerId) {
+    public ResponseEntity<Long> getTrainerNo(@RequestParam("trainerNo") Long trainerNo) {
         try {
-            Users trainer = userService.select(trainerId);
+            Users trainer = userService.select(trainerNo);
             return new ResponseEntity<>(trainer.getNo(), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error retrieving trainer number", e);
