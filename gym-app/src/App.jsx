@@ -51,8 +51,8 @@ function App() {
         <Route path='/ticket/ptTicket' element={ <PtTicket /> }></Route>
         <Route path='/ticket/ticketList' element={ <TicketList /> }></Route>
         <Route path='/ticket/trainerList' element={ <TrainerList /> }></Route>
-        <Route path='/check' element={ <Check /> }></Route>
-        <Route path='/qrCode' element={ <QRCode /> }></Route>
+        <Route path='/user/attendance/check' element={ <Check /> }></Route>
+        <Route path='/generate-qr-code' element={ <QRCode /> }></Route>
         <Route path='/ranking' element={ <Ranking /> }></Route>
       </Routes>
     </BrowserRouter>
