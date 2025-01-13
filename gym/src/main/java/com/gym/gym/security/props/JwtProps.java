@@ -10,7 +10,7 @@ import lombok.Data;
 // JWT 관련 프로퍼티를 관리하는 프로퍼티 클래스입니다.
 @Data
 @Component
-@ConfigurationProperties("com.aloha.login")       // com.aloha.login 경로 하위 속성들을 지정
+@ConfigurationProperties("com.gym.gym")       //com.gym.gym 경로 하위 속성들을 지정
 public class JwtProps {
     
     //om.aloha.login.secretKey로 지정된 프로퍼티 값을 주입받는 필드

@@ -58,8 +58,8 @@ public class JwtProvider {
                             .add("typ", SecurityConstants.TOKEN_TYPE) // typ : jwt 
                         .and()
                         .expiration(new Date(System.currentTimeMillis() + exp) )
-                        .claim("userNo", userNo)                    // id       : 사용자 식별키
-                        .claim("id", id)        // username : 사용자 아이디
+                        .claim("id", id)                    // id       : 사용자 식별키
+                        .claim("userNo", userNo)        // username : 사용자 아이디
                         .claim("rol", roles)                // rol      : 회원 권한 목록
                         .compact();
 
@@ -94,23 +94,27 @@ public class JwtProvider {
                                                 .parseSignedClaims(jwt);
 
                 log.info("parsedToken" + parsedToken);
-                // 사용자 식별키(userNo)
-                String userNoString = parsedToken.getPayload().get("userNo").toString();
-                Long userNo = Long.parseLong(userNoString);  // String -> Long 변환
 
-                // 사용자 아이디(id)
+                // 사용자 식별키(id)
                 String id = parsedToken.getPayload().get("id").toString();
+                // 사용자 아이디
+                String userNo = parsedToken.getPayload().get("userNo").toString();
+                // 회원 권한
+                Object roles = parsedToken.getPayload().get("rol");
 
-                // 회원 권한(roles)
-                List<String> roles = parsedToken.getPayload().get("rol", List.class);
 
                 Users user = new Users();
                 user.setId(id);
 
-                List<UserAuth> authList = roles.stream()
-                    .map(auth -> new UserAuth(userNo, auth.toString()))
-                    .collect(Collectors.toList());
-
+                List<UserAuth> authList = ((List<?>) roles)
+                                            .stream()
+                                            .map( auth -> UserAuth.builder()
+                                                                    .auth(auth.toString())
+                                                                    .userNo(Long.parseLong(userNo))
+                                                                    .build()
+                                                )
+                                            .collect(Collectors.toList() )
+                                            ;
                 user.setAuthList(authList);
 
                 // 시큐리티 권한 목록
