@@ -47,14 +47,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
             
-                String username = request.getParameter("username");
+                String id = request.getParameter("id");
                 String password = request.getParameter("password");
 
-                log.info("username :" + username);
+                log.info("id :" + id);
                 log.info("password : " + password);
 
                 // 인증토큰 객체 생성
-                Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(id, password);
             
                 log.info(authentication + "이거 왜 안됨?");
                 // 인증(로그인)
@@ -88,7 +88,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
                 Users user = customUser.getUser();
                 String id = user.getId();
-                String userNo = user.userNo();
+                Long userNo = user.getNo();
 
     
 
@@ -99,7 +99,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
                                                 
                 // JWT 생성
-                String jwt = jwtProvider.creteToken(id, userNo, roles);
+                String jwt = jwtProvider.creteToken(userNo, id,  roles);
 
                 
 
@@ -114,7 +114,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 
-                // jsonStirng : "{'username' : 'aloha', 'name' : '사용자', ....}"
+                // jsonStirng : "{'id' : 'aloha', 'name' : '사용자', ....}"
                 PrintWriter printWriter = response.getWriter();
                 printWriter.write(jsonString);
                 printWriter.flush();

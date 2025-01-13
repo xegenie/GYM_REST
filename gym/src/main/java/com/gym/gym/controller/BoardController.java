@@ -106,19 +106,6 @@ public class BoardController {
      */
     // @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINER') or (#p0 != null and
     // @BoardService.isOwner(#p0, authentication.principal.user.no))")
-    @PutMapping()
-    public String update(@RequestParam(name = "no") Long no, @AuthenticationPrincipal CustomUser authuser, Model model)
-            throws Exception {
-        Users user = authuser.getUser();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = auth.getPrincipal();
-        System.out.println("Principal:asdfasdf " + principal);
-
-        Board board = boardService.select(no);
-        model.addAttribute("board", board);
-
-        return "user/board/update";
-    }
     @PreAuthorize(" hasRole('ADMIN') or hasRole('TRAINER')")
     @GetMapping("/answerUpdate")
     public String answerUpdate(@RequestParam("no") Long no, Model model) throws Exception {
