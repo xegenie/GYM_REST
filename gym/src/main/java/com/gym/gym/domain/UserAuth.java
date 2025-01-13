@@ -8,6 +8,6 @@ public class UserAuth {
 
     private Long no;
     private Long userNo;
-    private String auth;k
+    private String auth;
 
 }
