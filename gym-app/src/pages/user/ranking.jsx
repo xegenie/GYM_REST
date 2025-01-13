@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const ranking = () => {
+const ranking = () => {
   return (
-    <div>출석랭킹화면</div>
+    <div>ranking</div>
   )
 }
+
+export default ranking
