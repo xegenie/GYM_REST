@@ -1,57 +1,52 @@
 package com.gym.gym.controller;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.CustomUser;
 import com.gym.gym.domain.Option;
 import com.gym.gym.domain.Page;
 import com.gym.gym.domain.Ranking;
-import com.gym.gym.domain.Users;
 import com.gym.gym.service.RankingService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
-@RequestMapping("")
-// @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@RestController
+@RequestMapping("/")
 public class RankingController {
 
     @Autowired
     private RankingService rankingService;
 
     @GetMapping("/ranking")
-    // @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    public String attendanceRanking(
-            @AuthenticationPrincipal CustomUser authuser,
-            Model model,
-            @ModelAttribute Option option,
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
+    public ResponseEntity<?> attendanceRanking(
+            @AuthenticationPrincipal CustomUser authUser,
             @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
             @RequestParam(value = "page", defaultValue = "1") int currentPage) {
 
-                // 로그인 사용자 정보 추가
-                if (authuser != null) {
-                    Users user = authuser.getUser();
-                    model.addAttribute("user", user);
-                }
-                try {
-                    if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-                        option.setKeyword(searchKeyword); // 검색어 설정
-                    }
+        // 로그인 사용자 정보 추가
+        if (authUser != null) {
+            log.info("Authenticated User: " + authUser.getUser().getName());
+        }
 
+        try {
+            // 검색어 처리
+            Option option = new Option();
+            if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+                option.setKeyword(searchKeyword); // 검색어 설정
+            }
 
             // 페이지 처리
             Page page = new Page();
@@ -64,28 +59,38 @@ public class RankingController {
 
             // 총 데이터 수
             int total = rankingService.count(option);
-
-            // 페이지 처리
             page.setTotal(total);
 
-            // 검색어가 없으면 상위 20명만 추출하여 표시
+            // 검색어가 없으면 상위 100명만 추출하여 표시
             List<Ranking> rankingList = rankingListAll.stream()
-                    .limit(100) // 상위 20명만
+                    .limit(100) // 상위 100명만
                     .collect(Collectors.toList());
-            model.addAttribute("rankingList", rankingList);
 
-            // 전체 랭킹 리스트와 검색어 등 추가
-            model.addAttribute("rankingListAll", rankingListAll); // 전체 랭킹 리스트도 전달
-            model.addAttribute("option", option);
-            model.addAttribute("page", page);
-            model.addAttribute("total", total);
+            // Response 데이터 구성
+            return new ResponseEntity<>(new RankingResponse(rankingList, rankingListAll, option, page, total), HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("출석 랭킹 조회 중 오류 발생", e);
-            model.addAttribute("errorMessage", "출석 랭킹 조회 중 오류가 발생했습니다.");
-            model.addAttribute("rankingList", Collections.emptyList());
+            return new ResponseEntity<>("출석 랭킹 조회 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 응답 데이터를 위한 DTO
+    public static class RankingResponse {
+        private List<Ranking> rankingList;
+        private List<Ranking> rankingListAll;
+        private Option option;
+        private Page page;
+        private int total;
+
+        public RankingResponse(List<Ranking> rankingList, List<Ranking> rankingListAll, Option option, Page page, int total) {
+            this.rankingList = rankingList;
+            this.rankingListAll = rankingListAll;
+            this.option = option;
+            this.page = page;
+            this.total = total;
         }
 
-        return "ranking"; // ranking.html로 전달
+        // getters and setters...
     }
 }

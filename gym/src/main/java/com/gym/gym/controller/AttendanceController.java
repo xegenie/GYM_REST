@@ -3,15 +3,13 @@ package com.gym.gym.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.Attendance;
 import com.gym.gym.domain.CustomUser;
@@ -19,13 +17,12 @@ import com.gym.gym.domain.Option;
 import com.gym.gym.domain.Page;
 import com.gym.gym.domain.QRcode;
 import com.gym.gym.service.AttendanceService;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
-@RequestMapping
+@RestController
+@RequestMapping("/api")
 public class AttendanceController {
 
     @Autowired
@@ -34,45 +31,32 @@ public class AttendanceController {
     /**
      * 출석 내역 조회 (페이징 기능 포함)
      * 
-     * @param model
      * @param option
      * @param page
      * @return
      */
     @GetMapping("/admin/attendance/list")
-    public String list(Model model, Option option, Page page) throws Exception {
+    public ResponseEntity<?> list(Option option, Page page) throws Exception {
         List<Attendance> attendanceList = attendanceService.list(option, page);
         int result = attendanceService.listCount();
-        model.addAttribute("attendanceList", attendanceList);
-        model.addAttribute("option", option);
-        model.addAttribute("rows", page.getRows());
-        model.addAttribute("page", page);
-        model.addAttribute("result", result);
-        String pageUrl = UriComponentsBuilder.fromPath("/admin/attendance/list")
-                .queryParam("keyword", option.getKeyword())
-                .queryParam("code", option.getCode())
-                .queryParam("rows", page.getRows())
-                .queryParam("orderCode", option.getOrderCode())
-                .build()
-                .toUriString();
 
-        model.addAttribute("pageUrl", pageUrl);
+        // 페이지 URL 생성
+        String pageUrl = String.format("/api/admin/attendance/list?keyword=%s&code=%s&rows=%d&orderCode=%s",
+                option.getKeyword(), option.getCode(), page.getRows(), option.getOrderCode());
 
-        return "admin/attendance/list";
+        // 응답 객체에 데이터를 담아서 반환
+        return ResponseEntity.ok(new AttendanceListResponse(attendanceList, option, page, result, pageUrl));
     }
 
     // 출석 체크 페이지를 이동
     @GetMapping("user/attendance/check")
-    public String showAttendancePage(@RequestParam("uuid") String uuid,
-            Model model) {
-        model.addAttribute("uuid", uuid);
-        return "user/attendance/check";
+    public ResponseEntity<?> showAttendancePage(@RequestParam("uuid") String uuid) {
+        return ResponseEntity.ok(new AttendanceCheckPageResponse(uuid));
     }
 
     // 출석 체크 (등록)
     @PostMapping("user/attendance/check")
-    public String insertAttendance(@RequestParam("qrId") String qrId, @AuthenticationPrincipal CustomUser user,
-            Model model, RedirectAttributes redirectAttributes) throws Exception {
+    public ResponseEntity<?> insertAttendance(@RequestParam("qrId") String qrId, @AuthenticationPrincipal CustomUser user) throws Exception {
         Long no = user.getNo();
 
         Attendance attendance = new Attendance();
@@ -83,11 +67,72 @@ public class AttendanceController {
         QRcode qRcode = attendanceService.selectQRcode(no);
 
         if (qRcode.getUuid().equals(qrId)) {
-            return "redirect:/";
+            return ResponseEntity.ok(new AttendanceResponse("출석 체크가 완료되었습니다."));
         }
 
-        // 오류 메시지를 리다이렉트 시 전달
-        redirectAttributes.addFlashAttribute("errorMessage", "유효하지 않은 QR 코드입니다.");
-        return "redirect:/"; // 여기서 errorMessage가 전달됩니다.
+        return ResponseEntity.badRequest().body(new AttendanceResponse("유효하지 않은 QR 코드입니다."));
+    }
+
+    // 출석 내역 조회 응답 클래스
+    public static class AttendanceListResponse {
+        private List<Attendance> attendanceList;
+        private Option option;
+        private Page page;
+        private int result;
+        private String pageUrl;
+
+        public AttendanceListResponse(List<Attendance> attendanceList, Option option, Page page, int result, String pageUrl) {
+            this.attendanceList = attendanceList;
+            this.option = option;
+            this.page = page;
+            this.result = result;
+            this.pageUrl = pageUrl;
+        }
+
+        public List<Attendance> getAttendanceList() {
+            return attendanceList;
+        }
+
+        public Option getOption() {
+            return option;
+        }
+
+        public Page getPage() {
+            return page;
+        }
+
+        public int getResult() {
+            return result;
+        }
+
+        public String getPageUrl() {
+            return pageUrl;
+        }
+    }
+
+    // 출석 체크 페이지 응답 클래스
+    public static class AttendanceCheckPageResponse {
+        private String uuid;
+
+        public AttendanceCheckPageResponse(String uuid) {
+            this.uuid = uuid;
+        }
+
+        public String getUuid() {
+            return uuid;
+        }
+    }
+
+    // 출석 체크 응답 클래스
+    public static class AttendanceResponse {
+        private String message;
+
+        public AttendanceResponse(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
     }
 }
