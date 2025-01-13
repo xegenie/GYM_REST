@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.BuyList;
 import com.gym.gym.domain.Page;
+import com.gym.gym.domain.Users;
 import com.gym.gym.service.BuyListService;
 import com.gym.gym.service.TrainerProfileService;
 import com.gym.gym.service.UserService;
@@ -60,7 +61,8 @@ public class BuyListController {
 
     // 전체 구매 리스트 조회
     @GetMapping("/admin")
-    public ResponseEntity<?> list(@RequestParam(name = "keyword", defaultValue = "") String keyword, Page page) throws Exception {
+    public ResponseEntity<?> list(@RequestParam(name = "keyword", defaultValue = "") String keyword, Page page)
+            throws Exception {
         List<BuyList> buyList = buyListService.list(keyword, page);
         return ResponseEntity.ok(buyList);
     }
@@ -92,25 +94,34 @@ public class BuyListController {
     }
 
     // 마이페이지 구매 리스트 조회
-    @GetMapping("/users/{userNo}/buyList")
+    @GetMapping("/users/{userNo}")
     public ResponseEntity<?> listByUser(@PathVariable("userNo") Long userNo, Page page) throws Exception {
-    page.setRows(5); // 페이지당 행 개수 설정
-    List<BuyList> buyList = buyListService.listByUser(userNo, page); // 구매 리스트 조회
-    List<BuyList> ticketBuyList = buyListService.ticketByUser(userNo); // 티켓 구매 리스트 조회
 
-    // "정상" 상태의 티켓 중 가장 오래된 티켓 필터링
-    BuyList startedTicket = ticketBuyList.stream()
-        .filter(b -> "정상".equals(b.getStatus()))
-        .min(Comparator.comparing(BuyList::getStartDate)) // 가장 오래된 티켓 찾기
-        .orElse(null); // 없으면 null 반환
+        // 유저 정보 조회
+        Users user = userService.select(userNo);
 
-    // 필요한 데이터 Map으로 조합
-    return ResponseEntity.ok(Map.of(
-        "buyList", buyList,
-        "page", page,
-        "ticketBuyList", ticketBuyList,
-        "startedTicket", startedTicket
-    ));
-}
+        // 유저가 없으면 로그 출력하고 에러 메시지 반환
+        if (user == null) {
+            log.error("유저 정보가 없습니다. userNo: {}", userNo);
+            return ResponseEntity.badRequest().body("유저 정보가 없습니다");
+        }
+
+        page.setRows(5); // 페이지당 행 개수 설정
+        List<BuyList> buyList = buyListService.listByUser(userNo, page); // 구매 리스트 조회
+        List<BuyList> ticketBuyList = buyListService.ticketByUser(userNo); // 티켓 구매 리스트 조회
+
+        // "정상" 상태의 티켓 중 가장 오래된 티켓 필터링
+        BuyList startedTicket = ticketBuyList.stream()
+                .filter(b -> "정상".equals(b.getStatus()))
+                .min(Comparator.comparing(BuyList::getStartDate)) // 가장 오래된 티켓 찾기
+                .orElse(null); // 없으면 null 반환
+
+        // 필요한 데이터 Map으로 조합
+        return ResponseEntity.ok(Map.of(
+                "buyList", buyList,
+                "page", page,
+                "ticketBuyList", ticketBuyList,
+                "startedTicket", startedTicket));
+    }
 
 }
