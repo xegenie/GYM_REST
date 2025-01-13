@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.Answer;
 import com.gym.gym.domain.Board;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/answer")
 
@@ -44,7 +45,7 @@ public class AnswerController {
 
     
     @ResponseBody
-    @PostMapping("")
+    @PostMapping()
     public String answerInsert( @AuthenticationPrincipal CustomUser authuser,@RequestBody Answer answer) throws Exception {
         Users user = authuser.getUser();
         answer.setUserNo(user.getNo());

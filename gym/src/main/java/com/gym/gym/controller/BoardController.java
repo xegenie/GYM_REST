@@ -9,12 +9,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.gym.gym.domain.Answer;
@@ -29,7 +33,8 @@ import com.gym.gym.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
+@CrossOrigin("*")
 @RequestMapping("/user/board")
 public class BoardController {
 
@@ -41,7 +46,7 @@ public class BoardController {
 
     // 목록
 
-    @GetMapping("/boardList")
+    @GetMapping()
     public String list(Model model,
     @ModelAttribute Option option, 
     @ModelAttribute Page page) throws Exception {
@@ -64,7 +69,7 @@ public class BoardController {
 
     }
 
-    @GetMapping("/read")
+    @GetMapping("/{no}")
     public String select(@AuthenticationPrincipal CustomUser authuser, Model model, @RequestParam("no") Long no)
             throws Exception {
         // 게시글 조회
@@ -76,17 +81,9 @@ public class BoardController {
         return "user/board/read";
     }
 
-    // 등록
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @GetMapping("/insert")
-    // @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public String insert() {
-        return "user/board/insert";
-    }
-
     // 등록처리
     @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @PostMapping("/insert")
+    @PostMapping()
     public String insertPost(@AuthenticationPrincipal CustomUser authuser,
             Board board) throws Exception {
 
@@ -109,7 +106,7 @@ public class BoardController {
      */
     // @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINER') or (#p0 != null and
     // @BoardService.isOwner(#p0, authentication.principal.user.no))")
-    @GetMapping("/update")
+    @PutMapping()
     public String update(@RequestParam(name = "no") Long no, @AuthenticationPrincipal CustomUser authuser, Model model)
             throws Exception {
         Users user = authuser.getUser();
@@ -134,7 +131,7 @@ public class BoardController {
     // 수정 처리
     // @PreAuthorize("hasRole('ADMIN') or (#p0 != null and
     // @BoardService.isOwner(#p0, authentication.principal.user.no))")
-    @PostMapping("/update")
+    @PutMapping()
     public String updatePost(@RequestParam("no") Long no, Board board) throws Exception {
         int result = boardService.update(board);
         if (result > 0) {
@@ -147,7 +144,7 @@ public class BoardController {
     // 삭제 처리
     // @PreAuthorize("hasRole('ADMIN') or (#p0 != null and
     // @BoardService.isOwner(#p0, authentication.principal.user.no))")
-    @PostMapping("/delete")
+    @DeleteMapping()
     public String delete(@RequestParam("no") Long no) throws Exception {
         int result1 = answerService.deleteByParent(no);
         if (result1 > 0) {
@@ -162,7 +159,7 @@ public class BoardController {
 
    
 
-   @PostMapping("/answerUpdate")
+   @PutMapping("/answerUpdate")
     public String updateAnswer( Answer answer) throws Exception {
         int result = answerService.update(answer);
         if(result > 0){

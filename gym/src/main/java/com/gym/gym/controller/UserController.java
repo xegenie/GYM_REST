@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.Authentication;
@@ -13,11 +15,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,9 +42,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@RequestMapping("")
+@RequestMapping()
 public class UserController {
 
     @Autowired
@@ -46,60 +53,84 @@ public class UserController {
     @Autowired
     private BoardService boardService;
 
-    // 마이페이지
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @GetMapping("/user/myPage/info")
-    public String myPage(Model model, @AuthenticationPrincipal CustomUser authuser) throws Exception {
-        Long no = authuser.getUser().getNo();
+    // 사용자 정보
+        @GetMapping("/user/info")
+    public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomUser customUser) {
+        log.info(":::::::사용자 정보::::::::::");
+    
+        if(customUser == null){
+            return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+        }
         
-        Users user = userService.select(no);
-        model.addAttribute("user", user);
-        return "/user/myPage/info";
+        log.info("customUser" + customUser);
+        
+        Users user = customUser.getUser();
+        log.info("user : " + user);
+        
+        if(user != null){
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+    
+        // 인증 되지 않은 경우
+
+
+        return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+    }
+ 
+
+    @PostMapping("/user")
+    public ResponseEntity<?> join(@RequestBody Users user) throws Exception {
+            log.info("회원 가입 요청");
+            int result = userService.join(user);
+            if(result > 0 ){
+                log.info("회원가입 성공");
+                return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+
+            }
+            else{
+                log.info("회원가입 실패!");
+                return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+            }
+        
     }
 
-    // 회원 수정 페이지 이동
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @GetMapping("/user/myPage/infoUpdate")
-    public String getMethodName(Model model, @AuthenticationPrincipal CustomUser authuser) throws Exception {
-        Long no = authuser.getUser().getNo();
-        Users user = userService.select(no);
-        model.addAttribute("user", user);
-        return "/user/myPage/infoUpdate";
-    }
 
     // 회원 정보 수정 처리
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @PostMapping("/user/myPage/infoUpdate")
-    public String userupdate(Users user, RedirectAttributes redirectAttributes) throws Exception {
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #p0.username == authentication.name") // 관리자 + 작성자 본인 
+    @PutMapping("/user")
+    public ResponseEntity<?> update(@RequestBody Users user) throws Exception {
+        log.info("회원 정보 수정");
         int result = userService.update(user);
-
-        if (result > 0) {
-            redirectAttributes.addFlashAttribute("message", "회원 수정 완료..");
-            return "redirect:info";
+        if(result > 0){
+            log.info("회원 수정 성공");
+            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }
-        redirectAttributes.addFlashAttribute("message", "회원 수정 실패..");
-        return "/";
+        else{
+            log.info("회원 수정 실패");
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+        }
+        
     }
+    
 
-    // 회원 탈퇴
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @PostMapping("/user/myPage/delete")
-    public String userdelete(@RequestParam("no") Long no, HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+        @PreAuthorize("hasRole('ROLE_ADMIN') or #p0 == authentication.name") // 관리자 + 작성자 본인 
+    @DeleteMapping("/user/{no}")
+    public ResponseEntity<?> delete(@RequestParam("no") Long no) throws Exception{
+     log.info("여기옴?" + no);
         int result = userService.deleteAuth(no);
-        result = userService.delete(no);
 
-        if (result > 0) {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-
-            return "redirect:/";
+        if(result > 0){
+            log.info("여기안옴?");
+            result = userService.delete(no);
+            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }
-
-        // 실패한 경우
-        return "redirect:/user/mypage/list";
+        else{
+            log.info("회원 삭제 실패");
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+        }
     }
+
+
 
     // 유저리스트
     @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
