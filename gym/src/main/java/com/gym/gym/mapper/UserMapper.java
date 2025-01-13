@@ -33,9 +33,9 @@ public interface UserMapper {
     
     public int updateAuth(UserAuth userAuth) throws Exception;
 
-    public int delete(@Param("no") Long no) throws Exception;
+    public int delete( Long no) throws Exception;
 
-    public int deleteAuth(@Param("no") Long no) throws Exception;
+    public int deleteAuth( Long no) throws Exception;
 
     public UserAuth selectAuth(Long no) throws Exception; 
 

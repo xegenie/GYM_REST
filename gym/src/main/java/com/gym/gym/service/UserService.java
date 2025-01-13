@@ -29,7 +29,7 @@ public interface UserService {
     
     public int join(Users user) throws Exception;
 
-    public int update(Users user) throws Exception;
+    public boolean update(Users user) throws Exception;
 
     public int insertAuth(UserAuth userAuth) throws Exception;
     

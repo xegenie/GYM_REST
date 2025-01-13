@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gym.gym.domain.Option;
@@ -69,9 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int update(Users user) throws Exception {
+    public boolean update(Users user) throws Exception {
         int result = userMapper.update(user);
-        return result;
+        return result > 0;
     }
 
     @Override
@@ -87,13 +88,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int delete(@RequestParam("no") Long no) throws Exception {
+    public int delete(@PathVariable("no") Long no) throws Exception {
         int result = userMapper.delete(no);
         return result;
     }
 
     @Override
-    public int deleteAuth(@RequestParam("no") Long no) throws Exception {
+    public int deleteAuth(@PathVariable("no") Long no) throws Exception {
         int result = userMapper.deleteAuth(no);
         return result;
     }
