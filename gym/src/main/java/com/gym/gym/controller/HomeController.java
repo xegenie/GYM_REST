@@ -1,5 +1,9 @@
 package com.gym.gym.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,20 +14,27 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gym.gym.domain.AuthenticationRequest;
 import com.gym.gym.domain.CustomUser;
 import com.gym.gym.domain.Users;
+import com.gym.gym.security.constants.SecurityConstants;
+import com.gym.gym.security.props.JwtProps;
 import com.gym.gym.service.AttendanceService;
 import com.gym.gym.service.UserService;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 public class HomeController {
 
     @Autowired
@@ -31,6 +42,9 @@ public class HomeController {
 
     @Autowired
     private AttendanceService attendanceService;
+
+    @Autowired
+    private JwtProps jwtProps;
 
 
     /**
@@ -64,25 +78,72 @@ public class HomeController {
      * 🔗 [GET] - /login
      * 📄 login.html
      */
-    @GetMapping("/login")
-    public String login(
-            @CookieValue(value = "remember-id", required = false) Cookie cookie,
-            Model model,
-            HttpServletRequest request,@AuthenticationPrincipal CustomUser user ) {
+    // @GetMapping("/login")
+    // public String login(
+    //         @CookieValue(value = "remember-id", required = false) Cookie cookie,
+    //         Model model,
+    //         HttpServletRequest request,@AuthenticationPrincipal CustomUser user ) {
 
-               if(user == null){
-        String username = "";
-        boolean rememberId = false;
-        if (cookie != null) {
-            username = cookie.getValue();
-            rememberId = true;
-        }
-        model.addAttribute("username", username);
-        model.addAttribute("rememberId", rememberId);
-        return "login";
+    //            if(user == null){
+    //     String username = "";
+    //     boolean rememberId = false;
+    //     if (cookie != null) {
+    //         username = cookie.getValue();
+    //         rememberId = true;
+    //     }
+    //     model.addAttribute("username", username);
+    //     model.addAttribute("rememberId", rememberId);
+    //     return "login";
+    // }
+    // return "redirect:/";
+    // }
+
+    
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest authReq) {
+        // 아이디 비밀번호
+        String username = authReq.getId();
+        String password = authReq.getPassword();
+
+        log.info("username : " + username);
+        log.info("password : " + password);
+
+        // 사용자 권한 정보 세팅
+        List<String> roles = new ArrayList<String>();
+        roles.add("ROLE_USER");
+        roles.add("ROLE_ADMIN");
+
+        // 서명에 사용할 키 생성
+        String secretKey = jwtProps.getSecretKey();
+        byte[] signingKey = secretKey.getBytes();
+
+        log.info("시크릿키"+ signingKey);
+
+        // JWT 토큰 생성
+        // 만료시간 : ms 단위
+        //  - 5일 : 1000 * 60 * 60 * 24 * 5
+        int day5 = 1000 * 60 * 60 * 24 * 5;
+
+        String jwt = Jwts.builder()
+                        .signWith(Keys.hmacShaKeyFor(signingKey), Jwts.SIG.HS512 )  // 알고리즘 설정
+                        .header()                                                   // 헤더 설정
+                            .add("typ", SecurityConstants.TOKEN_TYPE)           // typ : "jwt"
+                        .and()                                                      // 페이로드 설정
+                        .claim("uid", username)                                // 사용자 아이디
+                        .claim("rol", roles)                                   // 권한 정보
+                        .expiration( new Date(System.currentTimeMillis() + day5) )  // 만료시간
+                        .compact();                                                 // 토큰 생성
+
+
+        log.info("jwt : "  + jwt);
+
+
+
+                        
+        return new ResponseEntity<>(jwt, HttpStatus.OK);
     }
-    return "redirect:/";
-    }
+    
+
 
     /**
      * 회원 가입 화면

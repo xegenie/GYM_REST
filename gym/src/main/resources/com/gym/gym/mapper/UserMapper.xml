@@ -6,7 +6,7 @@
 <mapper namespace="com.gym.gym.mapper.UserMapper">
 
 
-
+    <!-- 회원, 권한 -->
     <resultMap id="UserMap" type="com.gym.gym.domain.Users">
         <id property="no" column="no"/>
         <result property="id" column="id"/>
@@ -33,6 +33,7 @@
     </resultMap>
 
 
+    <!-- 회원 조회 -->
     <select id="selectId" resultMap="UserMap">
         SELECT *
         FROM users
@@ -45,6 +46,7 @@
         WHERE no = #{no}
     </select>
 
+    <!-- 권한 조회 -->
     <select id="selectAuthList" resultType="UserAuth">
         SELECT *
         FROM user_auth
@@ -57,6 +59,7 @@
         WHERE user_no = #{no}
     </select>
 
+    <!-- 회원 조회 -->
 <select id="list" resultMap="UserMap">
     SELECT u.*, a.auth as userAuth, t.name AS trainerName
     FROM users u
@@ -77,19 +80,20 @@
 </select>
 
 
-
+    <!-- 회원가입 -->
 
     <insert id="join" useGeneratedKeys="true" keyProperty="no">
         INSERT INTO users ( id, password, name, phone, gender, email, birth, enabled, question, answer )
         VALUES (#{id}, #{password}, #{name}, #{phone}, #{gender}, #{email},  #{birth},#{enabled}, #{question}, #{answer})
     </insert>
 
+    <!-- 권한 부여 -->
     <insert id="insertAuth">
         INSERT INTO user_auth( user_no, auth )
         VALUES ( #{userNo}, #{auth} )
     </insert>
 
-
+    <!-- 회원 수정 -->
     <update id="update">
         UPDATE users
         SET phone = #{phone}
@@ -98,17 +102,18 @@
         WHERE no = #{no}
     </update>
 
+    <!-- 권한 수정 -->
     <update id="updateAuth">
         UPDATE user_auth
         SET auth = #{auth}
         WHERE user_no = #{userNo}
     </update>
-
+    <!-- 회원 삭제 -->
     <delete id="delete">
         DELETE FROM users
         WHERE no = #{no}
     </delete>
-
+    <!-- 권한 삭제 -->
     <delete id="deleteAuth">
         DELETE FROM user_auth
         WHERE user_no = #{userNo}
