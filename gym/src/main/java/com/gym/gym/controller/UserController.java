@@ -56,7 +56,8 @@ public class UserController {
     // 사용자 정보
         @GetMapping("/user/info")
     public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomUser customUser) {
-        log.info(":::::::사용자 정보::::::::::");
+        log.info(":::::::사용자 정보::::::::::"+ customUser);
+
     
         if(customUser == null){
             return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
@@ -96,12 +97,13 @@ public class UserController {
 
 
     // 회원 정보 수정 처리
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #p0.username == authentication.name") // 관리자 + 작성자 본인 
+    // @PreAuthorize("hasRole('ROLE_ADMIN') or #p0.id == authentication.name") // 관리자 + 작성자 본인 
     @PutMapping("/user")
     public ResponseEntity<?> update(@RequestBody Users user) throws Exception {
-        log.info("회원 정보 수정");
-        int result = userService.update(user);
-        if(result > 0){
+        log.info("회원 정보 수정" + user + "뭐임?");
+        boolean result = userService.update(user);
+        
+        if(result ){
             log.info("회원 수정 성공");
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }
@@ -113,9 +115,9 @@ public class UserController {
     }
     
 
-        @PreAuthorize("hasRole('ROLE_ADMIN') or #p0 == authentication.name") // 관리자 + 작성자 본인 
+     @PreAuthorize("hasRole('ROLE_ADMIN') or #p0 == authentication.no") // 관리자 + 작성자 본인 
     @DeleteMapping("/user/{no}")
-    public ResponseEntity<?> delete(@RequestParam("no") Long no) throws Exception{
+    public ResponseEntity<?> delete(@PathVariable("no") Long no) throws Exception{
      log.info("여기옴?" + no);
         int result = userService.deleteAuth(no);
 
@@ -173,12 +175,12 @@ public class UserController {
     @PostMapping("admin/user/update")
     public String adminupdate(Users user, @RequestParam("no") Long no, @RequestParam("auth") String auth, RedirectAttributes redirectAttributes)
             throws Exception {
-        int result = userService.update(user);
+        boolean result = userService.update(user);
         UserAuth userAuth = userService.selectAuth(no);
         userAuth.setAuth(auth);
         int result2 = userService.updateAuth(userAuth);
 
-        if (result > 0) {
+        if (result) {
             redirectAttributes.addFlashAttribute("message", "회원 수정 완료..");
             return "redirect:list";
         }

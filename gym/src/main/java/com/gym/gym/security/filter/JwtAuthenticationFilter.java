@@ -88,7 +88,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
                 Users user = customUser.getUser();
                 String id = user.getId();
-                Long userNo = user.getNo();
+                Long no = user.getNo();
 
     
 
@@ -99,7 +99,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
                                                 
                 // JWT 생성
-                String jwt = jwtProvider.creteToken(userNo, id,  roles);
+                String jwt = jwtProvider.creteToken(no, id,  roles);
 
                 
 

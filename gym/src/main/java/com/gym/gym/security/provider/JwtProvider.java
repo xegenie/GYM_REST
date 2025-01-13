@@ -46,7 +46,7 @@ public class JwtProvider {
     @Autowired
     private UserMapper userMapper;
 
-    public String creteToken(Long userNo, String id, List<String> roles) {
+    public String creteToken(Long no, String id, List<String> roles) {
 
         SecretKey shakey = getShaKey();
         int exp = 1000 * 60 * 60 * 24 * 7;
@@ -59,7 +59,7 @@ public class JwtProvider {
                         .and()
                         .expiration(new Date(System.currentTimeMillis() + exp) )
                         .claim("id", id)                    // id       : 사용자 식별키
-                        .claim("userNo", userNo)        // username : 사용자 아이디
+                        .claim("userNo", no)        // username : 사용자 아이디
                         .claim("rol", roles)                // rol      : 회원 권한 목록
                         .compact();
 
@@ -131,6 +131,13 @@ public class JwtProvider {
                         user.setName(userInfo.getName());
                         user.setEmail(userInfo.getEmail());
                         user.setCreatedAt(userInfo.getCreatedAt());
+                        user.setNo(userInfo.getNo());
+                        user.setQuestion(userInfo.getQuestion());
+                        user.setAnswer(userInfo.getAnswer());
+                        user.setPhone(userInfo.getPhone());
+                        user.setBirth(userInfo.getBirth());
+                        user.setGender(userInfo.getGender());
+                        user.setTrainerNo(userInfo.getTrainerNo());
                     }
                 }catch(Exception e){
                     log.error(e.getMessage());
