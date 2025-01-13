@@ -23,6 +23,16 @@ import TrainerList from './pages/user/Ticket/TrainerList'
 import Check from './pages/user/check'
 import QRCode from './pages/user/qrCode'
 import Ranking from './pages/user/ranking'
+import Login from './pages/user/User/Login'
+import Join from './pages/user/User/Join'
+import ResultId from './pages/user/User/ResultId'
+import ChangePw from './pages/user/User/ChangePw'
+import FindId from './pages/user/User/FindId'
+import FindPw from './pages/user/User/FindPw'
+import User from './pages/user/MyPage/User'
+import UserList from './pages/admin/User/UserList'
+import UserUpdate from './pages/admin/User/UserUpdate'
+
 
 function App() {
 
@@ -54,6 +64,20 @@ function App() {
         <Route path='/user/attendance/check' element={ <Check /> }></Route>
         <Route path='/generate-qr-code' element={ <QRCode /> }></Route>
         <Route path='/ranking' element={ <Ranking /> }></Route>
+
+        {/* 회원 정보 */}
+        <Route path='/login' element={ <Login /> }></Route>
+        <Route path='/join' element={ <Join /> }></Route>
+        <Route path='/ResultId' element={ <ResultId /> }></Route>
+        <Route path='/ChangePw' element={ <ChangePw /> }></Route>
+        <Route path='/FindId' element={ <FindId /> }></Route>
+        <Route path='/FindPw' element={ <FindPw /> }></Route>
+        <Route path='/FindId' element={ <FindId /> }></Route>
+        <Route path='/User' element={ <User /> }></Route>
+
+        {/* 어드민 */}
+        <Route path='/UserUpdate' element={ <UserUpdate /> }></Route>
+        <Route path='/UserList' element={ <UserList /> }></Route>
       </Routes>
     </BrowserRouter>
   )
