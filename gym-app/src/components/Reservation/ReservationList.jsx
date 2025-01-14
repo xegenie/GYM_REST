@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import './css/ReservationList.module.css';
 
-const ReservationList = ( {reservationList} ) => {
-  const [keyword, setKeyword] = useState("");
-  const [orderCode, setOrderCode] = useState(0);
-  const [code, setCode] = useState(0);
-  
+const ReservationList = ({ 
+  reservationList, 
+  handleSearch, 
+  handleOrderCodeChange, 
+  handleCodeChange, 
+  orderCode, 
+  code, 
+  keyword, 
+  setKeyword 
+}) => {
+  useEffect(() => {
+    console.log('예약 목록 :', reservationList);
+  }, [reservationList]);
+
   return (
     <div className='main'>
       <div className="inner">
@@ -29,7 +38,7 @@ const ReservationList = ( {reservationList} ) => {
             <input
               type="text"
               value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
+              onChange={(e) => setKeyword(e.target.value)}  // setKeyword가 전달된 것을 사용
               placeholder="검색어를 입력해주세요"
             />
             <button type="submit">검색</button>
@@ -50,41 +59,47 @@ const ReservationList = ( {reservationList} ) => {
               </tr>
             </thead>
             <tbody>
-              {reservationList.map((reservation) => (
-                <tr key={reservation.no}>
-                  <td>{reservation.no}</td>
-                  <td>{`${reservation.userName} (${reservation.userId})`}</td>
-                  <td>{reservation.trainerName}</td>
-                  <td>{reservation.rvDate}</td>
-                  <td>{reservation.createdAt}</td>
-                  <td
-                    style={{
-                      color:
-                        reservation.enabled === 0
-                          ? '#dc3545'
-                          : reservation.enabled === 2
+              {(Array.isArray(reservationList) && reservationList.length > 0) ? (
+                reservationList.map((reservation) => (
+                  <tr key={reservation.no}>
+                    <td>{reservation.no}</td>
+                    <td>{`${reservation.userName} (${reservation.userId})`}</td>
+                    <td>{reservation.trainerName}</td>
+                    <td>{reservation.rvDate}</td>
+                    <td>{reservation.createdAt}</td>
+                    <td
+                      style={{
+                        color:
+                          reservation.enabled === 0
+                            ? '#dc3545'
+                            : reservation.enabled === 2
                             ? '#2a9c1b'
                             : '',
-                    }}
-                  >
-                    {reservation.canceledAt}
-                  </td>
-                  <td>
-                    {reservation.enabled === 1 && (
-                      <>
-                        <button onClick={() => handleComplete(reservation.no)}>
-                          완료
-                        </button>
-                        <button onClick={() => handleCancel(reservation.no)}>
-                          취소
-                        </button>
-                      </>
-                    )}
-                    {reservation.enabled === 2 && <span>완료</span>}
-                    {reservation.enabled === 0 && <span>취소</span>}
-                  </td>
+                      }}
+                    >
+                      {reservation.canceledAt}
+                    </td>
+                    <td>
+                      {reservation.enabled === 1 && (
+                        <>
+                          <button onClick={() => handleComplete(reservation.no)}>
+                            완료
+                          </button>
+                          <button onClick={() => handleCancel(reservation.no)}>
+                            취소
+                          </button>
+                        </>
+                      )}
+                      {reservation.enabled === 2 && <span>완료</span>}
+                      {reservation.enabled === 0 && <span>취소</span>}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7">예약 목록이 없습니다.</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
