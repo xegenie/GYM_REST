@@ -81,7 +81,10 @@ public class PlanController {
             List<String> times24Hour = new ArrayList<>();
             List<String> times12Hour = new ArrayList<>();
 
+            System.out.println("userDetails: " + userDetails);
             Users user = userDetails.getUser();
+            System.out.println("user: " + user);
+            System.out.println("userNo: " + user.getNo());
             UserAuth userAuth = userService.selectAuth(user.getNo());
             System.out.println("userAuth: " + userAuth);
             String userAuthAuth = userAuth.getAuth();
