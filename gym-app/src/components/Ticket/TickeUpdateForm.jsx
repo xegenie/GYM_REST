@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Sidebar from '../Header/adminSidebar';
 import styles from './TicketInsertForm.module.css';
 
-const TicketInsertForm = ({ onInsert }) => {
+const TicketUpdateForm = ({ onUpdate, ticket }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    info: '',
-    months: '1',
-    type: '일반',
-    ptCount: '0', // PT 타입인 경우만 사용
+    name: ticket.name,
+    price: ticket.price,
+    info: ticket.info,
+    months: ticket.months,
+    type: ticket.type,
+    ptCount: ticket?.ptCount || '0',
   });
 
   const handleChange = (e) => {
@@ -38,16 +38,16 @@ const TicketInsertForm = ({ onInsert }) => {
       'Content-Type': 'application/json',
     };
 
-    onInsert(form, headers);
+    onUpdate(form, headers);
   };
 
   return (
-    <div className='container' >
+    <div className='container'>
       <Sidebar />
       <div className={styles.main}>
-        <div className='inner' >
+        <div className='inner'>
           <div className={styles.mainTitle}>
-            <h2>이용권 등록</h2>
+            <h2>이용권 수정</h2>
           </div>
           <div className={styles.form}>
             <form className={styles.formInner} onSubmit={onSubmit}>
@@ -55,7 +55,7 @@ const TicketInsertForm = ({ onInsert }) => {
                 <h3>미리보기</h3>
                 <div className={styles.ticketItem}>
                   <div className={styles.checkbox}>
-                    <input type="checkbox" className={styles.input} disabled />
+                    <input type="checkbox" disabled />
                   </div>
                   <div className={styles.ticketContent}>
                     <span className={styles.ticketName}>{formData.name || '상품명'}</span>
@@ -151,7 +151,7 @@ const TicketInsertForm = ({ onInsert }) => {
                             </option>
                           ))}
                         </select>
-                  )}
+                      )}
                     </td>
                   </tr>
                   <tr className={styles.tr}>
@@ -169,4 +169,4 @@ const TicketInsertForm = ({ onInsert }) => {
   );
 };
 
-export default TicketInsertForm;
+export default TicketUpdateForm;

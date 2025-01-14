@@ -1,58 +1,85 @@
-import React from 'react'
-import BoardList from '../../components/board/BoardList'
-import * as boards from '../../apis/boards'
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import * as ticket from '../../apis/ticket';
+import TicketList from '../../components/Ticket/TicketList';
+import TicketUpdateForm from '../../components/Ticket/TickeUpdateForm';
 
 const ListContainer = () => {
+  const [ticketList, setTicketList] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate(); // useNavigate 훅을 사용하여 리다이렉트 처리
 
-  // 🧊 state
-  const [boardList, setBoardList] = useState([])
-  const [pagination, setPagination] = useState({})
-  const [page, setPage] = useState(1)
-  const [size, setSize] = useState(10)
+  const [selectedTicket, setSelectedTicket] = useState({})
 
-  // ?파라미터=값 가져오는 방법
-  const location = useLocation()
-  
   const updatePage = () => {
-    const query = new URLSearchParams(location.search)
-    const newPage = query.get("page") ?? 1
-    const newSize = query.get("size") ?? 10
-    console.log(`newPage : ${newPage}`);
-    console.log(`newSize : ${newSize}`);
-    setPage(newPage)
-    setSize(newSize)
+    const query = new URLSearchParams(location.search);
+    const newKeyword = query.get("keyword") ?? "";
+    setKeyword(newKeyword); // URL에서 keyword를 추출하여 상태 업데이트
+  };
+
+  // getList 함수, 검색어가 빈 값일 경우 전체 리스트를 반환
+  const getList = async (searchKeyword) => {
+    console.log("검색어:", searchKeyword);
+
+    // 검색어가 비어있을 때 전체 목록을 불러옴
+    if (searchKeyword === "") {
+      const response = await ticket.list(""); // 빈 문자열로 전체 목록을 가져옴
+      setTicketList(response.data);
+    } else {
+      const response = await ticket.list(searchKeyword); // 검색어로 필터링된 목록을 가져옴
+      setTicketList(response.data);
+    }
+  };
+
+  // 삭제
+  const onDelete = async (ticketNos) => {
+    // 배열로 받은 ticketNos를 쿼리스트링으로 변환
+    const params = ticketNos.map(ticketNo => `ticketNos=${ticketNo}`).join('&');
+  
+    // ticket.remove 호출시 올바르게 URL을 넘김
+    const response = await ticket.remove(params);
+    if (response.status === 200) {
+      alert("삭제되었습니다.");
+      getList(keyword); // 삭제 후 목록을 갱신
+    } else {
+      alert("삭제에 실패했습니다.");
+    }
+  };
+
+  const selectTicket = async (ticketNo) => {
+    try {
+      const response = await ticket.select(ticketNo);
+      console.log('선택된 이용권:', response);
+
+      setSelectedTicket(response.data);
+      navigate(`/admin/ticket/ticketUpdate?ticketNo=${ticketNo}`);
+    } catch (error) {
+      console.error('이용권 조회 실패:', error);
+      alert('이용권 조회에 실패했습니다. 다시 시도해주세요.');
+    }
   }
+  
+  
+  // URL 파라미터 변경 시 검색어 업데이트
+  useEffect(() => {
+    updatePage(); // URL이 변경될 때마다 검색어 업데이트
+  }, [location.search]);
 
-  // 🎁 게시글 목록 데이터
-  const getList = async () => {
-    const response = await boards.list(page, size)
-    const data = await response.data
-    const list = data.list
-    const pagination = data.pagination
-    console.dir(data)
-    console.dir(data.list)
-    console.dir(data.pagination)
+  // 검색어 변경 시, API 호출
+  useEffect(() => {
+    getList(keyword); // keyword가 변경될 때마다 getList 호출
+  }, [keyword]);
 
-    setBoardList( list )
-    setPagination( pagination )
-  }
-
-  // ❓ 
-  useEffect( () => {
-    getList()
-  }, [page, size])
-
-  useEffect( () => {
-    updatePage()
-  }, [location.search])
+  const handleSearch = (newKeyword) => {
+    setKeyword(newKeyword);  // 검색어 상태 업데이트
+    navigate(`?keyword=${newKeyword}`);  // URL에 검색어를 쿼리 파라미터로 추가
+  };
 
   return (
-    <>
-      <BoardList boardList={boardList} pagination={pagination} />
-    </>
-  )
-}
+    <TicketUpdateForm ticket={selectedTicket} />,
+    <TicketList ticketList={ticketList} onSearch={handleSearch} keyword={keyword} onDelete={onDelete} selectTicket={selectTicket} />
+  );
+};
 
-export default ListContainer
+export default ListContainer;
