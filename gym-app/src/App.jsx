@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import Home from './pages/Home'
 import ProfileList from './pages/admin/Profile/ProfileList'
@@ -15,7 +14,7 @@ import TicketUpdate from './pages/admin/Ticket/TicketUpdate'
 import AttendanceList from './pages/admin/Attendance/attendanceList'
 import ReservationPtListPage from './pages/user/MyPage/ReservationPtListPage'
 import PayResult from './pages/user/Pay/PayResult'
-import Plan from './pages/user/plan/Plan'
+import Plan from './pages/user/Plan/Plan'
 import ReservationInsertPage from './pages/user/Reservation/ReservationInsertPage'
 import NormalTicket from './pages/user/Ticket/NormalTicket'
 import PtTicket from './pages/user/Ticket/PtTicket'
@@ -33,12 +32,14 @@ import FindPw from './pages/user/User/FindPw'
 import User from './pages/user/MyPage/User'
 import UserList from './pages/admin/User/UserList'
 import UserUpdate from './pages/admin/User/UserUpdate'
+import LoginContextProvider from './contexts/LoginContextProvider';
 
 
 function App() {
 
   return (
     <BrowserRouter>
+     <LoginContextProvider>  
       <Routes>
         <Route path='/' element={ <Home /> }></Route>
 
@@ -77,9 +78,11 @@ function App() {
         <Route path='/User' element={ <User /> }></Route>
 
         {/* 어드민 */}
-        <Route path='/UserUpdate' element={ <UserUpdate /> }></Route>
+        <Route path='/UserUpdate' element=
+        { <UserUpdate /> }></Route>
         <Route path='/UserList' element={ <UserList /> }></Route>
       </Routes>
+      </LoginContextProvider>
     </BrowserRouter>
   )
 }
