@@ -1,10 +1,13 @@
 package com.gym.gym.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AttendanceController {
 
     @Autowired
@@ -47,6 +51,27 @@ public class AttendanceController {
         // 응답 객체에 데이터를 담아서 반환
         return ResponseEntity.ok(new AttendanceListResponse(attendanceList, option, page, result, pageUrl));
     }
+
+
+    // 실시간 이용자 수
+    @GetMapping("/admin/attendance/userCount")
+    public ResponseEntity<?> getUserCount() throws Exception {
+        // 사용자 수 가져오기
+        int userCount = attendanceService.listCount();
+    
+        // 응답을 JSON 형태로 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("userCount", userCount);
+    
+        return ResponseEntity.ok(response);  // JSON 응답 반환
+    }
+    
+
+
+
+
+
+
 
     // 출석 체크 페이지를 이동
     @GetMapping("user/attendance/check")
