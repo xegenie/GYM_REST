@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ import com.gym.gym.service.TicketService;
 
 import lombok.extern.slf4j.Slf4j;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/admin/ticket")
 @Slf4j
@@ -42,7 +43,7 @@ public class TicketController {
 
     // 티켓 추가
     @PostMapping("/insert")
-    public ResponseEntity<String> insert(@RequestBody Ticket ticket) {
+    public ResponseEntity<String> insert(Ticket ticket) {
         try {
             String ptCount = ticket.getPtCount() + ""; // int를 String으로 변환
             if (ptCount.startsWith("custom,")) {

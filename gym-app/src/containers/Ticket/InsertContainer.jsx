@@ -1,35 +1,30 @@
 import React from 'react'
-import BoardInsertForm from '../../components/board/BoardInsertForm'
-import * as boards from '../../apis/boards'
+import {insert} from '../../apis/ticket'
 import { useNavigate } from 'react-router-dom'
+import TicketInsertForm from '../../components/Ticket/TicketInsertForm'
 
 const InsertContainer = () => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  // 게시글 등록 요청 이벤트 핸들러
-  // const onInsert = async (title, writer, content) => {
   const onInsert = async (formData, headers) => {
     try {
-      // const response = await boards.insert(title, writer, content)
-      const response = await boards.insert(formData, headers)
-      const data = await response.data
-      console.log(data);
-      alert('등록 완료')
-      // 게시글 목록으로 이동
-      navigate('/boards')      
-      
+      console.log('전달된 formData:', formData, headers);
+
+      const response = await insert(formData, headers);
+      console.log('등록 성공:', response);
+
+      alert('이용권이 성공적으로 등록되었습니다!');
+      navigate('/admin/ticket/ticketList');
+
     } catch (error) {
-      console.log(error);
-      
+      console.error('등록 실패:', error);
+      alert('등록에 실패했습니다. 다시 시도해주세요.');
     }
-  }
+  };
 
   return (
-    <>
-      <BoardInsertForm onInsert={onInsert} />
-    </>
-  )
-}
+    <TicketInsertForm onInsert={onInsert} />
+  );
+};
 
-export default InsertContainer
+export default InsertContainer;

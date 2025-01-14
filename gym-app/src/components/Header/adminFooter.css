@@ -1,0 +1,34 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 145px;
+    background-color: #fff;
+}
+
+.link {
+    display: flex;
+    width: 1440px;
+    height: 75px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #000;
+}
+
+.link a {
+    width: 100px;
+    color: #000;
+}
+
+.copyright {
+    display: flex;
+    width: 1320px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright span {
+    color: #000;
+}
