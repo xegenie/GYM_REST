@@ -197,14 +197,14 @@ textarea{resize: none;}
   box-shadow:1px 1px 5px rgba(10, 10, 10, 0.3);
 }
 
-.exercise-bymyself,
+/* .exercise-bymyself,
 .exercise-pt {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-}
+} */
 
 .pop-up .popup-type {
     background-color: #ECECEC;
@@ -489,22 +489,22 @@ textarea{resize: none;}
   height: 180px;
 }
 
-.input-schedule {
+/* .input-schedule {
   position: fixed;
   left: 295px;
   top: 180px;
   z-index: 10;
   display: none;
-}
+} */
 
 .exercise-pt {
   height: 230px;
-  display: none;
+  /* display: none; */
 }
 
-.exercise-bymyself{
+/* .exercise-bymyself{
   display: none;
-}
+} */
 
 .fc-daygrid-day {
   cursor: pointer;

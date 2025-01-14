@@ -1,18 +1,14 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './planStyle.css'
-import PlanContent from '../../../components/Plan/PlanContent'
-import PlanInfoModal from '../../../components/Plan/PlanInfoModal'
-import RsvInfoModal from '../../../components/Plan/RsvInfoModal'
-import PlanInsertModal from '../../../components/Plan/PlanInsertModal'
+import PlanContainer from '../../../containers/Plan/PlanContainer'
+import DateContextProvider from "../../../contexts/DateContextProvider";
 
 const Plan = () => {
   return (
-    <div>
-        <PlanContent />
-        <PlanInsertModal />
-        <PlanInfoModal />
-        <RsvInfoModal />
-    </div>
+    <DateContextProvider>
+        <PlanContainer />
+    </DateContextProvider>
   )
 }
 
