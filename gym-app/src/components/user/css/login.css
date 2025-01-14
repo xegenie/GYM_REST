@@ -1,9 +1,9 @@
-body {
+.login body {
     background-color: #000000dc;
 }
 
 
-.fullBody {
+.login .fullBody {
     display: flex;
     width: 100%;
     height: 100%;
@@ -12,13 +12,13 @@ body {
     align-items: center;
 }
 
-.container1 {
+.login .container1 {
     border: none;
     position: relative;
     
 }
 
-h1 {
+.login h1 {
     font-size: px;
     font-weight: bold;
     color: #9FD0D5;
@@ -26,7 +26,7 @@ h1 {
 }
 
 
-.container1 img {
+.login .container1 img {
     width: 80%;
     /* 부모 요소의 가로 크기에 맞춤 */
     height: 100%;
@@ -38,69 +38,69 @@ h1 {
     margin-bottom: 20px;
 }
 
-.login-btn{
+.login .login-btn{
     cursor: pointer;
 }
 
-.item label {
+.login .item label {
     color: white;
     margin-bottom: 10px;
 }
 
-.form-check-input:checked+.form-check-label {
+.login .form-check-input:checked+.form-check-label {
     color: #9FD0D5;
     /* 체크 시 텍스트 색상 */
 
 }
 
-.textcenter{
+.login .textcenter{
     text-align: center;
     margin-bottom: 30px;
    
 }
 
-.form-check{
+.login .form-check{
     display: flex;
     justify-content: space-around;
     margin-bottom: 30px;
 }
 
-.form-floating {
+.login .form-floating {
     margin-bottom: 15px;
 
 }
 
-a {
+.login a {
     text-decoration: none;
     color: inherit;
 }
 
-a:focus,
+.login a:focus,
 a:active {
     outline: none;
 }
 
-.subbutton {
+.login .subbutton {
     display: flex;
     justify-content: space-around;
     color: white;
 }
 
-.subbutton a:hover, label:hover {
+.login .subbutton a:hover, label:hover {
     color: #9FD0D5;
     cursor: pointer;
 }
 
-.form-check-input{
+.login .form-check-input{
     cursor: pointer;
 }
 
-.bottom {
+.login .bottom {
     height: 100px;
 }
 
 /* 전체 폼 스타일 */
-.login-form {
+.login .login-form {
     width: 100%;
     /* 폼의 너비 */
     max-width: 400px;
@@ -120,7 +120,7 @@ a:active {
 }
 
 /* 입력 필드 스타일 */
-.form-floating {
+.login .form-floating {
     position: relative;
     /* 레이블을 위한 상대 위치 */
     margin-bottom: 20px;
@@ -129,7 +129,7 @@ a:active {
 
 }
 
-.form-floating input {
+.login .form-floating input {
     background-color: #ddd;
     width: 80%;
     /* 입력 필드 너비 */
@@ -147,7 +147,7 @@ a:active {
     /* 클릭 효과 애니메이션 */
 }
 
-.form-floating input:focus {
+.login .form-floating input:focus {
     border-color: #007bff;
     /* 포커스 시 테두리 색 */
     box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
@@ -155,7 +155,7 @@ a:active {
 }
 
 /* 레이블 스타일 */
-.form-floating label {
+.login .form-floating label {
     position: absolute;
     /* 레이블을 입력 필드 위로 */
     top: 10px;
@@ -173,7 +173,7 @@ a:active {
 }
 
 
-button {
+.login button {
     border-radius: 10px;
     background-color: #2FABCF;
     color: black;
