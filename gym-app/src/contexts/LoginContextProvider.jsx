@@ -10,6 +10,8 @@ export const LoginContext = createContext()
 
 const LoginContextProvider = ({ children }) => {
 
+    // 로딩중
+    const [isLoading, setIsLoading] = useState(true)
   // 🔐 로그인 여부
   const [isLogin, setIsLogin] = useState(false)
   // 👩‍💼 사용자 정보 
@@ -65,12 +67,62 @@ const LoginContextProvider = ({ children }) => {
     
   }
 
-  // 🌞 로그아웃 함수
-  const logout = () => {
-    setIsLogin(false)
-    // TODO: ...
-  }
+  const logoutSetting = () => {
+    // Authorization 헤더 초기화
+    api.defaults.headers.common.authorization = undefined
 
+    // JWT 쿠키 삭제
+    Cookies.remove("jwt")
+
+    //  로그인 여부 : false
+    setIsLogin(false)
+    localStorage.removeItem("isLogin")
+
+    //  유저 정보 초기화
+    setUserInfo(null)
+    localStorage.removeItem("userInfo")
+
+    // 권한 정보 초기화
+    setRoles({ isUser: false, isAdmin: false })
+    localStorage.removeItem("roles")
+}
+
+
+
+  // 🌞 로그아웃 함수
+    // 로그아웃 함수
+    const logout = (force = false) => {
+
+      if (force) {
+
+          setIsLoading(true)
+          // 로그아웃 세팅
+          logoutSetting()
+
+          // 페이지 이동 > "/" (메인)
+          navigate("/")
+
+          setIsLoading(false)
+          return
+      }
+
+      Swal.confirm("로그아웃 하시겠습니까?", "로그아웃을 진행합니다", "warning", (result) => {
+          if (result.isConfirmed) {
+              Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success")
+              // 로그아웃 세팅
+              logoutSetting()
+
+              // 페이지 이동 > "/" (메인)
+              navigate("/")
+              return
+          }
+      }
+      )
+
+
+
+
+  }
   // 자동 로그인
   // 🍪쿠키에 저장된 💍JWT 를 읽어와서 로그인 처리
   const autoLogin = async () => {

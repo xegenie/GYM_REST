@@ -5,7 +5,7 @@ import logo from '../../assets/imges/logo2.png';
 import '../user/css/login.css';
 
 const LoginForm = () => {
-  const { login } = useContext(LoginContext);
+  const { isLogin, login, logout } = useContext(LoginContext);
   const [rememberId, setRememberId] = useState(false); 
   const [autoLogin, setAutoLogin] = useState(false); 
   const [savedId, setSavedId] = useState('');
@@ -48,7 +48,29 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login">
+
+  <div className="login">
+    <div className="util">
+            <ul>
+                {/* 로그인 여부(isLogin)에 따라서 조건부 렌더링 */}
+                {
+                    isLogin
+                    ?
+                    <>
+                        <li>마이페이지 </li>
+                        <li><button className='link' onClick={ () => logout()}> 로그아웃 </button></li>
+                    </>
+                :
+                <>
+                  
+                    <li>회원가입</li>
+            
+                </>
+            }
+            </ul>
+        </div>
+
+      <body>
       <div className="fullBody">
         <div className="container12">
           <div className="container1">
@@ -130,6 +152,7 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
+      </body>
     </div>
   );
 };
