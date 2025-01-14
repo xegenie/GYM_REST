@@ -15,7 +15,7 @@ function Ranking() {
           setRankingList(data); // 랭킹 데이터를 상태에 저장
         } else {
           console.error('Failed to fetch ranking data');
-        }
+        } 
       } catch (error) {
         console.error('Error fetching ranking data:', error);
       }
