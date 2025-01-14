@@ -1,8 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import { useDate } from "../../contexts/DateContextProvider";
 
-const PlanInsertModal = () => {
+const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown}) => {
+
+  const { currentDate, setCurrentDate } = useDate();
+
+  // ⚪❗ 초기값 세팅하기
+  const [start, setStart] = useState(currentDate)
+  const [end, setEnd] = useState(currentDate)
+
+  const setTime = (type, time) => {
+    const isStart = type === "start"; 
+    const baseDate = new Date(isStart ? start : end);
+  
+    const [hours, minutes] = time.split(':').map(Number); 
+    baseDate.setHours(hours, minutes, 0);
+    
+    console.log(`${type}(setTime):`, baseDate);
+    
+    isStart ? setStart(baseDate) : setEnd(baseDate);
+  };
+
+  useEffect(() => {
+    const cleanupStart = setupDropdown("dropdown-button-start", "options-start");
+    const cleanupEnd = setupDropdown("dropdown-button-end", "options-end");
+
+    return () => {
+      cleanupStart();
+      cleanupEnd();
+    }
+  }, []);
+  
   return (
     <div className='pop-up input-schedule'>
       <div className="popup-type">
@@ -24,22 +54,28 @@ const PlanInsertModal = () => {
               <div className="dropdown">
                 <button type="button" id="dropdown-button-start">시작 시간</button>
                 <div className="options" id="options-start">
-                  {/* <div th:each="time, iterStat : ${times24Hour}"
-                    th:text="${times12Hour[iterStat.index]}"
-                    th:value="${time}" 
-                    onClick="setTime('start', this)">
-                  </div> */}
+                  {times24Hour.map((time, index) => (
+                      <div 
+                        key={time}
+                        onClick={() => setTime('start', time)}
+                      >
+                       {times12Hour[index]} 
+                      </div>
+                  ))}
                 </div>
               </div>
               <span>-</span>
               <div className="dropdown">
                 <button type="button" id="dropdown-button-end">종료 시간</button>
                 <div className="options" id="options-end">
-                  {/* <div th:each="time, iterStat : ${times24Hour}"
-                    th:text="${times12Hour[iterStat.index]}"
-                    th:value="${time}" 
-                    onClick="setTime('end', this)">
-                  </div> */}
+                  {times24Hour.map((time, index) => (
+                      <div 
+                        key={time}
+                        onClick={() => setTime('end', time)}
+                      >
+                       {times12Hour[index]} 
+                      </div>
+                  ))}
                 </div>
               </div>
             </div>

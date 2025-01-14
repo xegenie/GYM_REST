@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DateUtils {
     
+    // 날짜를 0시 0분 0초로 초기화
     public Date DayFirst(Date currentDate){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate); // 현재 날짜 설정
@@ -28,6 +29,7 @@ public class DateUtils {
         return resetDate;
     }
 
+    // 인자 날짜의 한 시간 후의 Date 객체를 반환
     public Date CalcOneHourLater(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -39,6 +41,7 @@ public class DateUtils {
         return oneHourLater;
     }
 
+    // 이번 달의 첫째 날과 마지막 날을 구하는 메소드
     public List<Date> MonthFirstLast(Date date) {
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     

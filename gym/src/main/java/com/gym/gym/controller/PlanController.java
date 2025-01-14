@@ -78,9 +78,6 @@ public class PlanController {
             Date startDate = dates.get(0);
             Date endDate = dates.get(1);
 
-            List<String> times24Hour = new ArrayList<>();
-            List<String> times12Hour = new ArrayList<>();
-
             System.out.println("userDetails: " + userDetails);
             Users user = userDetails.getUser();
             System.out.println("user: " + user);
@@ -141,23 +138,6 @@ public class PlanController {
                 reservationEvents.add(event);
             }
 
-            // 일정 추가 팝업 드롭 다운 시간 목록
-            for (int i = 6; i <= 22; i++) {
-                for (int j = 0; j < 60; j += 15) {
-                    String time24 = String.format("%02d:%02d", i, j);
-                    times24Hour.add(time24);
-                    
-                    // 12시간제 형식으로 변환
-                    try {
-                        SimpleDateFormat sdf24 = new SimpleDateFormat("HH:mm", Locale.KOREA);
-                        SimpleDateFormat sdf12 = new SimpleDateFormat("a h:mm", Locale.KOREA);
-                        times12Hour.add(sdf12.format(sdf24.parse(time24)));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
             if(comment == null){
                 comment = new Comment();
                 comment.setCommentDate(commentDate);
@@ -168,8 +148,6 @@ public class PlanController {
             response.put("comment", comment);
             response.put("planEvents", planEvents);
             response.put("reservationEvents", reservationEvents);
-            response.put("times24Hour", times24Hour);
-            response.put("times12Hour", times12Hour);
             response.put("userAuthAuth", userAuthAuth);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
