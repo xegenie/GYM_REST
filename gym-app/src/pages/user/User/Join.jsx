@@ -70,9 +70,9 @@ const Join = () => {
 
 
   return (
-    <div className="container">
+    <>
       <JoinForm join={join} checkId={checkId} />
-    </div>
+      </>
   );
 };
 
