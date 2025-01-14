@@ -1,6 +1,7 @@
 import '../user/Join.css'
 import React from 'react';
 import * as Swal from '../../apis/alert.js';
+import logo from '../../assets/imges/logo2.png';
 
 
 const JoinForm = ({ join,checkId }) => {
@@ -50,7 +51,7 @@ const JoinForm = ({ join,checkId }) => {
         <div className="top-space"></div>
         <div className="container1" id="contain-box" style={{ margin: '25px 0' }}>
           <div className="px-4 py-5 mt-5 text-center">
-            <img className="FITlogo" src="img/logo2.png" alt="" />
+            <img className="FITlogo" src={logo} alt="" />
             <h1 className="joins">회원 가입</h1>
           </div>
 
@@ -240,6 +241,7 @@ const JoinForm = ({ join,checkId }) => {
                     name="question"
                     id="question"
                      autoComplete='question'
+                     style={{ cursor: 'pointer' }}
                   >
                     <option value="강아지 이름은?">강아지 이름은?</option>
                     <option value="졸업한 초등학교는?">졸업한 초등학교는?</option>

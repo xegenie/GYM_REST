@@ -22,12 +22,12 @@ const LoginContextProvider = ({ children }) => {
 
 
   // 🔐 로그인 함수
-  const login = async (username, password) => {
-    console.log(`username : ${username}`);
+  const login = async (id, password) => {
+    console.log(`username : ${id}`);
     console.log(`password) : ${password}`);
 
     try {
-      const response = await auth.login(username, password)
+      const response = await auth.login(id, password)
       const data = response.data      // 👩‍💼 {user}
       const status = response.status
       const headers = response.headers
