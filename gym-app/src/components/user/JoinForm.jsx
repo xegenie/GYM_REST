@@ -1,4 +1,4 @@
-import '../user/Join.css'
+import '../user/css/join.css';
 import React from 'react';
 import * as Swal from '../../apis/alert.js';
 import logo from '../../assets/imges/logo2.png';
@@ -45,44 +45,44 @@ const JoinForm = ({ join,checkId }) => {
   
 
   return (
+
     <div className="join">
       <body className="fullBody">
         {/* Header Fragment */}
-        <div className="top-space"></div>
+        <div className="topspace"></div>
         <div className="container1" id="contain-box" style={{ margin: '25px 0' }}>
-          <div className="px-4 py-5 mt-5 text-center">
+          <div className="wlskrkdy">
             <img className="FITlogo" src={logo} alt="" />
             <h1 className="joins">회원 가입</h1>
           </div>
 
-          <main className="form-signin login-box w-100 m-auto">
-            <form id="form" onSubmit={onJoin} className="needs-validation">
-              <input type="hidden" name="_csrf" value="${_csrf.token}" />
+          <main className="formsignin">
+            <form id="form" onSubmit={onJoin} className="needsvalidation">
               <div className="centerdhkwnj">
                 {/* 아이디 */}
-                <div className="input-group my-2" id="box-id">
-                  <label htmlFor="id">아이디</label>
-                  <div className="input-group-id">
+                    <label className="widd" htmlFor="id">아이디</label>
+                <div className="inputid123" id="box-id">
                     <input
                       type="text"
-                      className="form-control"
+                      className="formCo"
                       id="id"
                       name="id"
-                      autoComplete='id'
+                      autoComplete="id"
                       placeholder="아이디"
                       autoFocus
                       required
                     />
-                    <button type="button" className="btn btn-outline-secondary" onClick={checkId}>중복확인</button>
+                    <button type="button" className="btn btn-outline-secondary" onClick={checkId}>
+                      중복확인
+                    </button>
                   </div>
-                </div>
 
                 {/* 비밀번호 */}
-                <div className="input-group my-2">
-                  <label htmlFor="password">비밀번호</label>
+                  <label  className="widd" htmlFor="password">비밀번호</label>
+                <div className="inputid">
                   <input
                     type="password"
-                    className="form-control"
+                    className="formCo"
                     id="password"
                     name="password"
                      autoComplete='password'
@@ -93,11 +93,11 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 비밀번호 확인 */}
-                <div className="input-group my-2">
-                  <label htmlFor="passwordCheck">비밀번호 확인</label>
+                  <label  className="widd" htmlFor="passwordCheck">비밀번호 확인</label>
+                <div className="inputid">
                   <input
                     type="password"
-                    className="form-control"
+                    className="formCo"
                     id="passwordCheck"
                     name="passwordCheck"
                      autoComplete='passwordCheck'
@@ -107,11 +107,11 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 이름 */}
-                <div className="input-group my-2">
-                  <label htmlFor="name">이름</label>
+                  <label  className="widd" htmlFor="name">이름</label>
+                <div className="inputid">
                   <input
                     type="text"
-                    className="form-control"
+                    className="formCo"
                     id="name"
                     name="name"
                     placeholder="이름"
@@ -123,17 +123,19 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 성별 */}
-                <div className="input-group my-2 gender-group">
-                  <div className="gender-options" style={{ marginBottom: '20px', marginTop: '20px' }}>
-                    <label htmlFor="gender" style={{ marginLeft: '0' }}>성별</label>
+                <div className="inputid5" > 
+                    <label   htmlFor="gender">성별</label>
+                  
+                  <div className="gender-options" style={{ marginBottom: '20px', marginTop: '20px',marginLeft:'100px' }}>
                     <input
+                    
                       type="radio"
                       id="male"
                       name="gender"
                       value="남자"
                       required
                     />
-                    <label htmlFor="male">남자</label>
+                    <label   htmlFor="male">남자</label>
                     <input
                       type="radio"
                       id="female"
@@ -141,16 +143,17 @@ const JoinForm = ({ join,checkId }) => {
                       value="여자"
                       required
                     />
-                    <label htmlFor="female">여자</label>
+                    <label   htmlFor="female">여자</label>
+
                   </div>
                 </div>
 
                 {/* 생일 */}
-                <div className="input-group my-2">
-                  <label htmlFor="birth">생일</label>
+                  <label  className="widd" htmlFor="birth">생일</label>
+                <div className="inputid">
                   <input
                     type="text"
-                    className="form-control"
+                    className="formCo"
                     id="birth"
                     name="birth"
                     placeholder="주민번호 앞번호 8자를 입력해주세요."
@@ -162,12 +165,12 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 이메일 */}
-                <div className="input-group my-2 email-group">
-                  <label htmlFor="email">이메일</label>
-                  <div className="email-row">
+                  <label  className="widd" htmlFor="email">이메일</label>
+                <div className="inputid emailgroup">
+                  <div className="emailr">
                     <input
                       type="text"
-                      className="form-control"
+                      className="formCo"
                       id="email1"
                       name="email1"
                       placeholder="아이디"
@@ -176,10 +179,10 @@ const JoinForm = ({ join,checkId }) => {
                     />
                     <span>@</span>
                     <select
-                      className="form-control"
+                      className="formCo"
                       id="email2"
                       name="email2"
-                      style={{ width: '40%', cursor: 'pointer' }}
+                      style={{ width: '50%', cursor: 'pointer' }}
                      autoComplete='email2'
                     >
                       <option value="naver.com">naver.com</option>
@@ -192,12 +195,12 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 전화번호 */}
-                <div className="input-group my-2 phone-group">
-                  <label htmlFor="phone">연락처</label>
-                  <div className="phone-row">
+                  <label  className="widd" htmlFor="phone">연락처</label>
+                <div className="inputid phonegroup">
+                  <div className="phoner">
                     <input
                       type="text"
-                      className="form-control"
+                      className="formCo"
                       id="phone1"
                       name="phone1"
                       placeholder="010"
@@ -209,7 +212,7 @@ const JoinForm = ({ join,checkId }) => {
                     <span>-</span>
                     <input
                       type="text"
-                      className="form-control"
+                      className="formCo"
                       id="phone2"
                       name="phone2"
                       placeholder="1234"
@@ -221,7 +224,7 @@ const JoinForm = ({ join,checkId }) => {
                     <span>-</span>
                     <input
                       type="text"
-                      className="form-control"
+                      className="formCo"
                       id="phone3"
                       name="phone3"
                       placeholder="5678"
@@ -234,14 +237,14 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 질문 */}
-                <div className="input-group my-2">
-                  <label htmlFor="question">질문</label>
+                  <label className="widd" htmlFor="question">질문</label>
+                <div className="inputid">
                   <select
-                    className="form-control"
+                    className="formCo"
                     name="question"
                     id="question"
                      autoComplete='question'
-                     style={{ cursor: 'pointer' }}
+                     style={{ cursor: 'pointer', width: '560px' }}
                   >
                     <option value="강아지 이름은?">강아지 이름은?</option>
                     <option value="졸업한 초등학교는?">졸업한 초등학교는?</option>
@@ -251,11 +254,11 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 답변 */}
-                <div className="input-group my-2" style={{ marginBottom: '20px' }}>
-                  <label htmlFor="answer">답변</label>
+                  <label className="widd" htmlFor="answer">답변</label>
+                <div className="inputid" style={{ marginBottom: '20px' }}>
                   <input
                     type="text"
-                    className="form-control"
+                    className="formCo"
                     id="answer"
                     name="answer"
                     placeholder="답변"
@@ -265,8 +268,8 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
               </div>
 
-              <div className="d-grid gap-2">
-                <button className="btn-join" type="submit">가입하기</button>
+              <div className="dgridgap">
+                <button className="btnjoin" type="submit">가입하기</button>
               </div>
             </form>
           </main>
