@@ -4,7 +4,7 @@ import SideContainer from './SideContainer'
 
 const PlanContent = () => {
   return (
-    <div>
+    <div className='row d-flex flex-nowrap px-3'>
         <SideContainer />
         <MainCalendar />
     </div>

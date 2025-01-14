@@ -1,4 +1,5 @@
 import React from 'react'
+import './planStyle.css'
 import PlanContent from '../../../components/Plan/PlanContent'
 import PlanInfoModal from '../../../components/Plan/PlanInfoModal'
 import RsvInfoModal from '../../../components/Plan/RsvInfoModal'

@@ -14,5 +14,8 @@ npm install sweetalert2-react-content
 ### bootstrap
 npm install bootstrap@5
 
+### material icons
+npm install @mui/icons-material @mui/material @emotion/react @emotion/styled
+
 ### 통합
-npm install react-router-dom axios js-cookie sweetalert2 sweetalert2-react-content bootstrap@5
+npm install react-router-dom axios js-cookie sweetalert2 sweetalert2-react-content bootstrap@5 @mui/icons-material @mui/material @emotion/react @emotion/styled
