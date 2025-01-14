@@ -1,9 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './css/ReservationList.css'
+import { Link } from 'react-router-dom'
+import Sidebar from '../Header/adminSidebar';
 
-const ReservationList = () => {
+const ReservationList = ({ reservationList, pagination }) => {
+
+  function formatDate(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hour = String(d.getHours()).padStart(2, '0');
+    const minute = String(d.getMinutes()).padStart(2, '0');
+    const second = String(d.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  }
+
+  const [pageList, setPageList] = useState([])
+
+  const createPageList = () => {
+    let newPageList = []
+    for (let i = pagination.start; i <= pagination.end; i++) {
+      newPageList.push(i)
+    }
+    setPageList(newPageList)
+  }
+
+  useEffect(() => {
+    createPageList()
+  }, [pagination])
+
   return (
-    <div className='ReservationList'>
+    <div className='ReservationList' style={{ display: 'flex' }}>
+      <Sidebar />
       <div className="main">
         <div className="inner">
           <div className="title">
@@ -26,18 +56,73 @@ const ReservationList = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>홍길동(hong)</td>
-                  <td>김철수</td>
-                  <td>2021-07-01 10:00</td>
-                  <td>2021-06-30 15:00</td>
-                  <td>2021-07-01 10:00</td>
-                  <td>완료</td>
-                </tr>
+                {
+                  reservationList.length == 0
+                    ?
+                    <tr>
+                      <td colSpan={7} align='center'>조회된 데이터가 없습니다.</td>
+                    </tr>
+                    :
+                    reservationList.map((reservation) => {
+                      return (
+                        <tr key={reservation.no}>
+                          <td>{reservation.no}</td>
+                          <td>{reservation.userName}({reservation.userId})</td>
+                          <td>{reservation.trainerName}</td>
+                          <td>{formatDate(reservation.rvDate)}</td>
+                          <td>{formatDate(reservation.createdAt)}</td>
+                          {reservation.enabled == 2 ? (
+                            <td style={{ color: "#2a9c1b" }}>
+                              {formatDate(reservation.canceledAt)}</td>
+                          )
+                            : reservation.enabled == 1 ? (
+                              <td></td>
+                            )
+                              : reservation.enabled == 0 ? (
+                                <td style={{ color: '#dc3545' }}>
+                                  {formatDate(reservation.canceledAt)}</td>
+                              )
+                                : null}
+                          <td style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
+                            {reservation.enabled == 1 && (
+                              <>
+                                <button
+                                  type="button"
+                                  className="complete"
+                                  data-no={reservation.no}
+                                  onClick={() => showCompleteModal(reservation.no)}
+                                >
+                                  완료
+                                </button>
+                                <button
+                                  type="button"
+                                  className="cancel"
+                                  data-no={reservation.no}
+                                  onClick={() => showCancelModal(reservation.no)}
+                                >
+                                  취소
+                                </button>
+                              </>
+                            )}
+                            {reservation.enabled == 2 && <span className="ptComplete">완료</span>}
+                            {reservation.enabled == 0 && <span className="cancel-text">취소</span>}
+                          </td>
+                        </tr>
+                      )
+                    })
+                }
               </tbody>
             </table>
           </div>
+          {
+            (pagination != null && pagination.total > 0)
+            &&
+            (
+              <div className="pagination">
+                <Link to={`/admin/reservation/list?keyword=${keyword}&option=${option}&page=1`}>처음</Link>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>
