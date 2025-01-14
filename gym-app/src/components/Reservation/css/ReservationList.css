@@ -105,6 +105,7 @@
 
 .ReservationList button.complete {
     background-color: #28a745;
+    font-size: 15px;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -120,6 +121,7 @@
 
 .ReservationList button.cancel {
     background-color: orange;
+    font-size: 15px;
     color: white;
     border: none;
     padding: 5px 10px;
