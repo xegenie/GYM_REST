@@ -81,7 +81,7 @@ const PlanContainer = () => {
   }
 
   return (
-    <div>
+    <div className='schedule'>
       <PlanContent />
       <PlanInsertModal times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown} />
       <PlanInfoModal times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown} />
