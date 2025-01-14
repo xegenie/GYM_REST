@@ -1,25 +1,25 @@
-a{cursor: pointer;}
-textarea{resize: none;}
-.first-con{
+.schedule a{cursor: pointer;}
+.schedule textarea{resize: none;}
+.schedule .first-con{
     background-color: #F3F3F3;
     min-width: 300px; 
     max-width: 300px; 
     flex-shrink: 0;
 }
 
-.upd-schedule{
+.schedule .upd-schedule{
     cursor: pointer;
 }
-.upd-schedule:hover{
+.schedule .upd-schedule:hover{
     background-color: #e9e9e9 !important;
     box-shadow:2px 2px 5px rgba(160, 160, 160, 0.3);
 }
-.upd-schedule:active{
+.schedule .upd-schedule:active{
     /* background-color: #eeeeee !important; */
     box-shadow:none;
 }
 
-.cal-container{
+.schedule .cal-container{
     /* background:#fad390;
     padding:20px; */
     /* font-family: 'Questrial', sans-serif; */
@@ -29,7 +29,7 @@ textarea{resize: none;}
     box-sizing: border-box;
     /* height:100vh; */
 }
-.calendar {
+.schedule .calendar {
     display: inline-grid;
     justify-content: center;
     align-items: center;
@@ -48,7 +48,7 @@ textarea{resize: none;}
     box-sizing: border-box; 
   } */
   
-  .month {
+  .schedule .month {
     /* width: 100%;
     box-sizing: border-box; */
     display: flex;
@@ -80,15 +80,15 @@ textarea{resize: none;}
     }
   }
   
-  .days,
-  .dates {
+  .schedule .days,
+  .schedule .dates {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 2px; /* 셀 간격 축소 */
     margin-top: 5px; /* 여백 축소 */
   }
   
-  .days {
+  .schedule .days {
     justify-content: center;
     align-items: center;
     color: #999;
@@ -105,7 +105,7 @@ textarea{resize: none;}
   }
   
   
-  .dates button {
+  .schedule .dates button {
     cursor: pointer;
     outline: 0;
     border: 0;
@@ -135,13 +135,13 @@ textarea{resize: none;}
     background: #eee;
 }
 
-.comment{
+.schedule .comment{
   background: #D7F0FF;
   border-radius: 15px;
   overflow: hidden;
   height: 250px;
 }
-  .comment-title {
+.schedule .comment-title {
     background: #C4E8FD;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -149,46 +149,46 @@ textarea{resize: none;}
     align-items: center;
     /* margin: 0; */
   }
-  .comment-title>p{
+  .schedule .comment-title>p{
     margin: auto;
     font-weight: 600;
     font-size: 22px;
     color: #525767;
   }
-  .comment-content{
+  .schedule .comment-content{
     padding: 8px 8px;
     max-height: 218px; 
     overflow-y: auto;
   }
 
-  .comment-content .comment-date {
+  .schedule .comment-content .comment-date {
     font-size: 18px;
     font-weight: bold;
   }
 
-  .comment-detail .cContent,
-  .comment-detail .fContent {
+  .schedule .comment-detail .cContent,
+  .schedule .comment-detail .fContent {
     white-space: pre-line;
   }
 
-  .comment-btn-container button:hover {
+  .schedule .comment-btn-container button:hover {
     background-color: #08a1fa;
   }
 
-  .comment-edit textarea {
+  .schedule .comment-edit textarea {
     width: 100%;
     background-color: #fff;
     border: none;
   }
 
-  .comment-edit textarea:focus,
-  .comment-edit textarea:hover{
+  .schedule .comment-edit textarea:focus,
+  .schedule .comment-edit textarea:hover{
     outline: none;
     background-color: #eeeeee;
   }
 
 
-.pop-up{
+  .schedule .pop-up{
   width: 350px;
   height: 350px;
   background-color: #F3F3F3;
@@ -206,7 +206,7 @@ textarea{resize: none;}
   z-index: 1000;
 } */
 
-.pop-up .popup-type {
+.schedule .pop-up .popup-type {
     background-color: #ECECEC;
     height: 50px;
     display: flex;
@@ -216,21 +216,21 @@ textarea{resize: none;}
     justify-content: space-between;
 }
 
-.pop-up .popup-type>p {
+.schedule .pop-up .popup-type>p {
     font-size: 18px;
     margin: 0;
 }
 
-.input-schedule .popup-type{
+.schedule .input-schedule .popup-type{
     justify-content: end;
 }
 
-.popup-type .icons {
+.schedule .popup-type .icons {
     display: flex;
     justify-content: space-between;
     gap: 4px;
 }
-.popup-type .icons a {
+.schedule .popup-type .icons a {
     color: #444444;
     width: 32px;
     height: 32px;
@@ -246,21 +246,21 @@ textarea{resize: none;}
     background-color: transparent;
 }
 
-.exercise-bymyself .popup-type {
+.schedule .exercise-bymyself .popup-type {
     background-color: #FEE6C9;
 }
 
-.exercise-pt .popup-type{
+.schedule .exercise-pt .popup-type{
     background-color: #D2F0FF;
 }
 
-.input-schedule>.popup-type .icons a:hover{
+.schedule .input-schedule>.popup-type .icons a:hover{
     background-color:#c0c0c0 !important;
 }
-.exercise-bymyself>.popup-type .icons a:hover{
+.schedule .exercise-bymyself>.popup-type .icons a:hover{
     background-color: #ecceaa !important;
 }
-.exercise-pt>.popup-type .icons a:hover{
+.schedule .exercise-pt>.popup-type .icons a:hover{
     background-color: #b1e2fa !important;
 }
 /* .input-schedule>.popup-type:hover{
@@ -273,8 +273,8 @@ textarea{resize: none;}
     background-color: #b1e2fa !important;
 } */
 
-.pop-up .popup-edit,
-.pop-up .popup-content{
+.schedule .pop-up .popup-edit,
+.schedule .pop-up .popup-content{
   /* flex: 1; */
   padding: 24px;
   padding-top: 28px;
@@ -282,8 +282,8 @@ textarea{resize: none;}
   height: 300px;
 }
 
-.popup-edit input,
-.popup-content input{
+.schedule .popup-edit input,
+.schedule .popup-content input{
   width: 100%;
   height: 36px;
   font-size: 20px;
@@ -293,14 +293,14 @@ textarea{resize: none;}
   border-top-right-radius: 3px;
 }
 
-.popup-edit input:focus,
-.popup-content input:focus{
+.schedule .popup-edit input:focus,
+.schedule .popup-content input:focus{
   outline: none;
   border-bottom: 2px solid #16ABFF;
   transition: 0.1s;
 }
 
-.set-time{
+.schedule .set-time{
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -309,17 +309,17 @@ textarea{resize: none;}
   align-items: center;
 }
 
-.set-time>p {
+.schedule .set-time>p {
   margin: 0;
   align-items: center;
   font-size: 18px;
 }
-.set-time-date{
+.schedule .set-time-date{
   margin: 0 auto;
   font-weight: bold;
 }
 
-.set-time-drops{
+.schedule .set-time-drops{
   margin: 0;
   width: 180px;
   display: flex;
@@ -341,11 +341,11 @@ textarea{resize: none;}
 } */
 /* .set-time-drops option{} */
 
-.dropdown{
+.schedule .dropdown{
   width: 80px;
   height: 28px;
 }
-.dropdown button{
+.schedule .dropdown button{
   margin: 0 auto;
   width: 100%;
   height: 100%;
@@ -356,7 +356,7 @@ textarea{resize: none;}
 }
 
 /* 커스텀 옵션 컨테이너 */
-.options {
+.schedule .options {
   display: none;
   position: absolute;
   top: 100%;
@@ -369,18 +369,18 @@ textarea{resize: none;}
   z-index: 10;
 }
 
-.options div {
+.schedule .options div {
   padding: 5px;
   cursor: pointer;
 }
 
-.dropdown button:hover,
-.options div:hover {
+.schedule .dropdown button:hover,
+.schedule .options div:hover {
   background-color: #ececec;
 }
 
-.popup-edit textarea,
-.popup-content textarea{
+.schedule .popup-edit textarea,
+.schedule .popup-content textarea{
   width: 100%;
   height: 115px;
   background-color: #ececec;
@@ -399,14 +399,14 @@ textarea{resize: none;}
   background-color: #e0e0e0;
 }
 
-.button-container {
+.schedule .button-container {
   width: 100%;
   display: flex;
   justify-content: end;
   gap: 10px;
 }
 
-.button-container button{
+.schedule .button-container button{
   border: none;
   background-color: #16ABFF;
   color: #fff;
@@ -415,40 +415,40 @@ textarea{resize: none;}
   font-size: 15px;
 }
 
-#cancelButton{
+.schedule #cancelButton{
   background-color: #c2c2c2;
   color: #121212;
 }
-#cancelButton:hover{
+.schedule #cancelButton:hover{
   background-color: #acacac;
 }
 
-.exercise-bymyself .popup-edit #updateButton:hover,
-.input-schedule .popup-content .button-container button:hover{
+.schedule .exercise-bymyself .popup-edit #updateButton:hover,
+.schedule .input-schedule .popup-content .button-container button:hover{
   background-color: #08a1fa;
 }
 
-.popup-content .popup-title{
+.schedule .popup-content .popup-title{
   font-size: 22px;
   padding-bottom: 15px;
 }
-.popup-content .time-info{
+.schedule .popup-content .time-info{
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.popup-content .time-info>p{
+.schedule .popup-content .time-info>p{
   margin: 0;
   align-items: center;
   font-size: 18px;
 }
-.plan-date{
+.schedule .plan-date{
   margin: 0 auto;
   font-weight: bold;
   text-align: center;
 }
-.popup-content .time-info .plan-time{
+.schedule .popup-content .time-info .plan-time{
   margin: 0;
   width: 180px;
   display: flex;
@@ -458,11 +458,11 @@ textarea{resize: none;}
   padding: 5px 12px;
   margin: 0;
 }
-.popup-content .time-info .plan-time p{
+.schedule .popup-content .time-info .plan-time p{
   margin: 0;
 }
 
-.popup-content .plan-detail {
+.schedule .popup-content .plan-detail {
   margin: 0;
   width: 100%;
   height: calc(100% - 113.5px);
@@ -472,20 +472,20 @@ textarea{resize: none;}
   overflow-y: auto;
 }
 
-.exercise-pt .trainer-info{
+.schedule .exercise-pt .trainer-info{
   width: 100%;
   display: flex;
   align-items: center;
   padding-top: 15px;
   gap: 18px;
 }
-.exercise-pt .trainer-info p {
+.schedule .exercise-pt .trainer-info p {
   font-size: 18px;
   margin: 0;
 }
 
 
-.exercise-pt .popup-content{
+.schedule .exercise-pt .popup-content{
   height: 180px;
 }
 
@@ -497,7 +497,7 @@ textarea{resize: none;}
   display: none;
 } */
 
-.exercise-pt {
+.schedule .exercise-pt {
   height: 230px;
   /* display: none; */
 }
@@ -506,25 +506,25 @@ textarea{resize: none;}
   display: none;
 } */
 
-.fc-daygrid-day {
+.schedule .fc-daygrid-day {
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.fc-daygrid-day:hover {
+.schedule .fc-daygrid-day:hover {
   background-color: #f0f8ff;
 }
 
-#calendar {
+.schedule #calendar {
   height: 850px;
 }
 
-a{
+.schedule a{
   text-decoration: none;
   color: #121212;
 }
 
-.focused-day {
+.schedule .focused-day {
   outline: 2px solid #007bff; 
   background-color: #cee6ff; /* 연한 파란색 배경 */
   /* border-radius: 4px;  */
