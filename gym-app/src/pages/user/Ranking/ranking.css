@@ -1,100 +1,101 @@
-* {
+/* Global styles */
+.osw * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
+.osw html, .osw body {
     height: 100%;
 }
 
-.fullBody {
+.osw .fullBody {
     display: flex;
     flex-direction: column;
     min-height: 100%;
     margin: 0; /* 마진 제거 */
 }
 
-.main {
+.osw .main {
     display: flex;
     flex-grow: 1;
     width: 100%;
     margin-top: 55px;
 }
 
-.content1, .content2, .content3 {
+.osw .content1, .osw .content2, .osw .content3 {
     height: 100%;
 }
 
-.content1 {
+.osw .content1 {
     background-color: #252323;
     width: 20%;
 }
 
-.content2 {
+.osw .content2 {
     background-color: #2c2828;
     width: 60%;
 }
 
-.content3 {
+.osw .content3 {
     background-color: #252323;
     width: 20%;
 }
 
-.text {
+.osw .text {
     display: flex;
     justify-content: center;
     color: aliceblue;
     margin-top: 20px;
 }
 
-.attendance-table {
+.osw .attendance-table {
     margin: 0 auto;
     color: aliceblue;
     text-align: center;
     margin-top: -60px;
 }
 
-th {
+.osw th {
     padding: 50px;
 }
 
-td {
+.osw td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
 
-.text-rank {
+.osw .text-rank {
     display: flex;
     justify-content: center;
     color: aliceblue;
     margin-top: 50px;
 }
 
-.containerbox {
+.osw .containerbox {
     margin: 50px 10px;
     height: 100px;
     background-color: #363535;
     border-radius: 15px;
 }
 
-.pageNav {
+.osw .pageNav {
     margin-top: 20px;
     display: flex;
     justify-content: center;
 }
 
-.table-container {
+.osw .table-container {
     position: relative;
 }
 
-.button-container {
+.osw .button-container {
     display: flex;
     justify-content: center;
     padding: 10px;
 }
 
-.load-more-btn {
+.osw .load-more-btn {
     display: inline-block;
     padding: 10px 20px;
     font-size: 16px;
@@ -107,18 +108,17 @@ td {
     margin-top: 80px;
 }
 
-.load-more-btn:hover {
+.osw .load-more-btn:hover {
     background-color: #3b38df;
     transform: scale(1.05);
 }
 
-.footer {
+.osw .footer {
     position: relative;
     width: 100%;
 }
 
-
-.btn-primary {
+.osw .btn-primary {
     padding: 10px 20px;
     margin: 100px 0;
     font-size: 16px;
@@ -131,7 +131,7 @@ td {
     margin-left: 100px;
 }
 
-.btn-primary2 {
+.osw .btn-primary2 {
     padding: 10px 20px;
     margin: 100px 0;
     font-size: 16px;
@@ -144,20 +144,20 @@ td {
     margin-left: 60px;
 }
 
-.btn-primary:hover {
+.osw .btn-primary:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
-.attendance-table {
+.osw .attendance-table {
     margin-bottom: 40px; /* 푸터와 테이블 사이의 간격 */
 }
 
-.footer {
+.osw .footer {
     padding-top: 20px;
 }
 
-.text {
+.osw .text {
     display: flex;
     justify-content: center;
     color: aliceblue;
@@ -165,26 +165,25 @@ td {
     margin-bottom: 30px; /* 출석 랭킹과 테이블 사이의 간격 */
 }
 
-
-.btn-primary:hover {
+.osw .btn-primary:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
-.btn-primary2:hover {
+.osw .btn-primary2:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
-.attendance-table {
+.osw .attendance-table {
     margin-bottom: 40px; /* 푸터와 테이블 사이의 간격 */
 }
 
-.footer {
+.osw .footer {
     padding-top: 20px;
 }
 
-.text {
+.osw .text {
     display: flex;
     justify-content: center; /* 출석 랭킹 글씨를 가운데로 정렬 */
     color: aliceblue;
@@ -192,25 +191,17 @@ td {
     margin-bottom: 30px; /* 출석 랭킹과 테이블 사이의 간격 */
 }
 
-
-
-.highlight {
+.osw .highlight {
     background-color: #ff0; /* 하이라이트 배경색 */
     animation: fadeOut 2s forwards; /* 페이드 아웃 애니메이션 */
 }
 
-
-.ranking-icon {
+.osw .ranking-icon {
     width: 50px;
     height: 50px;
 }
 
-
-
-
-
-
-@keyframes fadeOut {
+@keyframes osw-fadeOut {
     from {
         background-color: #ff0;
     }

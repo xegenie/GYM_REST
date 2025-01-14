@@ -48,6 +48,12 @@ const Home = () => {
 
   return (
 
+
+
+
+    <div className='osw'>      {/* 첫 번째 섹션 */}
+
+    
     <div>
       {/* ranking 페이지로 가는 링크  */}
       <Link to="/ranking">
@@ -59,12 +65,13 @@ const Home = () => {
         <button>헬스장 입장</button>
       </Link>
 
+       {/* 출석내역 가는 링크 */}
+       <Link to="/admin/attendanceList">
+        <button>출석 내역</button>
+      </Link>
 
 
 
-
-
-      {/* 첫 번째 섹션 */}
       <div className="container" style={{ height: '100vh', width: '100%' }}>
         <img src="/images/메인.png" alt="메인 이미지" className="main-image zoom-animation" />
         <div className="icon">
@@ -141,6 +148,8 @@ const Home = () => {
         ↑
       </button>
     </div>
+    </div>
+
   );
 };
 
