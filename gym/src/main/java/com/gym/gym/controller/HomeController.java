@@ -11,10 +11,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,8 +35,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
+@CrossOrigin("*")
 @Slf4j
 @RestController
+@RequestMapping("/")
 public class HomeController {
 
     @Autowired
@@ -186,7 +190,6 @@ public class HomeController {
      * 아이디 중복 검사
      * 🔗 [GET] - /check/{id}
      */
-    @ResponseBody
     @GetMapping("/check/{id}")
     public ResponseEntity<Boolean> userCheck(@PathVariable("id") String id) throws Exception {
         log.info("아이디 중복 확인: " + id);
