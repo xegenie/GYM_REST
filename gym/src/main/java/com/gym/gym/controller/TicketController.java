@@ -32,6 +32,7 @@ public class TicketController {
     // 티켓 목록 조회
     @GetMapping("/list")
     public ResponseEntity<List<Ticket>> list(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+        log.info("keyword : " + keyword);
         try {
             List<Ticket> ticketList = ticketService.allList(keyword);
             return new ResponseEntity<>(ticketList, HttpStatus.OK);

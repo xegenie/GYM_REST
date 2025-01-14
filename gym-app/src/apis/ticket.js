@@ -1,7 +1,7 @@
 import api from './api'
 
 // 티켓 목록 조회
-export const list = (keyword) => api.get(`/admin/ticket/list?${keyword}`)
+export const list = (keyword) => api.get(`/admin/ticket/list?keyword=${keyword}`)
 
 // 티켓 등록
 export const insert = (formData, headers) => api.post(`/admin/ticket/insert`, formData, headers)
