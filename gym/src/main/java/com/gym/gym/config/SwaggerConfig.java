@@ -22,8 +22,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("TodoList Proejct API")
-                        .description("TodoList 프로젝트 API 입니다.")
+                .info(new Info().title("GYM Proejct API")
+                        .description("GYM 프로젝트 API 입니다.")
                         .version("v0.0.1"));
     }
 
