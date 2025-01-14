@@ -1,34 +1,50 @@
-import React, { useState } from 'react';
-import '../../apis/user';  // join.js는 필요에 따라 리팩토링
+import '../user/Join.css'
+import React from 'react';
+import * as Swal from '../../apis/alert.js';
 
-const Join = ({join}) => {
+
+const JoinForm = ({ join,checkId }) => {
 
   const onJoin = (e) => {
-    e.preventDefault() // submit 기본 동작 방지
-    const form = e.target
-    const id = form.id.value
-    const password = form.password.value
-    const name = form.name.value
-    const email = "1234"
-    const phone = "1234"
-    const gender = form.gender.value
-    const birth = form.birth.value
-    const question = form.question.value
-    const answer = form.answer.value
+    e.preventDefault();
+    const form = e.target;
+    const id = form.id.value;
+    const password = form.password.value;
+    const passwordCheck = form.passwordCheck.value;
+    const name = form.name.value;
+    const gender = form.gender.value;
+    const birth = form.birth.value;
+    const question = form.question.value;
+    const answer = form.answer.value;
+    const email1 = form.email1.value;
+    const email2 = form.email2.value;
+    const phone1 = form.phone1.value;
+    const phone2 = form.phone2.value;
+    const phone3 = form.phone3.value;
 
-    console.log(id, password, name, email);
+    if (password !== passwordCheck) {
+      Swal.alert('비밀번호가 일치하지 않습니다.', '비밀번호를 확인해주세요', 'error');
+      
+      const passwordField = document.getElementById("password");
+      passwordField.focus();
+      
 
-    join({ id, password, name, email, phone, gender, birth, question, answer })
+      
+      return;
+    }
+    
+    checkId();
 
-}
+    const email = `${email1}@${email2}`;
+    const phone = `${phone1}${phone2}${phone3}`;
 
+    join({ id, password, name, email, phone, gender, birth, question, answer });
+  };
 
-
+  
 
   return (
     <div className="join">
-
-      
       <body className="fullBody">
         {/* Header Fragment */}
         <div className="top-space"></div>
@@ -39,7 +55,7 @@ const Join = ({join}) => {
           </div>
 
           <main className="form-signin login-box w-100 m-auto">
-            <form id="form"  onSubmit={(e) => onJoin(e)} className="needs-validation">
+            <form id="form" onSubmit={onJoin} className="needs-validation">
               <input type="hidden" name="_csrf" value="${_csrf.token}" />
               <div className="centerdhkwnj">
                 {/* 아이디 */}
@@ -54,8 +70,9 @@ const Join = ({join}) => {
                       autoComplete='id'
                       placeholder="아이디"
                       autoFocus
+                      required
                     />
-                    <button type="button" className="btn btn-outline-secondary">중복확인</button>
+                    <button type="button" className="btn btn-outline-secondary" onClick={checkId}>중복확인</button>
                   </div>
                 </div>
 
@@ -69,6 +86,7 @@ const Join = ({join}) => {
                     name="password"
                      autoComplete='password'
                     placeholder="6자 이상 비밀번호"
+                    required
                     
                   />
                 </div>
@@ -83,6 +101,7 @@ const Join = ({join}) => {
                     name="passwordCheck"
                      autoComplete='passwordCheck'
                     placeholder="6자 이상 비밀번호 확인"
+                    required
                   />
                 </div>
 
@@ -98,6 +117,7 @@ const Join = ({join}) => {
                   autoComplete='name'
                     pattern="[가-힣]+"
                     title="이름은 한글로 입력해주세요."
+                    required
                   />
                 </div>
 
@@ -110,6 +130,7 @@ const Join = ({join}) => {
                       id="male"
                       name="gender"
                       value="남자"
+                      required
                     />
                     <label htmlFor="male">남자</label>
                     <input
@@ -117,6 +138,7 @@ const Join = ({join}) => {
                       id="female"
                       name="gender"
                       value="여자"
+                      required
                     />
                     <label htmlFor="female">여자</label>
                   </div>
@@ -134,6 +156,7 @@ const Join = ({join}) => {
                      autoComplete='birth'
                     pattern="\d{8}"
                     title="생년월일은 8자리 숫자여야 합니다."
+                    required
                   />
                 </div>
 
@@ -144,15 +167,16 @@ const Join = ({join}) => {
                     <input
                       type="text"
                       className="form-control"
-                      id="email-id"
+                      id="email1"
                       name="email1"
                       placeholder="아이디"
                       autoComplete='email1'
+                      required
                     />
                     <span>@</span>
                     <select
                       className="form-control"
-                      id="email-domain"
+                      id="email2"
                       name="email2"
                       style={{ width: '40%', cursor: 'pointer' }}
                      autoComplete='email2'
@@ -179,6 +203,7 @@ const Join = ({join}) => {
                       pattern="\d{3}"
                       title="전화번호 첫 3자리는 숫자이어야 합니다."
                        autoComplete='phone1'
+                       required
                     />
                     <span>-</span>
                     <input
@@ -190,6 +215,7 @@ const Join = ({join}) => {
                       pattern="\d{4}"
                       title="전화번호 다음 4자리는 숫자이어야 합니다."
                        autoComplete='phone2'
+                       required
                     />
                     <span>-</span>
                     <input
@@ -201,6 +227,7 @@ const Join = ({join}) => {
                       pattern="\d{4}"
                       title="전화번호 마지막 4자리는 숫자이어야 합니다."
                        autoComplete='phone3'
+                       required
                     />
                   </div>
                 </div>
@@ -231,6 +258,7 @@ const Join = ({join}) => {
                     name="answer"
                     placeholder="답변"
                      autoComplete='answer'
+                     required
                   />
                 </div>
               </div>
@@ -248,4 +276,4 @@ const Join = ({join}) => {
   );
 }
 
-export default Join;
+export default JoinForm;
