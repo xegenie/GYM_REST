@@ -96,7 +96,7 @@ public class TrainerProfileController {
      * 트레이너 등록
      */
     @PostMapping("/insert")
-    public ResponseEntity<String> insert(@RequestBody TrainerProfile trainerProfile) {
+    public ResponseEntity<String> insert(TrainerProfile trainerProfile) {
         try {
             int result = trainerProfileService.insert(trainerProfile);
             if (result > 0) {
