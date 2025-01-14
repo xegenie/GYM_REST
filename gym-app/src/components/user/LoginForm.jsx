@@ -1,27 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie'; // js-cookie 임포트
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import logo from '../../assets/imges/logo2.png';
 import '../user/css/login.css';
 
 const LoginForm = () => {
   const { login } = useContext(LoginContext);
-  const [rememberId, setRememberId] = useState(false); // 아이디 저장 체크 상태
-  const [autoLogin, setAutoLogin] = useState(false); // 자동 로그인 체크 상태
-  const [savedId, setSavedId] = useState(''); // 저장된 아이디 상태
+  const [rememberId, setRememberId] = useState(false); 
+  const [autoLogin, setAutoLogin] = useState(false); 
+  const [savedId, setSavedId] = useState('');
 
-  // 페이지 로드 시 초기화
   useEffect(() => {
-    const storedId = localStorage.getItem('savedId');
-    const storedToken = localStorage.getItem('jwtToken');
+    const storedId = Cookies.get('remember-id'); // 쿠키에서 저장된 아이디 가져오기
+    const storedToken = localStorage.getItem('jwtToken'); // 로컬 스토리지에서 토큰 가져오기
 
     if (storedId) {
       setSavedId(storedId);
-      setRememberId(true); // 아이디 저장 체크 상태 활성화
+      setRememberId(true); // 아이디 저장 체크 활성화
     }
 
     if (storedToken) {
-      setAutoLogin(true); // 자동 로그인 활성화
-      // 자동 로그인 처리 (예: 사용자 정보 확인 API 호출 가능)
+      setAutoLogin(true); // 자동 로그인 체크 활성화
     }
   }, []);
 
@@ -33,17 +32,17 @@ const LoginForm = () => {
 
     // 아이디 저장 처리
     if (rememberId) {
-      localStorage.setItem('savedId', id);
+      Cookies.set('remember-id', id, { expires: 7 }); // 쿠키에 아이디 저장, 7일 동안 유지
     } else {
-      localStorage.removeItem('savedId');
+      Cookies.remove('remember-id'); // 쿠키에서 아이디 삭제
     }
 
     // 로그인 처리
     login(id, password).then((token) => {
       if (autoLogin) {
-        localStorage.setItem('jwtToken', token); // 자동 로그인: 로컬 스토리지에 저장
+        localStorage.setItem('jwtToken', token); // 자동 로그인: 로컬 스토리지에 토큰 저장
       } else {
-        sessionStorage.setItem('jwtToken', token); // 세션 로그인: 세션 스토리지에 저장
+        sessionStorage.setItem('jwtToken', token); // 세션 로그인: 세션 스토리지에 토큰 저장
       }
     });
   };
