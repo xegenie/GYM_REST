@@ -7,8 +7,7 @@ const ReservationListPage = () => {
   return (
     <>
       <Header />
-      <div className="ReservationList">
-        <div className="container">
+        <div className="reservationList-container">
           <Sidebar />
           <div className="main">
             <div className="inner">
@@ -19,7 +18,6 @@ const ReservationListPage = () => {
             </div>
           </div>
         </div>
-      </div>
     </>
   )
 }

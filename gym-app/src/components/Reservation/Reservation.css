@@ -1,4 +1,4 @@
-.ReservationList * {
+.reservationList-container * {
     margin: 0;
     padding: 0;
     border: none;
@@ -6,14 +6,14 @@
     font: inherit;
 }
 
-.ReservationList .container {
+.reservationList-container {
     margin: auto;
     width: 1440px;
     height: 935px;
     display: flex;
 }
 
-.ReservationList .main {
+.reservationList-container .main {
     width: 1160px;
     height: 100%;
     display: flex;
@@ -23,14 +23,14 @@
     flex-shrink: 0;
 }
 
-.ReservationList .inner {
+.reservationList-container .inner {
     width: 1100px;
     height: 900px;
     background-color: #E7ECEF;
     border-radius: 5%;
 }
 
-.ReservationList .inner .title {
+.reservationList-container .inner .title {
     width: 100%;
     height: 150px;
     display: flex;
@@ -38,12 +38,12 @@
     align-items: center;
 }
 
-.ReservationList .search-container {
+.reservationList-container .search-container {
     display: flex;
     justify-content: center;
 }
 
-.ReservationList .search {
+.reservationList-container .search {
     width: 1000px;
     height: 30px;
     display: flex;
@@ -51,7 +51,7 @@
     margin-bottom: 30px;
 }
 
-.ReservationList .search input[type="text"] {
+.reservationList-container .search input[type="text"] {
     padding: 8px;
     width: 200px;
     margin-right: 10px;
@@ -60,7 +60,7 @@
     background-color: #fff;
 }
 
-.ReservationList .search button {
+.reservationList-container .search button {
     padding: 0px 20px;
     background-color: #008CBA;
     color: white;
@@ -72,18 +72,18 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
-.ReservationList .search button:hover {
+.reservationList-container .search button:hover {
     background-color: #005f73;
 }
 
-.ReservationList .list {
+.reservationList-container .list {
     width: 100%;
     display: flex;
     justify-content: center;
     max-height: 550px;
 }
 
-.ReservationList .paging {
+.reservationList-container .paging {
     width: 100%;
     height: 100px;
     display: flex;
@@ -91,13 +91,13 @@
     align-items: end;
 }
 
-.ReservationList .pagination {
+.reservationList-container .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-.ReservationList .pagination a {
+.reservationList-container .pagination a {
     margin: 0 5px;
     padding: 8px 16px;
     text-decoration: none;
@@ -108,19 +108,19 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
-.ReservationList .pagination a:hover {
+.reservationList-container .pagination a:hover {
     background-color: #005f73;
     color: white;
 }
 
-.ReservationList .pagination a.active {
+.reservationList-container .pagination a.active {
     background-color: #008CBA;
     color: white;
     border: 1px solid #008CBA;
     pointer-events: none;
 }
 
-.ReservationList table {
+.reservationList-container table {
     width: 100%;
     max-height: 550px;
     max-width: 1000px;
@@ -131,19 +131,19 @@
     overflow-y: auto;
 }
 
-.ReservationList thead {
+.reservationList-container thead {
     background-color: #F7F8F9;
 }
 
-.ReservationList th,
-.ReservationList td {
+.reservationList-container th,
+.reservationList-container td {
     height: 50px;
     padding: 10px;
     text-align: center;
     border: 1px solid #ddd;
 }
 
-.ReservationList button.complete {
+.reservationList-container button.complete {
     background-color: #28a745;
     font-size: 15px;
     color: white;
@@ -155,11 +155,11 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
-.ReservationList button.complete:hover {
+.reservationList-container button.complete:hover {
     background-color: #218838;
 }
 
-.ReservationList button.cancel {
+.reservationList-container button.cancel {
     background-color: orange;
     font-size: 15px;
     color: white;
@@ -171,44 +171,44 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
-.ReservationList button.cancel:hover {
+.reservationList-container button.cancel:hover {
     background-color: #FF4500;
 }
 
-.ReservationList .cancel-text {
+.reservationList-container .cancel-text {
     font-weight: bold;
     color: #dc3545;
 }
 
-.ReservationList .ptComplete {
+.reservationList-container .ptComplete {
     font-weight: bold;
     color: #2a9c1b;
 }
 
-.ReservationList .left-align {
+.reservationList-container .left-align {
     display: inline-block;
     margin-right: auto;
 }
 
-.ReservationList #order-code {
+.reservationList-container #order-code {
     padding: 5px;
     border: 1px solid #000;
     border-radius: 5px;
     background-color: #fff;
 }
 
-.ReservationList #code {
+.reservationList-container #code {
     padding: 5px;
     border: 1px solid #000;
     border-radius: 5px;
     background-color: #fff;
 }
 
-.ReservationList .inner {
+.reservationList-container .inner {
     position: relative;
 }
 
-.ReservationList #cancelModal {
+.reservationList-container #cancelModal {
     display: none;
     position: absolute;
     top: 50%;
@@ -223,7 +223,7 @@
     z-index: 1000;
 }
 
-.ReservationList #completeModal {
+.reservationList-container #completeModal {
     display: none;
     position: absolute;
     top: 50%;
@@ -238,15 +238,15 @@
     z-index: 1000;
 }
 
-.ReservationList .modal-container {
+.reservationList-container .modal-container {
     padding: 20px;
 }
 
-.ReservationList .modal-action {
+.reservationList-container .modal-action {
     margin-top: 20px;
 }
 
-.ReservationList .modal-action button {
+.reservationList-container .modal-action button {
     padding: 10px 20px;
     margin: 0 10px;
     cursor: pointer;
@@ -257,6 +257,6 @@
     transition: background-color 0.3s;
 }
 
-.ReservationList .modal-action button:hover {
+.reservationList-container .modal-action button:hover {
     background-color: #0056b3;
 }
