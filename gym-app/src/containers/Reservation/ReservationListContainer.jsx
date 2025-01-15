@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { LoginContext } from '../../contexts/LoginContextProvider'
 import * as reservation from '../../apis/reservation'
-import ReservationList from '../../components/Reservation/ReservationList'
+import ReservationListTable from '../../components/Reservation/ReservationListTable'
 
 const ReservationListContainer = () => {
 
+  const {userInfo} = useContext(LoginContext)
   const [reservationList, setReservationList] = useState([])
-  const [pagination, setPagination] = useState({})
   const [keyword, setKeyword] = useState('')
   const [option, setOption] = useState('')
   const [page, setPage] = useState(1)
@@ -25,9 +26,9 @@ const ReservationListContainer = () => {
 
   const getReservationList = async () => {
     let response 
-
+    
     if (location.pathname.includes('/myPage/ptList')) {
-      const userNo = 
+      const userNo = await userInfo.no
       response = await reservation.userByList(userNo, option, page)
     } else {
       response = await reservation.list(keyword, option, page)
@@ -35,12 +36,11 @@ const ReservationListContainer = () => {
 
     const data = await response.data
     setReservationList(data)
-    setPagination(pagination)
   }
 
   useEffect(() => {
-    getReservationList()
-  }, [keyword, option, page])
+      getReservationList(); 
+  }, [userInfo, keyword, option, page]);
 
   useEffect(() => {
     updatePage()
@@ -48,7 +48,7 @@ const ReservationListContainer = () => {
 
   return (
     <>
-      <ReservationList reservationList={reservationList} pagination={pagination}/>
+      <ReservationListTable reservationList={reservationList}/>
     </>
   )
 }

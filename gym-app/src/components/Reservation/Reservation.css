@@ -1,3 +1,43 @@
+.ReservationList * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+.ReservationList .container {
+    margin: auto;
+    width: 1440px;
+    height: 935px;
+    display: flex;
+}
+
+.ReservationList .main {
+    width: 1160px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F7F8F9;
+    flex-shrink: 0;
+}
+
+.ReservationList .inner {
+    width: 1100px;
+    height: 900px;
+    background-color: #E7ECEF;
+    border-radius: 5%;
+}
+
+.ReservationList .inner .title {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .ReservationList .search-container {
     display: flex;
     justify-content: center;
