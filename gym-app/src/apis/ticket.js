@@ -10,7 +10,7 @@ export const select = (ticketNo) => api.get(`/admin/ticket/select?ticketNo=${tic
 export const insert = (formData, headers) => api.post(`/admin/ticket/insert`, formData, headers)
 
 // 수정
-export const update = (formData, headers) => api.put(`/admin/ticket/update`, formData, headers)
+export const update = (formData, headers) => api.put(`/admin/ticket/update`, formData, headers);
 
 // 삭제
 export const remove = (ticketNos) => api.delete(`/admin/ticket/delete?${ticketNos}`)

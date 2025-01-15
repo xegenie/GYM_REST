@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as ticket from '../../apis/ticket';
 import TicketList from '../../components/admin/Ticket/TicketList';
-import TicketUpdateForm from '../../components/admin/Ticket/TickeUpdateForm';
 
 const ListContainer = () => {
   const [ticketList, setTicketList] = useState([]);
   const [keyword, setKeyword] = useState("");
   const location = useLocation();
   const navigate = useNavigate(); // useNavigate 훅을 사용하여 리다이렉트 처리
-
-  const [selectedTicket, setSelectedTicket] = useState({})
 
   const updatePage = () => {
     const query = new URLSearchParams(location.search);
@@ -49,9 +46,9 @@ const ListContainer = () => {
 
   // 선택
   const selectTicket = async (ticket) => {
-   return ticket; 
+    navigate(`/admin/ticket/ticketUpdate?ticketNo=${ticket.no}`);
+    
   }
-  
   
   // URL 파라미터 변경 시 검색어 업데이트
   useEffect(() => {
@@ -69,7 +66,6 @@ const ListContainer = () => {
   };
 
   return (
-    <TicketUpdateForm ticket={selectedTicket} />,
     <TicketList ticketList={ticketList} onSearch={handleSearch} keyword={keyword} onDelete={onDelete} selectTicket={selectTicket} />
   );
 };

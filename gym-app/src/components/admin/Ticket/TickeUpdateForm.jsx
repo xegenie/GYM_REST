@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../Header/adminSidebar';
+import { useLocation } from 'react-router-dom';
+import * as ticket from '../../../apis/ticket';
 import './css/TicketInsertForm.css';
 
-const TicketUpdateForm = ({ onUpdate, ticket }) => {
+const TicketUpdateForm = ({ onUpdate }) => {
   const [formData, setFormData] = useState({
-    name: ticket.name,
-    price: ticket.price,
-    info: ticket.info,
-    months: ticket.months,
-    type: ticket.type,
-    ptCount: ticket?.ptCount || '0',
+    name: '',
+    price: '',
+    info: '',
+    months: '1',
+    type: '',
+    ptCount: '0',
   });
+
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const ticketNo = query.get('ticketNo'); // URL 쿼리 파라미터에서 ticketNo 가져오기
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +30,7 @@ const TicketUpdateForm = ({ onUpdate, ticket }) => {
     e.preventDefault();
 
     const form = new FormData();
+    form.append('no', ticketNo);
     form.append('name', formData.name);
     form.append('price', formData.price);
     form.append('info', formData.info);
@@ -34,6 +41,11 @@ const TicketUpdateForm = ({ onUpdate, ticket }) => {
       form.append('ptCount', formData.ptCount);
     }
 
+    // FormData의 내용을 확인하기
+    for (let [key, value] of form.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -41,12 +53,37 @@ const TicketUpdateForm = ({ onUpdate, ticket }) => {
     onUpdate(form, headers);
   };
 
+  // 티켓 정보를 가져오기
+  useEffect(() => {
+    if (ticketNo) {
+      const fetchTicketDetails = async () => {
+        try {
+          const response = await ticket.select(ticketNo);
+          setFormData({
+            name: response.data.name,
+            price: response.data.price,
+            info: response.data.info,
+            months: response.data.months,
+            type: response.data.type,
+            ptCount: response.data.ptCount,
+          });
+        } catch (error) {
+          console.error('티켓 정보 가져오기 실패:', error);
+          console.log(error);
+
+        }
+      };
+
+      fetchTicketDetails(); // 티켓 번호로 정보 가져오기
+    }
+  }, [ticketNo]);
+
   return (
     <div className="ticketForm">
-      <div className='container'>
+      <div className="container">
         <Sidebar />
         <div className="main">
-          <div className='inner'>
+          <div className="inner">
             <div className="mainTitle">
               <h2>이용권 수정</h2>
             </div>
@@ -157,7 +194,7 @@ const TicketUpdateForm = ({ onUpdate, ticket }) => {
                     </tr>
                     <tr className="tr">
                       <td colSpan="2" className="buttonTd">
-                        <button type="submit" className="button">등록</button>
+                        <button type="submit" className="button">수정</button>
                       </td>
                     </tr>
                   </tbody>

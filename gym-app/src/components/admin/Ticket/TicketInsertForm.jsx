@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Sidebar from '../Header/adminSidebar';
-import './css/TicketInsertForm.css';
+import React, { useState } from 'react'
+import './css/TicketInsertForm.css'
+import Sidebar from '../../admin/Header/adminSidebar';
 
 const TicketInsertForm = ({ onInsert }) => {
   const [formData, setFormData] = useState({
