@@ -56,8 +56,8 @@ const DateContextProvider = ({children}) => {
     const startHours = startDate.getHours();
     const endHours = endDate.getHours();
 
-    const startTime = `${startHours >= 12? '오후':'오전'} ${startHours}:${startDate.getMinutes()}`
-    const endTime = `${endHours >= 12? '오후':'오전'} ${endHours}:${endDate.getMinutes()}`
+    const startTime = `${startHours >= 12? '오후':'오전'} ${startHours}:${startDate.getMinutes().toString().padStart(2, '0')}`
+    const endTime = `${endHours >= 12? '오후':'오전'} ${endHours}:${endDate.getMinutes().toString().padStart(2, '0')}`
     const formattedDate = `${startDate.getMonth() + 1}/${startDate.getDate()} (${startDate.toLocaleDateString('ko-KR', { weekday: 'short' })})`;
 
     return { startTime: startTime, endTime: endTime, formattedDate: formattedDate }
