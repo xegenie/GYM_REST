@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Normal from '../../../components/users/Ticket/NormalTicket'
+import TicketContextProvider from '../../../contexts/TicketContextProvider'
 const NormalTicket = () => {
   return (
-    <div>NormalTicket</div>
+    <TicketContextProvider>
+      <Normal />
+    </TicketContextProvider>
   )
 }
 
