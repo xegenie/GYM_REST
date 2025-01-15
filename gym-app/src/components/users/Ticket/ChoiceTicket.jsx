@@ -1,27 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { TicketContext } from '../../../contexts/TicketContextProvider'
 import * as pay from '../../../apis/pay';
 import './css/ChoiceTicket.css';
 
 const ChoiceTicket = () => {
-  const [buyList, setBuyList] = useState([]);
-  const [startDate, setStartDate] = useState(null);
+  const { buyList, setBuyList, startDate, setStartDate } = useContext(TicketContext);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchTicketData = async () => {
-      try {
-        const response = await pay.ticketDate();
-        const { buyList, startedTicket } = response.data;
-        setBuyList(buyList); // 구매 리스트 업데이트
-        setStartDate(startedTicket); // 가장 오래된 티켓 업데이트
-      } catch (err) {
-        setError("데이터를 불러오는 중 오류가 발생했습니다."); // 에러 상태 설정
-        console.error(err);
-      }
-    };
-
-    fetchTicketData();
-  }, []);
 
   return (
     <div className="ChoiceTicket">
