@@ -24,7 +24,15 @@ const ReservationListContainer = () => {
   }
 
   const getReservationList = async () => {
-    const response = await reservation.list(keyword, option, page)
+    let response 
+
+    if (location.pathname.includes('/myPage/ptList')) {
+      const userNo = 
+      response = await reservation.userByList(userNo, option, page)
+    } else {
+      response = await reservation.list(keyword, option, page)
+    }
+
     const data = await response.data
     setReservationList(data)
     setPagination(pagination)

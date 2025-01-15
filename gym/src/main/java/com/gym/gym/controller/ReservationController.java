@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -97,10 +98,37 @@ public class ReservationController {
     }
 
     // 회원 내 예약 목록
-    @GetMapping("/user/myPage/ptList")
-    public ResponseEntity<?> getMyReservation(@AuthenticationPrincipal CustomUser userDetails, Option option, Page page) {
+    // @GetMapping("/user/myPage/ptList")
+    // public ResponseEntity<?> getMyReservation(@AuthenticationPrincipal CustomUser userDetails, Option option, Page page) {
+    //     try {
+    //         List<Reservation> reservationCount = reservationService.userByList(userDetails.getNo(), option, new Page());
+    //         long disabledCount = reservationService.disabledCount(userDetails.getNo());
+
+    //         if (!reservationCount.isEmpty()) {
+    //             Reservation lastReservation = reservationCount.get(reservationCount.size() - 1);
+    //             int ptCount = lastReservation.getPtCount();
+    //             ptCount -= disabledCount;
+
+    //             ptCount = Math.max(ptCount, 0);
+    //         }
+
+    //         List<Reservation> reservationList = reservationService.userByList(userDetails.getNo(), option, page);
+    //         return new ResponseEntity<>(reservationList, HttpStatus.OK);
+    //     } catch (Exception e) {
+    //         log.error("회원 예약 조회 오류");
+    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
+    // 회원 내 예약 목록
+    @GetMapping("/user/myPage/ptList/{userNo}")
+    public ResponseEntity<?> getMyReservation(@PathVariable Long userNo, @AuthenticationPrincipal CustomUser userDetails, Option option, Page page) {
         try {
-            List<Reservation> reservationCount = reservationService.userByList(userDetails.getNo(), option, new Page());
+            if (userNo != userDetails.getNo()) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+
+            List<Reservation> reservationCount = reservationService.userByList(userNo, option, new Page());
             long disabledCount = reservationService.disabledCount(userDetails.getNo());
 
             if (!reservationCount.isEmpty()) {
@@ -111,7 +139,7 @@ public class ReservationController {
                 ptCount = Math.max(ptCount, 0);
             }
 
-            List<Reservation> reservationList = reservationService.userByList(userDetails.getNo(), option, page);
+            List<Reservation> reservationList = reservationService.userByList(userNo, option, page);
             return new ResponseEntity<>(reservationList, HttpStatus.OK);
         } catch (Exception e) {
             log.error("회원 예약 조회 오류");
