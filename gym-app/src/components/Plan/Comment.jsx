@@ -3,7 +3,7 @@ import React from 'react'
 const Comment = () => {
   return (
     <div className='comment-container pt-4'>
-      <form>
+      <form id="updateCommentForm">
         <div className="comment">
           <div className="comment-title">
             <p>trainer's comment</p>

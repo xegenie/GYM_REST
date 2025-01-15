@@ -10,17 +10,27 @@ const PlanContainer = () => {
   
   const { currentDate, setCurrentDate } = useDate();
 
+  const [comment, setComment] = useState();
+  const [planList, setPlanList] = useState([]);
+  const [rsvList, setRsvList] = useState([]);
+
   const [times24Hour, setTimes24Hour] = useState([]);
   const [times12Hour, setTimes12Hour] = useState([]);
 
-  // const getDataList = async () => {
-  //   const response = await plan.getPlans()
-  //   const data = await response.data
-  //   console.log("data(PlanContainer) : " + data)
-  // }
+  const getDataList = async () => {
+    const response = await plan.getPlans()
+    const data = await response.data
+    console.dir(response)
+    console.dir(data)
+
+    setComment(data.comment)
+    setPlanList(data.planEvents)
+    setRsvList(data.reservationEvents)
+
+  }
 
   useEffect(() => {
-    // getDataList()
+    getDataList()
     const { times24Hour, times12Hour } = generateTimeLists();
     setTimes24Hour(times24Hour);
     setTimes12Hour(times12Hour);
@@ -82,10 +92,14 @@ const PlanContainer = () => {
 
   return (
     <div className='schedule'>
-      <PlanContent />
-      <PlanInsertModal times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown} />
-      <PlanInfoModal times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown} />
-      <RsvInfoModal />
+      <PlanContent
+        comment={comment} planList={planList} rsvList={rsvList} />
+      <PlanInsertModal 
+        times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown} />
+      <PlanInfoModal 
+        times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown}
+        planList={planList} />
+      <RsvInfoModal rsvList={rsvList} />
     </div>
   )
 }
