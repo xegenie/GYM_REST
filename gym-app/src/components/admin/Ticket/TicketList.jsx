@@ -4,7 +4,7 @@ import "./css/TicketList.css";
 
 const TicketList = ({ ticketList, onDelete, onSearch, keyword, selectTicket }) => {
 
-    const handleDelete = (e, type) => {
+    const handleDelete = (e) => {
         e.preventDefault();
         if (!window.confirm("정말 삭제하시겠습니까?"))
             return;
@@ -56,8 +56,8 @@ const TicketList = ({ ticketList, onDelete, onSearch, keyword, selectTicket }) =
                     </span>
                 </div>
                 <div style={{ width: "69px" }}>
-                    <buuton type="button" onClick={() => selectTicket(ticket.no)}
-                        className="updateBtn"> 수정 </buuton>
+                    <button type="button" onClick={() => selectTicket(ticket)}
+                        className="updateBtn"> 수정 </button>
                 </div>
             </div>
         ));
