@@ -1,37 +1,62 @@
 import React, { useState, useEffect } from 'react';
+import * as pay from '../../../apis/pay';
+import './css/ChoiceTicket.css';
 
 const ChoiceTicket = () => {
-  // 예시 데이터 (실제 데이터를 받아오는 로직 추가 가능)
   const [buyList, setBuyList] = useState([]);
-  const [oldestBuyList, setOldestBuyList] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [error, setError] = useState(null);
 
-  // useEffect를 사용하여 초기 데이터 로딩 처리
   useEffect(() => {
-    // 실제 데이터를 불러오는 로직 예시
-    // 예를 들어, fetch나 axios 등을 사용해서 buyList와 oldestBuyList를 가져옴
-    setBuyList([
-      { ticketName: 'VIP 이용권', endDate: '2025-01-30' }
-    ]);
-    setOldestBuyList({ startDate: '2023-12-01' });
+    const fetchTicketData = async () => {
+      try {
+        const response = await pay.ticketDate();
+        const { buyList, startedTicket } = response.data;
+        setBuyList(buyList); // 구매 리스트 업데이트
+        setStartDate(startedTicket); // 가장 오래된 티켓 업데이트
+      } catch (err) {
+        setError("데이터를 불러오는 중 오류가 발생했습니다."); // 에러 상태 설정
+        console.error(err);
+      }
+    };
+
+    fetchTicketData();
   }, []);
 
   return (
-    <div className="container">
-      <div className="title d-flex flex-column justify-content-end align-items-center gap-5" style={{ height: "300px" }}>
-        <h1>이용권 구매</h1>
-        <div className="ticket d-flex">
-          <span>보유중인 이용권 : &ensp;</span>
-          <span>{buyList.length > 0 ? buyList[buyList.length - 1].ticketName : '없음'}</span>
-          &ensp;(&ensp;
-          <span>{oldestBuyList ? new Date(oldestBuyList.startDate).toLocaleDateString() + ' ~ ' : '-'}</span>
-          <span>{buyList.length > 0 ? new Date(buyList[buyList.length - 1].endDate).toLocaleDateString() : ''}</span>
-          &ensp;)
+    <div className="ChoiceTicket">
+      <div className="container">
+        <div
+          className="title d-flex flex-column justify-content-end align-items-center gap-5"
+          style={{ height: "300px" }}
+        >
+          <h1>이용권 구매</h1>
+          <div className="ticket d-flex">
+            <span>보유중인 이용권 : &ensp;</span>
+            {/* 이용권 이름 */}
+            <span>{buyList.length > 0 ? buyList[buyList.length - 1].ticketName : '없음'}</span>
+            &ensp;(&ensp;
+            {/* 시작 날짜 */}
+            <span>{startDate ? new Date(startDate.startDate).toLocaleDateString() + ' ~ ' : '-'}</span>
+            &nbsp;
+            {/* 만료 날짜 */}
+            <span>{buyList.length > 0 ? new Date(buyList[buyList.length - 1].endDate).toLocaleDateString() : ''}</span>
+            &ensp;)
+          </div>
+          {error && <div style={{ color: 'red' }}>{error}</div>} {/* 에러 메시지 */}
         </div>
-      </div>
 
-      <div className="button d-flex gap-5 justify-content-center align-items-center" style={{ height: "460px" }}>
-        <a className="normal rounded-4" href="/user/ticket/normal">일반 이용권 구매</a>
-        <a className="pt rounded-4" href="/user/ticket/trainerList">PT + 이용권 구매</a>
+        <div
+          className="button d-flex gap-5 justify-content-center align-items-center"
+          style={{ height: "460px" }}
+        >
+          <a className="normal rounded-4" href="/ticket/normalTicket">
+            일반 이용권 구매
+          </a>
+          <a className="pt rounded-4" href="/user/ticket/trainerList">
+            PT + 이용권 구매
+          </a>
+        </div>
       </div>
     </div>
   );

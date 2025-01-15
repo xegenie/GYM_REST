@@ -1,8 +1,9 @@
 import React from 'react'
+import Choice from '../../../components/users/Ticket/ChoiceTicket'
 
 const ChoiceTicket = () => {
   return (
-    <div>ChoiceTicket</div>
+    <Choice />
   )
 }
 
