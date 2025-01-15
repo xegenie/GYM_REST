@@ -3,13 +3,52 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import { useDate } from '../../../contexts/DateContextProvider';
 
 const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown}) => {
+  
+  const { clickedPlan, formatPlanTime } = useDate();
+
+  const [id, setId] = useState('');
+  const [title, setTitle] = useState('')
+  const [eventStart, setEventStart] = useState()
+  const [eventEnd, setEventEnd] = useState()
+  const [description, setDescription] = useState('')
+
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+  const [formattedDate, setFormattedDate] = useState('');
 
   // ⚪❗ 초기값 세팅하기
-  const [startEdit, setStartEdit] = useState(new Date())
-  const [endEdit, setEndEdit] = useState(new Date())
+  const [startEdit, setStartEdit] = useState(new Date(clickedPlan.eventStart))
+  const [endEdit, setEndEdit] = useState(new Date(clickedPlan.eventEnd))
 
+  useEffect(() => {
+    const cleanupStart = setupDropdown("dropdown-edit-start", "options-edit-start");
+    const cleanupEnd = setupDropdown("dropdown-edit-end", "options-edit-end");
+
+    return () => {
+      cleanupStart();
+      cleanupEnd();
+    }
+  }, []);
+
+  useEffect(() => {
+    setId(clickedPlan.id)
+    setTitle(clickedPlan.title)
+    setEventStart(clickedPlan.eventStart)
+    setEventEnd(clickedPlan.eventEnd)
+    setDescription(clickedPlan.description)
+    formatPlanTime(clickedPlan.eventStart, clickedPlan.description)
+    if (clickedPlan.eventStart && clickedPlan.eventEnd) {
+      let { startTime, endTime, formattedDate } = formatPlanTime(clickedPlan.eventStart, clickedPlan.eventEnd);
+      setStartTime(startTime);
+      setEndTime(endTime);
+      setFormattedDate(formattedDate);
+    }
+
+  }, [clickedPlan])
+  
   const setTime = (type, time) => {
     const isStartEdit = type === "startEdit"; 
     const baseDate = new Date(isStartEdit ? startEdit : endEdit);
@@ -22,15 +61,6 @@ const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown}) => {
     isStartEdit ? setStartEdit(baseDate) : setEndEdit(baseDate);
   };
 
-  useEffect(() => {
-    const cleanupStart = setupDropdown("dropdown-edit-start", "options-edit-start");
-    const cleanupEnd = setupDropdown("dropdown-edit-end", "options-edit-end");
-
-    return () => {
-      cleanupStart();
-      cleanupEnd();
-    }
-  }, []);
 
   return (
     <div className="pop-up exercise-bymyself">
@@ -46,20 +76,20 @@ const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown}) => {
         </div>
       </form>
       <div className="popup-content edit-before" >
-        <div className="popup-title">유산소 운동</div>
+        <div className="popup-title">{title}</div>
         <div className="time-info">
           <p><AccessTimeRoundedIcon /></p>
           <div className="plan-date">
-            
+            {formattedDate}
           </div>
           <div className="plan-time">
-            <p className="plan-start-time"></p>
+            <p className="plan-start-time">{startTime}</p>
             <p>-</p>
-            <p className="plan-end-time"></p>
+            <p className="plan-end-time">{endTime}</p>
           </div>
         </div>
         <hr />
-        <div className="plan-detail"><br />
+        <div className="plan-detail">{description}<br />
         </div>
       </div>
       <div className="popup-edit" style={{display:"none"}}>
