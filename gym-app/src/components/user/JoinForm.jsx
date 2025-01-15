@@ -124,9 +124,9 @@ const JoinForm = ({ join,checkId }) => {
 
                 {/* 성별 */}
                 <div className="inputid5" > 
-                    <label   htmlFor="gender">성별</label>
+                    <label  className='genderlabel'  htmlFor="gender">성별</label>
                   
-                  <div className="gender-options" style={{ marginBottom: '20px', marginTop: '20px',marginLeft:'100px' }}>
+                  <div className="gender-options" style={{ marginBottom: '20px', marginTop: '20px' }}>
                     <input
                     
                       type="radio"
@@ -167,7 +167,7 @@ const JoinForm = ({ join,checkId }) => {
                 {/* 이메일 */}
                   <label  className="widd" htmlFor="email">이메일</label>
                 <div className="inputid emailgroup">
-                  <div className="emailr">
+              
                     <input
                       type="text"
                       className="formCo"
@@ -191,7 +191,7 @@ const JoinForm = ({ join,checkId }) => {
                       <option value="daum.net">daum.net</option>
                       <option value="hanmail.net">hanmail.net</option>
                     </select>
-                  </div>
+               
                 </div>
 
                 {/* 전화번호 */}

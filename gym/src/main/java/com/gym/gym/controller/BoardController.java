@@ -1,8 +1,12 @@
 package com.gym.gym.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +52,11 @@ public class BoardController {
     // 목록
 
     @GetMapping()
-    public String list(Model model,
+    public ResponseEntity<?> list(
     @ModelAttribute Option option, 
     @ModelAttribute Page page) throws Exception {
         List<Board> boardList = boardService.boardlist(option, page);
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("option", option);
-        model.addAttribute("rows", page.getRows());
-        model.addAttribute("page", page);
+
         String pageUrl = UriComponentsBuilder.fromPath("user/board/boardList")
                 .queryParam("keyword", option.getKeyword())
                 .queryParam("code", option.getCode())
@@ -62,27 +64,26 @@ public class BoardController {
                 .queryParam("orderCode", option.getOrderCode())
                 .build()
                 .toUriString();
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("pageUrl", pageUrl);
+        response.put("list",boardList);
 
-        model.addAttribute("pageUrl", pageUrl);
-
-        return "user/board/boardList";
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
     @GetMapping("/{no}")
-    public String select(@AuthenticationPrincipal CustomUser authuser, Model model, @RequestParam("no") Long no)
+    public String select(@AuthenticationPrincipal CustomUser authuser, @PathVariable("no") Long no)
             throws Exception {
         // 게시글 조회
         Board board = boardService.select(no);
         List<Answer> answerList = answerService.listByParent(no);
-        model.addAttribute("answerList", answerList);
-        model.addAttribute("board", board);
 
         return "user/board/read";
     }
 
     // 등록처리
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
+    // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @PostMapping()
     public String insertPost(@AuthenticationPrincipal CustomUser authuser,
             Board board) throws Exception {
@@ -106,7 +107,7 @@ public class BoardController {
      */
     // @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINER') or (#p0 != null and
     // @BoardService.isOwner(#p0, authentication.principal.user.no))")
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('TRAINER')")
+    // @PreAuthorize(" hasRole('ADMIN') or hasRole('TRAINER')")
     @GetMapping("/answerUpdate")
     public String answerUpdate(@RequestParam("no") Long no, Model model) throws Exception {
         Answer answer = answerService.select(no);
@@ -134,8 +135,8 @@ public class BoardController {
     @DeleteMapping()
     public String delete(@RequestParam("no") Long no) throws Exception {
         int result1 = answerService.deleteByParent(no);
-        if (result1 > 0) {
-            int result = boardService.delete(no);
+            if (result1 > 0) {
+                int result = boardService.delete(no);
             
             if (result > 0) {
                 return "redirect:boardList";

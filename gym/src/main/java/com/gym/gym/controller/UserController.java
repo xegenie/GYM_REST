@@ -115,8 +115,8 @@ public class UserController {
     }
     
 
-     @PreAuthorize("hasRole('ROLE_ADMIN') or #p0 == authentication.no") // 관리자 + 작성자 본인 
-    @DeleteMapping("/user/{no}")
+    //  @PreAuthorize("hasRole('ROLE_ADMIN') or #p0 == authentication.no") // 관리자 + 작성자 본인 
+    @DeleteMapping("/use/{no}")
     public ResponseEntity<?> delete(@PathVariable("no") Long no) throws Exception{
      log.info("여기옴?" + no);
         int result = userService.deleteAuth(no);
@@ -135,17 +135,12 @@ public class UserController {
 
 
     // 유저리스트
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
+    // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @GetMapping("/admin/user/list")
     public String userlist(Model model
                         ,@ModelAttribute Option option, @ModelAttribute Page page) throws Exception {
         List<Users> userList = userService.list(option,page);
 
-
-        model.addAttribute("userList", userList);
-        model.addAttribute("option", option);
-        model.addAttribute("rows", page.getRows());
-        model.addAttribute("page", page);
         String pageUrl = UriComponentsBuilder.fromPath("")
                 .queryParam("keyword", option.getKeyword())
                 .queryParam("code", option.getCode())
@@ -154,24 +149,20 @@ public class UserController {
                 .build()
                 .toUriString();
 
-        model.addAttribute("pageUrl", pageUrl);
-
         return "admin/user/list";
                         }
 
     // 관리자 : 회원 정보 수정 이동
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
+    // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @GetMapping("/admin/user/update")
     public String adminUpdate(Model model, @RequestParam("no") Long no) throws Exception {
         Users user = userService.select(no);
         UserAuth userAuth = userService.selectAuth(no);
-        model.addAttribute("userAuth", userAuth);
-        model.addAttribute("user", user);
         return "/admin/user/update";
     }
 
     // 관리자 : 회원 정보 수정 처리
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
+    // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @PostMapping("admin/user/update")
     public String adminupdate(Users user, @RequestParam("no") Long no, @RequestParam("auth") String auth, RedirectAttributes redirectAttributes)
             throws Exception {
@@ -189,7 +180,7 @@ public class UserController {
     }
 
     // 관리자 : 회원 탈퇴
-    @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
+    // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @PostMapping("/admin/user/delete")
     public String postMethodName(@RequestParam("no") Long no, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes)
             throws Exception {
@@ -220,12 +211,12 @@ public class UserController {
         Users foundUser = userService.findUserByDetails(name, phone, question, answer);
 
         if (foundUser != null && foundUser.getId() != null) {
-            model.addAttribute("user", foundUser);
-            model.addAttribute("no", 1);
+            // model.addAttribute("user", foundUser);
+            // model.addAttribute("no", 1);
             return "/user/find";
         } else {
-            model.addAttribute("users", null);
-            model.addAttribute("message", "사용자를 찾을 수 없습니다.");
+            // model.addAttribute("users", null);
+            // model.addAttribute("message", "사용자를 찾을 수 없습니다.");
             return "/user/find";
         }
     }
@@ -253,14 +244,14 @@ public class UserController {
 
         if (foundUser != null && foundUser.getId() != null) {
             String code = UUID.randomUUID().toString().substring(0, 6);
-            model.addAttribute("code", code);
-            model.addAttribute("no", foundUser.getNo());
+            // model.addAttribute("code", code);
+            // model.addAttribute("no", foundUser.getNo());
             foundUser.setCode(code);
             userService.codeInsert(foundUser);
             return "/user/changePassword";
         } else {
-            model.addAttribute("users", null);
-            model.addAttribute("message", "입력하신 사용자를 찾을 수 없습니다.");
+            // model.addAttribute("users", null);
+            // model.addAttribute("message", "입력하신 사용자를 찾을 수 없습니다.");
             return "/user/find";
         }
 
@@ -340,10 +331,10 @@ public String boardList(Model model,
     @ModelAttribute Page page, @AuthenticationPrincipal CustomUser user) throws Exception {
         Long no = user.getNo();
         List<Board> boardList = boardService.myBoardlist(option, page, no);
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("option", option);
-        model.addAttribute("rows", page.getRows());
-        model.addAttribute("page", page);
+        // model.addAttribute("boardList", boardList);
+        // model.addAttribute("option", option);
+        // model.addAttribute("rows", page.getRows());
+        // model.addAttribute("page", page);
         String pageUrl = UriComponentsBuilder.fromPath("user/board/boardList")
                 .queryParam("keyword", option.getKeyword())
                 .queryParam("code", option.getCode())
@@ -352,7 +343,7 @@ public String boardList(Model model,
                 .build()
                 .toUriString();
 
-        model.addAttribute("pageUrl", pageUrl);
+        // model.addAttribute("pageUrl", pageUrl);
 
         return "user/myPage/myBoardList";
 
