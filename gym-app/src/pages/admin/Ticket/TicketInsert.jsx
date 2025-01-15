@@ -1,6 +1,6 @@
 import React from 'react'
-import Footer from '../../../components/Header/adminFooter'
-import Header from '../../../components/Header/adminHeader'
+import Footer from '../../../components/admin/Header/adminFooter'
+import Header from '../../../components/admin/Header/adminHeader'
 import InsertContainer from '../../../containers/Ticket/InsertContainer'
 
 const TicketInsert = () => {
