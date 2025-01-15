@@ -85,7 +85,7 @@ public class PlanController {
             UserAuth userAuth = userService.selectAuth(user.getNo());
             System.out.println("userAuth: " + userAuth);
             String userAuthAuth = userAuth.getAuth();
-            System.out.println("userAuthAuth: " + userAuthAuth);
+            System.out.println("userAuthAuth getPlans: " + userAuthAuth);
             System.out.println("userNo: " + userNo);
 
             int iNo;
@@ -96,10 +96,12 @@ public class PlanController {
             // ADMIN 또는 USER 역할인 경우 userNo 파라미터가 없을 때만 접근
             else if (userNo == null && (userAuthAuth.equals("ROLE_ADMIN") || userAuthAuth.equals("ROLE_USER"))) {
                 iNo = userDetails.getNo().intValue();
+                log.info("userDetails.getNo().intValue(): " + iNo);
             } 
             // 위의 조건에 맞지 않으면 403 오류 처리
             else {
-                return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+                log.info("UNAUTHORIZED getPlans");
+                return new ResponseEntity<>("UNAUTHORIZED getPlans", HttpStatus.UNAUTHORIZED);
             }
 
             List<Plan> planList = planService.selectByStartEnd(iNo, startDate, endDate);
