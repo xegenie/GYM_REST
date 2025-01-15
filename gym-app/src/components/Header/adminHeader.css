@@ -1,4 +1,4 @@
-header {
+.header header {
     padding: 0 30px;
     width: 100%;
     height: 75px;
@@ -8,22 +8,22 @@ header {
     justify-content: space-between;
 }
 
-.logo {
+.header .logo {
     width: 250px;
     height: 75px;
 }
 
-.logo a {
+.header .logo a {
     display: inline-block;
 }
 
-.logo img {
+.header .logo img {
     width: 200px;
     height: 75px;
     object-fit: contain;
 }
 
-.header-link {
+.header .header-link {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,8 +31,8 @@ header {
     height: 50px;
 }
 
-.header-link>a,
-.header-link form a {
+.header .header-link>a,
+.header .header-link form a {
     color: #000 !important;
     text-decoration: none;
     width: 125px;
@@ -41,7 +41,7 @@ header {
     font-weight: bold;
 }
 
-.header-link>a:hover,
-.header-link form a:hover {
+.header .header-link>a:hover,
+.header .header-link form a:hover {
     color: #ddd;
 }

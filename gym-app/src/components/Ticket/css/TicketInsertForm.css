@@ -1,18 +1,35 @@
-.mainTitle {
+.ticketForm * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+.ticketForm .container {
+    margin: auto;
+    width: 1440px;
+    height: 935px;
+    display: flex;
+}
+
+.ticketForm .mainTitle {
     width: 100%;
     height: 100px;
     text-align: center;
     line-height: 100px;
+    font-weight: bold;
+    font-size: 1.2em;
 }
 
-.form {
+.ticketForm .form {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
 }
 
-.formInner {
+.ticketForm .formInner {
     padding: 40px;
     display: flex;
     align-items: center;
@@ -24,11 +41,11 @@
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-.file-upload {
+.ticketForm .file-upload {
     padding: 30px;
 }
 
-.file-upload-box {
+.ticketForm .file-upload-box {
     width: 278px;
     height: 250px;
     border: 2px dashed #ccc;
@@ -41,24 +58,24 @@
     overflow: hidden;
 }
 
-.file-upload-box .insertImg,
-.file-upload-box .updateImg {
+.ticketForm .file-upload-box .insertImg,
+.ticketForm .file-upload-box .updateImg {
     width: 100%;
     height: 100%;
     position: absolute;
 }
 
-.file-upload-box .insertImg {
+.ticketForm .file-upload-box .insertImg {
     display: none;
 }
 
-.file-upload-box span {
+.ticketForm .file-upload-box span {
     font-size: 16px;
     color: #aaa;
     pointer-events: none;
 }
 
-.file-input {
+.ticketForm .file-input {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -66,13 +83,12 @@
     cursor: pointer;
 }
 
-.table {
+.ticketForm .table {
     width: 100%;
     height: 100%;
-    line-height: 55px;
 }
 
-.tr {
+.ticketForm .tr {
     width: 100%;
     display: flex;
     align-items: start;
@@ -80,8 +96,8 @@
     padding: 0 50px;
 }
 
-td .input,
-.textarea {
+.ticketForm td input,
+.ticketForm .textarea {
     width: 300px;
     padding: 5px 10px; /* 안쪽 여백 */
     border: 1px solid #ccc; /* 테두리 */
@@ -89,17 +105,17 @@ td .input,
     font-size: 16px; /* 글꼴 크기 */
 }
 
-.td {
+.ticketForm .td {
     width: 300px;
 }
 
-.textarea {
+.ticketForm .textarea {
     height: 120px; /* 높이 */
     box-sizing: border-box; /* 패딩 포함 크기 조정 */
     resize: none; /* 크기 조정 비활성화 */
 }
 
-.button {
+.ticketForm .button {
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -108,16 +124,16 @@ td .input,
     cursor: pointer;
 }
 
-.button:hover {
+.ticketForm .button:hover {
     filter: brightness(90%);
 }
 
-.buttonTd {
+.ticketForm .buttonTd {
     width: 100%;
     text-align: right;
 }
 
-.select {
+.ticketForm .select {
     padding: 5px 10px;
     border: 1px solid #000;
     border-radius: 5px;
@@ -125,7 +141,7 @@ td .input,
     margin-right: 10px;
 }
 
-.ticketItem {
+.ticketForm .ticketItem {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -135,7 +151,7 @@ td .input,
     height: 100px;
 }
 
-.ticketContent {
+.ticketForm .ticketContent {
     width: 320px;
     line-height: 25px;
     display: flex;
@@ -143,45 +159,45 @@ td .input,
     justify-content: center;
 }
 
-.ticketName,
-.ticketInfo,
-.ticketPrice {
+.ticketForm .ticketName,
+.ticketForm .ticketInfo,
+.ticketForm .ticketPrice {
     font-size: 16px;
     font-weight: bold;
 }
 
-.ticketInfo {
+.ticketForm .ticketInfo {
     color: #5a5a5afb;
     font-size: 15px;
 }
 
-.checkbox {
+.ticketForm .checkbox {
     width: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.checkbox input[type="checkbox"],
-.input[type="checkbox"] {
+.ticketForm .checkbox input[type="checkbox"],
+.ticketForm .input[type="checkbox"] {
     width: 20px;
     height: 20px;
 }
 
-.ptCountRow {
+.ticketForm .ptCountRow {
     display: none;
     align-items: center;
     flex: 1; /* 플렉스 컨테이너 내에서 차지할 공간 설정 */
     gap: 10px; /* 적절한 간격 추가 */
 }
 
-.customMonth {
+.ticketForm .customMonth {
     display: none;
     width: 100px;
     font-size: 14px;
 }
 
-.preview {
+.ticketForm .preview {
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -190,4 +206,18 @@ td .input,
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.ticketForm .inner {
+    width: 1100px;
+    height: 900px;
+    background-color: #E7ECEF;
+    border-radius: 5%;
+}
+.ticketForm .inner .title {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

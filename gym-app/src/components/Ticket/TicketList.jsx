@@ -1,21 +1,21 @@
 import React from "react";
 import Sidebar from "../Header/adminSidebar";
-import styles from "./TicketList.module.css";
+import "./css/TicketList.css";
 
 const TicketList = ({ ticketList, onDelete, onSearch, keyword, selectTicket }) => {
 
-    const handleDelete = (e, type) => { 
-        e.preventDefault(); 
-        if (!window.confirm("정말 삭제하시겠습니까?")) 
-            return; 
+    const handleDelete = (e, type) => {
+        e.preventDefault();
+        if (!window.confirm("정말 삭제하시겠습니까?"))
+            return;
         const selectedTickets = [
-            ...document.querySelectorAll(`input[name="ticketNos"]:checked`)].map(input => input.value); 
-            if (selectedTickets.length === 0) { 
-                alert("삭제할 이용권을 선택하세요."); 
-                return; 
-            } 
-            onDelete(selectedTickets); 
-        };
+            ...document.querySelectorAll(`input[name="ticketNos"]:checked`)].map(input => input.value);
+        if (selectedTickets.length === 0) {
+            alert("삭제할 이용권을 선택하세요.");
+            return;
+        }
+        onDelete(selectedTickets);
+    };
 
 
     const renderTickets = (type) => {
@@ -39,82 +39,84 @@ const TicketList = ({ ticketList, onDelete, onSearch, keyword, selectTicket }) =
         }
 
         return filteredTickets.map((ticket) => (
-            <div className={styles.ticketItem} key={ticket.no}>
-                <div className={styles.checkbox}>
+            <div className="ticketItem" key={ticket.no}>
+                <div className="checkbox">
                     <input
                         type="checkbox"
-                        className={styles.ticketCheckbox}
+                        className="ticketCheckbox"
                         name="ticketNos"
                         value={ticket.no}
                     />
                 </div>
-                <div className={styles.ticketContent}>
-                    <span className={styles.ticketName}>{ticket.name}</span>
-                    <span className={styles.ticketInfo}>{ticket.info}</span>
-                    <span className={styles.ticketPrice}>
+                <div className="ticketContent">
+                    <span className="ticketName">{ticket.name}</span>
+                    <span className="ticketInfo">{ticket.info}</span>
+                    <span className="ticketPrice">
                         {ticket.price.toLocaleString()}원
                     </span>
                 </div>
                 <div style={{ width: "69px" }}>
                     <buuton type="button" onClick={() => selectTicket(ticket.no)}
-                        className={styles.updateBtn}> 수정 </buuton>
+                        className="updateBtn"> 수정 </buuton>
                 </div>
             </div>
         ));
     };
 
     return (
-        <div className='container'>
-            <Sidebar />
-            <div className={styles.main}>
-                <div className={styles.inner}>
-                    <div className={styles.mainTitle}>
-                        <h2>이용권 목록</h2>
-                    </div>
+        <div className="ticketList">
+            <div className='container'>
+                <Sidebar />
+                <div className="main">
+                    <div className='inner'>
+                        <div className="mainTitle">
+                            <h2>이용권 목록</h2>
+                        </div>
 
-                    <div className={styles.searchContainer}>
-                        <form
-                            className={styles.search}
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                const newkeyword = e.target.keyword.value;
-                                onSearch(newkeyword); // handleSearch 호출
-                            }}
-                        >
-                            <input
-                                type="text"
-                                name="keyword"
-                                placeholder="검색어를 입력해주세요"
-                                className={styles.searchInput}
-                                defaultValue={keyword}
-                            />
-                            <button type="submit" className={styles.searchButton}>검색</button>
-                        </form>
-                    </div>
-
-                    <div className={styles.list}>
-                        <div className={styles.ticket}>
-                            <div style={{ width: "100%", borderBottom: "1px solid #bbb" }}>
-                                <label className={styles.normal}>일반 이용권</label>
-                            </div>
-                            <form onSubmit={(e) => handleDelete(e, "일반")}>
-                                <div className={styles.items}>{renderTickets("일반")}</div>
-                                <div className={styles.delete}>
-                                    <button type="submit" className={styles.deleteBtn}>삭제</button>
-                                </div>
+                        <div className="searchContainer">
+                            <form
+                                className="search"
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    const newkeyword = e.target.keyword.value;
+                                    onSearch(newkeyword); // handleSearch 호출
+                                }}
+                            >
+                                <input
+                                    type="text"
+                                    name="keyword"
+                                    placeholder="검색어를 입력해주세요"
+                                    className="searchInput"
+                                    defaultValue={keyword}
+                                />
+                                <button type="submit" className="searchButton">검색</button>
                             </form>
                         </div>
 
-                        <div className={styles.ticket}>
-                            <div style={{ width: "100%", borderBottom: "1px solid #bbb" }}>
-                                <label className={styles.pt}>PT 이용권</label>
-                            </div>
-                            <form onSubmit={(e) => handleDelete(e, "PT")}>
-                                <div className={styles.items}>{renderTickets("PT")}</div>
-                                <div className={styles.delete}>
-                                    <button type="submit" className={styles.deleteBtn}>삭제</button>
+                        <div className="list">
+                            <div className="ticket">
+                                <div style={{ width: "100%", borderBottom: "1px solid #bbb" }}>
+                                    <label className="normal">일반 이용권</label>
                                 </div>
-                            </form>
+                                <form onSubmit={(e) => handleDelete(e, "일반")}>
+                                    <div className="items">{renderTickets("일반")}</div>
+                                    <div className="delete">
+                                        <button type="submit" className="deleteBtn">삭제</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div className="ticket">
+                                <div style={{ width: "100%", borderBottom: "1px solid #bbb" }}>
+                                    <label className="pt">PT 이용권</label>
+                                </div>
+                                <form onSubmit={(e) => handleDelete(e, "PT")}>
+                                    <div className="items">{renderTickets("PT")}</div>
+                                    <div className="delete">
+                                        <button type="submit" className="deleteBtn">삭제</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
