@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './css/ReservationList.css'
 import { Link } from 'react-router-dom'
-import Sidebar from '../Header/adminSidebar';
+import Sidebar from '../admin/Header/adminSidebar';
 import * as format from '../../utils/format';
 
 const ReservationList = ({ reservationList, pagination }) => {
