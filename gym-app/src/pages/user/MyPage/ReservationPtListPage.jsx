@@ -1,11 +1,12 @@
 import React from 'react'
+import ReservationListContainer from '../../../containers/Reservation/ReservationListContainer'
 
-const PtList = () => {
+const ReservationPtListPage = () => {
   return (
     <div>
-      
+      <ReservationListContainer />
     </div>
   )
 }
 
-export default PtList
+export default ReservationPtListPage
