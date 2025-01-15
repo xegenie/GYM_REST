@@ -33,6 +33,7 @@ import User from './pages/user/MyPage/User'
 import UserList from './pages/admin/User/UserList'
 import UserUpdate from './pages/admin/User/UserUpdate'
 import LoginContextProvider from './contexts/LoginContextProvider';
+import UserInfo from './pages/user/MyPage/UserInfo'
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
         <Route path='/FindId' element={ <FindId /> }></Route>
         <Route path='/FindPw' element={ <FindPw /> }></Route>
         <Route path='/User' element={ <User /> }></Route>
+        <Route path='/UserInfo' element={<UserInfo/>}></Route>
 
         {/* 어드민 */}
         <Route path='/UserUpdate' element=

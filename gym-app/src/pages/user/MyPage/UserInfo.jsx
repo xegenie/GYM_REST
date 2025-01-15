@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react'
+import UserInfoForm from '../../../components/user/UserInfoForm'
 import { useNavigate } from 'react-router-dom'
+import { LoginContext } from '../../../contexts/LoginContextProvider'
 import * as auth from '../../../apis/auth'
 import * as Swal from '../../../apis/alert'
-import { LoginContext } from '../../../contexts/LoginContextProvider'
-import UserForm from '../../../components/MyPage/UserForm'
 
+const UserInfo = () => {
 
-const User = () => {
- // context
- const {isLoading, isLogin, roles, logout, userInfo } = useContext(LoginContext)
+     // context
+ const {isLoading, isLogin, roles, logout, userInfo,setUserInfo } = useContext(LoginContext)
 
- const navigate = useNavigate();
+ const navigete = useNavigate()
 
  const updateUser = async (form) => {
    console.log(form);
@@ -27,12 +27,12 @@ const User = () => {
    }
    data = response.data
    const status = response.status
-   console.log(`data : ${data}`);
-   console.log(`status : ${status}`);
+
 
    if(status == 200) {
      console.log(`회원정보 수정 성공`)
-     Swal.confirm('회원정보 수정 성공', '로그아웃 후 다시 로그인 해주세요.', 'success' , () => logout(true))
+     setUserInfo({ ...userInfo, ...form });
+     Swal.alert('회원정보 수정 성공', '마이페이지로 이동합니다.', 'success' , () => navigete("/User"))
    }
    else{
      console.log(`회원정보 수정 실패`)
@@ -70,27 +70,27 @@ const User = () => {
 
  useEffect(() => {
    if(isLoading) return
-   
+
    if(!isLogin || !roles.isUser){
-     Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login')})
+     Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigete('/login')})
      return
    }
-
  }, [isLoading])
  
 
- return (
-   <>
-   <div className="container">
-       <h1>User</h1>
-       <hr />
-       <h2>마이페이지</h2>
-      
-       <UserForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
+
+  return (
+    <>
+    <div className="container">
+        <h1>UserInfo</h1>
+        <hr />
+        <h2>마이페이지</h2>
        
-   </div>
-</>
- )
+        <UserInfoForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
+        
+    </div>
+ </>
+  )
 }
 
-export default User
+export default UserInfo

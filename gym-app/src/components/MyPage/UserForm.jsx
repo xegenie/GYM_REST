@@ -1,32 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { LoginContext } from '../../contexts/LoginContextProvider';
 
-const UserForm = ({userInfo, updateUser, removeUser}) => {
+const UserForm = ({}) => {
 
-      const [editMode, setEditMode] = useState(false);
 
-      // 정보 수정
-      const onUpdate = (e) => {
-        e.preventDefault()
-        const form = e.target
-        const id = form.username.value
-        const name = form.name.value
-        const password = form.password.value
-        const email = form.email.value
-
-        console.log(id, password, name, email)
-
-        updateUser({id, name, password, email})
-    }
-
-    console.log(userInfo)
-  
-    const handleCancelEdit = () => {
-      setEditMode(false);
-      setFormData({ phone, email });
-    };
-
-    
-
+  const {isLoading, isLogin, roles,  userInfo } = useContext(LoginContext)
 
 
 
@@ -65,6 +44,7 @@ const UserForm = ({userInfo, updateUser, removeUser}) => {
               </tbody>
             </table>
             <Link to="/UserInfo" className="btn btn-primary">정보 수정</Link>
+       
           </div>
    
     </div>

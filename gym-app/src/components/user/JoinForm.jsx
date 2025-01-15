@@ -275,7 +275,6 @@ const JoinForm = ({ join,checkId }) => {
           </main>
         </div>
 
-        {/* Footer Fragment */}
       </body>
     </div>
   );
