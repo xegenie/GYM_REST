@@ -25,15 +25,15 @@ function Ranking() {
   }, []); // 빈 배열로 설정해 컴포넌트 마운트 시 한 번만 실행
 
   return (
-    <div className="osw">
-    <div className="fullBody">
-      <header>
-        {/* 공통 헤더 추가 */}
-      </header>
 
-      <button>
+   
+    <div className="oswRanking">
+    <div className="fullBody">
+     
+
+      {/* <button>
         <a href="/" style={{ textDecoration: 'none', color: 'rgb(10, 8, 8)' }}>홈으로</a>
-      </button>
+      </button> */}
 
       <div className="main">
         <div className="content1">
@@ -99,6 +99,7 @@ function Ranking() {
       </script>
     </div>
     </div>
+  
   );
 }
 
