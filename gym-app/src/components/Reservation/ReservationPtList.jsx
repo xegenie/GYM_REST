@@ -2,12 +2,12 @@ import React from 'react'
 import * as format from '../../utils/format';
 import './Reservation.css'
 
-const ReservationPtListTable = ( {reservationList} ) => {
+const ReservationPtList = ({ reservationList }) => {
   return (
     <>
       <div className="list">
         <table>
-          <thead>
+          <thead style={{ fontWeight: 'bold' }}>
             <tr>
               <th>담당 트레이너</th>
               <th>예약 날짜</th>
@@ -28,7 +28,7 @@ const ReservationPtListTable = ( {reservationList} ) => {
                   return (
                     <tr key={reservation.no}>
                       <td>{reservation.trainerName}</td>
-                      <td style={{fontWeight : "bold"}}>{format.formatRvDate(reservation.rvDate)}</td>
+                      <td style={{ fontWeight: "bold" }}>{format.formatRvDate(reservation.rvDate)}</td>
                       <td>{format.formatDate(reservation.createdAt)}</td>
                       {reservation.enabled == 2 ? (
                         <td style={{ color: "#2a9c1b" }}>
@@ -69,4 +69,4 @@ const ReservationPtListTable = ( {reservationList} ) => {
   )
 }
 
-export default ReservationPtListTable
+export default ReservationPtList

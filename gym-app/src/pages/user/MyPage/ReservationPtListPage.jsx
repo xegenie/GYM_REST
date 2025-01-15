@@ -7,16 +7,14 @@ const ReservationPtListPage = () => {
   return (
     <>
       <Header />
-      <div className="ReservationList">
-        <div className="container">
-          <Sidebar />
-          <div className="main">
-            <div className="inner">
-              <div className="title">
-                <h2>PT 예약 및 완료 목록</h2>
-              </div>
-              <ReservationListContainer />
+      <div className="reservationList-container">
+        <Sidebar />
+        <div className="main">
+          <div className="inner">
+            <div className="title">
+              <h2>PT 예약 및 완료 목록</h2>
             </div>
+            <ReservationListContainer />
           </div>
         </div>
       </div>
