@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useDate } from "../../contexts/DateContextProvider";
+import { useDate } from "../../../contexts/DateContextProvider";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
 const MiniCalendar = () => {
 
   const { currentDate, setCurrentDate } = useDate();
+  const [displayDate, setDisplayDate] = useState(new Date(currentDate));
   const [calendarDays, setCalendarDays] = useState([]);
 
   const monthNames = [
@@ -14,8 +15,15 @@ const MiniCalendar = () => {
   ];
 
   useEffect(() => {
-    renderCalendar(currentDate);
+    setDisplayDate(currentDate);
+    console.log("miniCalendar currentDate: " + currentDate)
   }, [currentDate]);
+
+  useEffect(() => {
+    renderCalendar(displayDate)
+
+  }, [displayDate])
+  
 
   const renderCalendar = (date) => {
     const year = date.getFullYear();
@@ -50,11 +58,18 @@ const MiniCalendar = () => {
   };
 
   const handlePrevMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    setDisplayDate(new Date(displayDate.getFullYear(), displayDate.getMonth() - 1, 1));
+    // renderCalendar(displayDate);
   };
 
   const handleNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    setDisplayDate(new Date(displayDate.getFullYear(), displayDate.getMonth() + 1, 1));
+    // renderCalendar(displayDate);
+  };
+
+  const handleDateClick = (date) => {
+    const newDate = displayDate.setDate(date)
+    setCurrentDate(new Date(newDate));
   };
 
   return (
@@ -63,8 +78,8 @@ const MiniCalendar = () => {
         <div className="month">
           <a className="nav prev" onClick={handlePrevMonth}><ChevronLeftRoundedIcon /></a>
           <div>
-            <span className="current-month">{monthNames[currentDate.getMonth()]}</span> 
-            <span className="year">{currentDate.getFullYear()}</span>
+            <span className="current-month">{monthNames[displayDate.getMonth()]}</span> 
+            <span className="year">{displayDate.getFullYear()}</span>
           </div>
           <a className="nav next"onClick={handleNextMonth}><ChevronRightRoundedIcon /></a>
         </div>
@@ -83,6 +98,7 @@ const MiniCalendar = () => {
               key={index} 
               className={day.isToday ? 'today' : ''}
               style={{ opacity: day.isCurrentMonth ? 1 : 0.5 }}
+              onClick={() => handleDateClick(day.date)}
             >
               <time>{day.date}</time>
             </button>

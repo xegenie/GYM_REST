@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
-import { useDate } from "../../contexts/DateContextProvider";
+import { useDate } from "../../../contexts/DateContextProvider";
 
 const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown}) => {
 
-  const { currentDate, setCurrentDate } = useDate();
+  const { currentDate, setCurrentDate, formatDate } = useDate();
 
   // ⚪❗ 초기값 세팅하기
   const [start, setStart] = useState(currentDate)
   const [end, setEnd] = useState(currentDate)
+  const [formattedDate, setFormattedDate] = useState('');
 
   const setTime = (type, time) => {
     const isStart = type === "start"; 
@@ -24,14 +25,18 @@ const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown}) => {
   };
 
   useEffect(() => {
+    // 드롭다운 세팅
     const cleanupStart = setupDropdown("dropdown-button-start", "options-start");
     const cleanupEnd = setupDropdown("dropdown-button-end", "options-end");
+
+    const formattedDate = `${currentDate.getMonth() + 1}/${currentDate.getDate()} (${currentDate.toLocaleDateString('ko-KR', { weekday: 'short' })})`;
+    setFormattedDate(formattedDate);
 
     return () => {
       cleanupStart();
       cleanupEnd();
     }
-  }, []);
+  }, [currentDate]);
   
   return (
     <div className='pop-up input-schedule'>
@@ -48,7 +53,7 @@ const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown}) => {
           <div className="set-time">
             <p><AccessTimeRoundedIcon /></p>
             <div className="set-time-date">
-              <span>1/13(월)</span>
+              <span>{formattedDate}</span>
             </div>
             <div className="set-time-drops">
               <div className="dropdown">

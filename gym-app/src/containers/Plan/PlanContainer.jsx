@@ -1,33 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import PlanContent from '../../components/Plan/PlanContent'
-import PlanInsertModal from '../../components/Plan/PlanInsertModal'
-import PlanInfoModal from '../../components/Plan/PlanInfoModal'
-import RsvInfoModal from '../../components/Plan/RsvInfoModal'
+import PlanContent from '../../components/users/Plan/PlanContent'
+import PlanInsertModal from '../../components/users/Plan/PlanInsertModal'
+import PlanInfoModal from '../../components/users/Plan/PlanInfoModal'
+import RsvInfoModal from '../../components/users/Plan/RsvInfoModal'
 import * as plan from '../../apis/plan'
 import { useDate } from "../../contexts/DateContextProvider";
 
 const PlanContainer = () => {
   
-  const { currentDate, setCurrentDate } = useDate();
+  const { currentDate, setCurrentDate, comment, planList, rsvList, getDataList } = useDate();
 
-  const [comment, setComment] = useState();
-  const [planList, setPlanList] = useState([]);
-  const [rsvList, setRsvList] = useState([]);
+  // const [comment, setComment] = useState();
+  // const [planList, setPlanList] = useState([]);
+  // const [rsvList, setRsvList] = useState([]);
 
   const [times24Hour, setTimes24Hour] = useState([]);
   const [times12Hour, setTimes12Hour] = useState([]);
 
-  const getDataList = async () => {
-    const response = await plan.getPlans()
-    const data = await response.data
-    console.dir(response)
-    console.dir(data)
-
-    setComment(data.comment)
-    setPlanList(data.planEvents)
-    setRsvList(data.reservationEvents)
-
-  }
+  
 
   useEffect(() => {
     getDataList()
