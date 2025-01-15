@@ -1,13 +1,21 @@
 
 
 .join body {
-    background-color: #000000dc;
-    font-family: Arial, sans-serif;
+
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+    
+}
+
+.join .fullBody {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;      /* 수직 중앙 정렬 */
+    background-color: #000000dc; /* 배경색 */
 }
 
 .join .container1 {
@@ -44,7 +52,6 @@
     justify-content: center;     /* 수평 중앙 정렬 */
     align-items: center;         /* 수직 중앙 정렬 */
     height: 100%;               /* 화면 전체 높이로 설정 */
-    width: 100%;
     flex-direction: column;      /* 자식 요소들을 세로로 정렬 */
     gap: 20px;
 }
@@ -54,6 +61,8 @@
     height: 500px;
 }
 
+
+
 .join .inlabel {
     font-size: 18px;
     margin-bottom: 5px;
@@ -61,32 +70,37 @@
     display: block;
 }
 
-
+.join .formsignin {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 내부 아이템 중앙 정렬 */
+    justify-content: center;
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
 
 .widd{
-    width: 90%;
+    width: 100%;
 }
 
 .join .formCo {
+    flex-grow: 1;          /* 아이디 입력창이 가능한 공간을 다 차지하도록 */
+    margin-right: 10px;
+    margin-left: 55px;    /* 버튼과의 간격 */
     height: 40px;
-    width: 80%;
-    margin: 10px 0; /* 상하 여백만 설정 */
-    padding: 0 15px; /* 좌우 여백 추가 */
-    background-color: #2c2c2c;
-    color: white;
-    border: 1px solid #444;
+    width: 50%;
     border-radius: 8px;
+    border: none;
 }
 
 .join .inputid .formCo {
-    font-size: 18px; /* 아이디 입력창 텍스트 크기 설정 */
+    font-size: 14px; /* 아이디 입력창 텍스트 크기 설정 */
     font-weight: bold;
 }
 
 .join .formCo:focus {
     border-color: #007bff;
     outline: none;
-    background-color: #333;
+    background-color: #b1aeae;
 }
 
 .join .input-group {
@@ -102,7 +116,7 @@
 
 .join .input-group button:hover {
     background-color: #444;
-    color: white;
+    color: black;
 }
 
 .join .dgridgap {
@@ -135,10 +149,8 @@
 }
 .join .inputid {
     display: flex;
-    justify-content: center;  /* Center horizontally */
-    align-items: center;      /* Center vertically */
-    width: 650px;
-    margin-bottom: 15px;
+    align-items: center; /* 수직 중앙 정렬 */
+    width: 100%;
    
 }
 
@@ -148,7 +160,12 @@
     align-items: center;      /* Center vertically */
     width: 550px;
     margin-bottom: 15px;
+    
 
+}
+
+.join input{
+    padding: 0 20px;
 }
 
 .join .inputid5{
@@ -156,24 +173,31 @@
     justify-content: flex-start;  /* Center horizontally */
     align-items: center;      /* Center vertically */
     width: 680px;
-    margin-bottom: 15px;
+    margin: 15px;
+    margin-left:195px;
 }
 
 .join .inputid123 input{
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     margin-right: 10px;
-    height: 40px;
+    margin-left: 75px;
+    height: 30px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 
 .join .inputid123 button {
-    height: 40px;
-    width: 150px; /* 버튼을 입력창과 같은 너비로 설정 */
-    background-color: #ffffff;
+    background-color:white ;
+    color: black;
     font-weight: bold;
     border: none;
-    border-radius: 8px;
+    height: 40px;
+    margin-right: 35px;
+    width: 20%;
+    border-radius: 8px; /* 우측 둥근 모서리 */
     font-size: 16px;
     cursor: pointer;
 }
@@ -209,29 +233,28 @@
     height: 40px;
     padding: 0 15px;
     border-radius: 8px;
-    background-color: #2c2c2c;
-    color: white;
+    color: black;
     border: 1px solid #444;
 }
 
 /* 이메일 그룹 */
-.join .emailgroup .emailr {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* 입력 필드 간 간격 */
-    margin-left: 50px;
-    margin-right: 55px;
-    
+
+
+
+.join .emailgroup select{
+    width: 150px;
+    margin-left: 10px;
+    padding: 0 10px;
 }
 
-.join .emailr input {
+.join .emailgroup input {
     flex: 1; /* 입력 필드 크기 균등 배분 */
     height: 40px;
-    width: 450px;
+    margin-left: 55px;
+    width: 230px;
     border-radius: 8px;
-    padding: 0 15px;
-    background-color: #2c2c2c;
-    color: white;
+    padding: 0 20px;
+    color: black;
     border: 1px solid #444;
 }
 
@@ -247,11 +270,11 @@
 .join .phoner input {
     flex: 1; /* 입력 필드 크기 균등 배분 */
     height: 40px;
-    width: 80%;
+    width: 115px;
+    margin-left: 5px;
     border-radius: 8px;
     padding: 0 15px;
-    background-color: #2c2c2c;
-    color: white;
+    color: black;
     border: 1px solid #444;
 }
 
@@ -268,6 +291,7 @@
     align-items: flex-start; /* 라벨은 왼쪽 정렬 */
     gap: 5px; /* 라벨과 버튼 그룹 사이 간격 */
 }
+
 
 /* 버튼 그룹 */
 .join .gender-options {

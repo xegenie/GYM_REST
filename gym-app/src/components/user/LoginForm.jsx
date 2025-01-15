@@ -5,7 +5,7 @@ import logo from '../../assets/imges/logo2.png';
 import '../user/css/login.css';
 
 const LoginForm = () => {
-  const { isLogin, login, logout } = useContext(LoginContext);
+  const { isLogin, login, logout, userInfo } = useContext(LoginContext);
   const [rememberId, setRememberId] = useState(false); 
   const [autoLogin, setAutoLogin] = useState(false); 
   const [savedId, setSavedId] = useState('');
@@ -59,6 +59,8 @@ const LoginForm = () => {
                     <>
                         <li>마이페이지 </li>
                         <li><button className='link' onClick={ () => logout()}> 로그아웃 </button></li>
+                        <input type="text" name="username" id="username"
+                placeholder='username' autoComplete='username' required readOnly defaultValue={userInfo}/>
                     </>
                 :
                 <>
@@ -79,7 +81,7 @@ const LoginForm = () => {
               <h1>로그인</h1>
             </div>
 
-            <main className="formsignin">
+            <div className="formsignin">
               <form onSubmit={onLogin}>
                 <div className="form-floating">
                   <input
@@ -148,7 +150,7 @@ const LoginForm = () => {
                   <a href="/user/findPassword">비밀번호 찾기</a>
                 </div>
               </form>
-            </main>
+            </div>
           </div>
         </div>
       </div>
