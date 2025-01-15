@@ -2,20 +2,11 @@ import React, { useEffect, useState } from 'react'
 import './css/ReservationList.css'
 import { Link } from 'react-router-dom'
 import Sidebar from '../Header/adminSidebar';
+import * as format from '../../utils/format';
 
 const ReservationList = ({ reservationList, pagination }) => {
 
-  function formatDate(date) {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const hour = String(d.getHours()).padStart(2, '0');
-    const minute = String(d.getMinutes()).padStart(2, '0');
-    const second = String(d.getSeconds()).padStart(2, '0');
-
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-  }
+  
 
   const [pageList, setPageList] = useState([])
 
@@ -69,18 +60,18 @@ const ReservationList = ({ reservationList, pagination }) => {
                           <td>{reservation.no}</td>
                           <td>{reservation.userName}({reservation.userId})</td>
                           <td>{reservation.trainerName}</td>
-                          <td>{formatDate(reservation.rvDate)}</td>
-                          <td>{formatDate(reservation.createdAt)}</td>
+                          <td>{format.formatDate(reservation.rvDate)}</td>
+                          <td>{format.formatDate(reservation.createdAt)}</td>
                           {reservation.enabled == 2 ? (
                             <td style={{ color: "#2a9c1b" }}>
-                              {formatDate(reservation.canceledAt)}</td>
+                              {format.formatDate(reservation.canceledAt)}</td>
                           )
                             : reservation.enabled == 1 ? (
                               <td></td>
                             )
                               : reservation.enabled == 0 ? (
                                 <td style={{ color: '#dc3545' }}>
-                                  {formatDate(reservation.canceledAt)}</td>
+                                  {format.formatDate(reservation.canceledAt)}</td>
                               )
                                 : null}
                           <td style={{display: 'flex', justifyContent: 'space-around', alignItems: 'center'}}>
