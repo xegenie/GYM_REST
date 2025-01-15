@@ -1,7 +1,7 @@
 import React from 'react'
 import {insert} from '../../apis/ticket'
 import { useNavigate } from 'react-router-dom'
-import TicketInsertForm from '../../components/Ticket/TicketInsertForm'
+import TicketInsertForm from '../../components/admin/Ticket/TicketInsertForm'
 
 const InsertContainer = () => {
   const navigate = useNavigate();

@@ -66,7 +66,7 @@ public class TicketController {
 
     // 티켓 수정
     @PutMapping("/update")
-    public ResponseEntity<String> update(@RequestBody Ticket ticket) {
+    public ResponseEntity<String> update(@RequestBody Ticket ticket){
         try {
             int result = ticketService.update(ticket);
             if (result == 0) {

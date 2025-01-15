@@ -18,8 +18,8 @@ import Plan from './pages/user/Plan/Plan'
 import ReservationInsertPage from './pages/user/Reservation/ReservationInsertPage'
 import NormalTicket from './pages/user/Ticket/NormalTicket'
 import PtTicket from './pages/user/Ticket/PtTicket'
-import TicketList from './pages/user/Ticket/TicketList'
-import TrainerList from './pages/user/Ticket/TrainerList'
+import ChoiceTicket from './pages/user/Ticket/ChoiceTicket'
+import ChoiceTrainer from './pages/user/Ticket/ChoiceTrainer'
 import Check from './pages/user/QrCode/check' 
 import QRCode from './pages/user/QrCode/QrCode'
 import Ranking from './pages/user/Ranking/ranking'
@@ -61,8 +61,8 @@ function App() {
         <Route path='/reservation/reservationInsert' element={ <ReservationInsertPage /> }></Route>
         <Route path='/ticket/normalTicket' element={ <NormalTicket /> }></Route>
         <Route path='/ticket/ptTicket' element={ <PtTicket /> }></Route>
-        <Route path='/ticket/ticketList' element={ <TicketList /> }></Route>
-        <Route path='/ticket/trainerList' element={ <TrainerList /> }></Route>
+        <Route path='/ticket/ChoiceTicket' element={ <ChoiceTicket /> }></Route>
+        <Route path='/ticket/ChoiceTrainer' element={ <ChoiceTrainer /> }></Route>
         <Route path='/user/attendance/check' element={ <Check /> }></Route>
         <Route path='/generate-qr-code' element={ <QRCode /> }></Route>
         <Route path='/ranking' element={ <Ranking /> }></Route>

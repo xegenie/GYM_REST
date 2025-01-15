@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as ticket from '../../apis/ticket';
-import TicketList from '../../components/Ticket/TicketList';
-import TicketUpdateForm from '../../components/Ticket/TickeUpdateForm';
+import TicketList from '../../components/admin/Ticket/TicketList';
+import TicketUpdateForm from '../../components/admin/Ticket/TickeUpdateForm';
 
 const ListContainer = () => {
   const [ticketList, setTicketList] = useState([]);
@@ -47,17 +47,9 @@ const ListContainer = () => {
     }
   };
 
-  const selectTicket = async (ticketNo) => {
-    try {
-      const response = await ticket.select(ticketNo);
-      console.log('선택된 이용권:', response);
-
-      setSelectedTicket(response.data);
-      navigate(`/admin/ticket/ticketUpdate?ticketNo=${ticketNo}`);
-    } catch (error) {
-      console.error('이용권 조회 실패:', error);
-      alert('이용권 조회에 실패했습니다. 다시 시도해주세요.');
-    }
+  // 선택
+  const selectTicket = async (ticket) => {
+   return ticket; 
   }
   
   

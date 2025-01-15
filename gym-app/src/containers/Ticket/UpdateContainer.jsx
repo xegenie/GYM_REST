@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import * as ticket from '../../apis/ticket'
 import { useNavigate } from 'react-router-dom'
-import TicketUpdatetForm from '../../components/Ticket/TickeUpdateForm'
+import TicketUpdatetForm from '../../components/admin/Ticket/TickeUpdateForm'
 
 const UpdateContainer = () => {
 
