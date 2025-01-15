@@ -1,0 +1,38 @@
+.oswQrCode .qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.oswQrCode .qr-code {
+    margin-bottom: 20px;
+}
+
+.oswQrCode .timer {
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}
+
+.oswQrCode .main-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.oswQrCode .url-text {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.oswQrCode .url-text a {
+    color: blue;
+    text-decoration: none;
+}
+
+.oswQrCode .url-text a:hover {
+    text-decoration: underline;
+}

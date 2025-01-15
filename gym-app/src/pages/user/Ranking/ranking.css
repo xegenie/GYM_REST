@@ -213,3 +213,10 @@
         background-color: transparent;
     }
 }
+
+/* 하이라이트 효과 */
+.highlight {
+    background-color: yellow;
+    transition: background-color 0.5s ease;
+  }
+  
