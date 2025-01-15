@@ -70,6 +70,12 @@ const Home = () => {
         <button>출석 내역</button>
       </Link>
 
+          {/* 로그인 가는 링크 */}
+          <Link to="/login">
+        <button>로그인</button>
+      </Link>
+
+
 
 
       <div className="container" style={{ height: '100vh', width: '100%' }}>

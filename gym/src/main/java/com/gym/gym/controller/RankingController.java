@@ -1,6 +1,8 @@
 package com.gym.gym.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +26,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class RankingController {
 
     @Autowired
     private RankingService rankingService;
 
     @GetMapping("/ranking")
-    // @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     public ResponseEntity<?> attendanceRanking(
             @AuthenticationPrincipal CustomUser authUser,
             @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
@@ -67,7 +68,15 @@ public class RankingController {
                     .limit(100) // 상위 100명만
                     .collect(Collectors.toList());
 
-            return new ResponseEntity<>(rankingList, HttpStatus.OK);
+            // 로그인된 사용자의 ID 가져오기
+            String userId = authUser != null ? authUser.getUser().getId() : null;
+
+            // 반환할 Map 객체 생성
+            Map<String, Object> response = new HashMap<>();
+            response.put("rankingList", rankingList);
+            response.put("userId", userId);  // 로그인된 사용자 ID 추가
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("출석 랭킹 조회 중 오류 발생", e);
@@ -75,3 +84,4 @@ public class RankingController {
         }
     }
 }
+

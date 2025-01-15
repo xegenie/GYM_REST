@@ -5,28 +5,28 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Base64;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.BuyList;
-import com.gym.gym.domain.CustomUser;
 import com.gym.gym.domain.QRcode;
 import com.gym.gym.service.BuyListService;
 import com.gym.gym.service.QRCodeGenerator;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/generate-qr-code")
+@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "Authorization")
 public class QRCodeController {
 
     @Autowired
@@ -35,24 +35,19 @@ public class QRCodeController {
     @Autowired
     private BuyListService buyListService;
 
+    // QR 코드 생성 API
     @PostMapping
-    public ResponseEntity<?> generateQRCode(@AuthenticationPrincipal CustomUser user) throws Exception {
+    public ResponseEntity<?> generateQRCode(@RequestParam Long userNo, @RequestParam String uuid) throws Exception {
 
-        if(user == null){
+        if (userNo == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("사용자 정보를 불러오지 못했습니다.");
         }
 
-        QRcode qrCode = new QRcode();
-        Long no = user.getNo();
-        log.info(no + " 유저번호");
-        qrCode.setUserNo(no); // Users 테이블에서 no 받은 후 Qrcode에 세팅
-        qrCode.setUuid(UUID.randomUUID().toString());
+        log.info(userNo + " 유저번호");
 
-        qrCodeGenerator.QRinsert(qrCode);
-
-        // 유저가 티켓 보유 중일 시에만 QR페이지 생성
-        BuyList buyList = buyListService.lastBuyList(no);
+        // 유저의 마지막 구매 정보 조회
+        BuyList buyList = buyListService.lastBuyList(userNo);
 
         // 날짜 가져오기
         if (buyList == null) {
@@ -71,32 +66,34 @@ public class QRCodeController {
                     .body("티켓이 만료되었습니다. 새로운 티켓을 구입해주세요.");
         }
 
-        // 티켓이 있으면서 만료기간 남았다면 QR 코드 생성
-        if (buyList.getUserNo() == user.getNo() && endDateTime.isAfter(currentDateTime)) {
-            ByteArrayOutputStream qrCodeOutputStream = new ByteArrayOutputStream();
-            try {
-                qrCodeGenerator.generateQRCodeImage(qrCode, qrCodeOutputStream);
-            } catch (Exception e) {
-                log.error("QR 코드 생성 중 오류 발생", e);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("QR 코드 생성 중 오류가 발생했습니다.");
-            }
+        // QR 코드 생성
+        QRcode qrCode = new QRcode();
+        qrCode.setUserNo(userNo);
+        qrCode.setUuid(uuid);
 
-            byte[] imageBytes = qrCodeOutputStream.toByteArray();
-            String qrCodeBase64 = Base64.getEncoder().encodeToString(imageBytes);
+        qrCodeGenerator.QRinsert(qrCode); // QR 코드 DB에 저장
 
-            // QR 코드 URL 생성
-            String qrCodeUrl = String.format("http://192.168.30.63:8080/user/attendance/check?qrcodeId=%d&uuid=%s",
-                    no, qrCode.getUuid());
-
-            QRCodeResponse response = new QRCodeResponse(qrCodeBase64, qrCodeUrl);
-            return ResponseEntity.ok(response); // QR 코드와 URL 반환
+        ByteArrayOutputStream qrCodeOutputStream = new ByteArrayOutputStream();
+        try {
+            qrCodeGenerator.generateQRCodeImage(qrCode, qrCodeOutputStream);
+        } catch (Exception e) {
+            log.error("QR 코드 생성 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("QR 코드 생성 중 오류가 발생했습니다.");
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("티켓이 없거나 만료되었습니다.");
+        byte[] imageBytes = qrCodeOutputStream.toByteArray();
+        String qrCodeBase64 = Base64.getEncoder().encodeToString(imageBytes);
+
+        // QR 코드 URL 생성
+        String qrCodeUrl = String.format("http://localhost:8080/user/attendance/check?qrcodeId=%d&uuid=%s",
+                userNo, qrCode.getUuid());
+
+        QRCodeResponse response = new QRCodeResponse(qrCodeBase64, qrCodeUrl);
+        return ResponseEntity.ok(response); // QR 코드와 URL 반환
     }
 
+    // QR 코드 삭제 API
     @PostMapping("/delete")
     public ResponseEntity<String> deleteQRCode(@RequestBody Map<String, String> request) {
         String uuid = request.get("uuid");
