@@ -1,6 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDate } from '../../../contexts/DateContextProvider';
 
 const Comment = () => {
+
+  const { currentDate, setCurrentDate, comment } = useDate();
+
+  const [ccontent, setCcontent] = useState('');
+  const [fcontent, setFcontent] = useState('');
+  const [commentDate, setCommentDate] = useState('')
+
+  useEffect(() => {
+    console.dir(comment)
+    if (comment){
+      setCcontent(comment.ccontent);
+      setFcontent(comment.fcontent);
+      const date = new Date(comment.commentDate);
+      const formattedDate = `${date.getMonth() + 1}/${date.getDate()} (${date.toLocaleDateString('ko-KR', { weekday: 'short' })})`;
+      setCommentDate(formattedDate);
+    }
+
+  }, [comment])
+  
   return (
     <div className='comment-container pt-4'>
       <form id="updateCommentForm">
@@ -9,13 +29,15 @@ const Comment = () => {
             <p>trainer's comment</p>
           </div>
           <div className="comment-content">
-            <span className="comment-date">1/13(월)</span>
+            <span className="comment-date">{commentDate}</span>
             <input type="hidden" name="commentDate" id='commentDate' />
             <div className="comment-c comment-detail">
               <span><b>코멘트</b></span><br />
-              <span className="cContent">ㅎㅇ</span><br /><br />
+              <span className="cContent">
+                {ccontent}  
+              </span><br /><br />
               <span><b>식단</b></span><br />
-              <span className="fContent">darkgasmsal</span>
+              <span className="fContent">{fcontent}</span>
             </div>
             <div className="comment-c comment-edit" style={{display:"none"}}>
               <input type="hidden" name="no" id="commentNo" />
