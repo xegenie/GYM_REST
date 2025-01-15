@@ -1,23 +1,42 @@
 @charset "UTF-8";
 
-.mainTitle {
+.ticketList * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+.ticketList .container {
+    margin: auto;
+    width: 1440px;
+    height: 935px;
+    display: flex;
+}
+
+.ticketList .mainTitle {
     width: 100%;
     height: 100px;
     text-align: center;
     line-height: 100px;
+    font-weight: bold;
+    font-size: 1.2em;
 }
 
-.searchContainer {
+.ticketList .searchContainer {
     display: flex;
     justify-content: center;
 }
-.search {
+
+.ticketList .search {
     width: 1000px;
     height: 30px;
     display: flex;
     justify-content: end;
 }
-.search input[type="text"] {
+
+.ticketList .search input[type="text"] {
     padding: 8px;
     width: 200px;
     margin-right: 10px;
@@ -25,7 +44,8 @@
     border-radius: 5px;
     background-color: #fff;
 }
-.search button {
+
+.ticketList .search button {
     padding: 0px 20px;
     background-color: #008CBA;
     color: white;
@@ -36,11 +56,12 @@
     transition: background-color 0.3s ease, color 0.3s ease;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); 
 }
-.search button:hover {
+
+.ticketList .search button:hover {
     background-color: #005f73;
 }
 
-.list {
+.ticketList .list {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -48,20 +69,21 @@
     padding: 0 50px;
 }
 
-.paging {
+.ticketList .paging {
     width: 100%;
     height: 100px;
     display: flex;
     justify-content: center;
     align-items: end;
 }
-.pagination {
+
+.ticketList .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-.pagination a {
+.ticketList .pagination a {
     margin: 0 5px;
     padding: 8px 16px;
     text-decoration: none;
@@ -72,20 +94,20 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1); 
 }
 
-.pagination a:hover {
+.ticketList .pagination a:hover {
     background-color: #005f73;
     color: white;
 }
 
-.pagination a.active {
+.ticketList .pagination a.active {
     background-color: #008CBA;
     color: white;
     border: 1px solid #008CBA;
     pointer-events: none;
 }
 
-.updateBtn,
-.deleteBtn {
+.ticketList .updateBtn,
+.ticketList .deleteBtn {
     display: inline-block;
     border: none;
     border-radius: 4px;
@@ -95,19 +117,20 @@
     cursor: pointer;
 }
 
-.updateBtn {
+.ticketList .updateBtn {
     background-color: #7c92c0;
 }
-.deleteBtn {
+
+.ticketList .deleteBtn {
     background-color: #e46262;
 }
 
-.updateBtn:hover,
-.deleteBtn:hover {
+.ticketList .updateBtn:hover,
+.ticketList .deleteBtn:hover {
     filter: brightness(90%);
 }
 
-.ticket {
+.ticketList .ticket {
     width: 50%;
     height: 100%;
     display: flex;
@@ -116,25 +139,25 @@
     padding: 0 10px;
 }
 
-.ticketContent {
+.ticketList .ticketContent {
     width: 320px;
     line-height: 25px;
     display: flex;
     flex-direction: column;
 }
 
-.checkbox {
+.ticketList .checkbox {
     width: 105px;
     text-align: center;
 }
 
-.ticket .items {
+.ticketList .ticket .items {
     width: 100%;
     height: 500px; 
     overflow-y: auto;
 }
 
-.ticket .ticketItem {
+.ticketList .ticket .ticketItem {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #bbb;
@@ -142,25 +165,25 @@
     height: 100px;
 }
 
-.ticketName,
-.ticketPrice {
+.ticketList .ticketName,
+.ticketList .ticketPrice {
     font-weight: bold;
     font-size: 16px;
 }
 
-.ticketInfo {
+.ticketList .ticketInfo {
     font-size: 15px;
     color: #5a5a5afb;
 }
 
-input[type="checkbox"] {
+.ticketList input[type="checkbox"] {
     width: 20px;
     height: 20px;
     cursor: pointer;
     accent-color: #06ac00;
 }
 
-.ticket label {
+.ticketList .ticket label {
     display: inline-block;
     width: 100px;
     height: 30px;
@@ -171,19 +194,20 @@ input[type="checkbox"] {
     border-radius: 4px 4px 0 0;
 }
 
-.normal {
+.ticketList .normal {
     background-color: #0DB4D4;
 }
-.pt {
+
+.ticketList .pt {
     background-color: #E74A4A;
 }
 
-.delete {
+.ticketList .delete {
     width: 100%;
     padding: 33px;
     text-align: right;
 }
 
-form {
+.ticketList form {
     width: 502.5px;
 }

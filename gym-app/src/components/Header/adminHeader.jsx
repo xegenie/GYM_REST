@@ -1,5 +1,5 @@
 import React from 'react';
-import './adminHeader.module.css';
+import './adminHeader.css';
 import './adminStyle.css';
 
 const Header = () => {
@@ -22,20 +22,22 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <div className="logo">
-        <a href="/"><img src="/img/logo.png" alt="로고" /></a>
-      </div>
-      <div className="header-link">
-        <a href="/">메인화면</a>
-        <button 
-          type="button"
-          onClick={handleLogout}
-          style={{ textDecoration: 'none', color: 'inherit', border: 'none', background: 'none' }}>
-          로그아웃
-        </button>
-      </div>
-    </header>
+    <div className='header'>
+      <header>
+        <div className="logo">
+          <a href="/"><img src="/img/logo.png" alt="로고" /></a>
+        </div>
+        <div className="header-link">
+          <a href="/">메인화면</a>
+          <button
+            type="button"
+            onClick={handleLogout}
+            style={{ textDecoration: 'none', color: 'inherit', border: 'none', background: 'none' }}>
+            로그아웃
+          </button>
+        </div>
+      </header>
+    </div>
   );
 }
 
