@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const UserInfoForm = ({updateUser, userInfo, removeUser}) => {
 
@@ -81,9 +82,9 @@ const UserInfoForm = ({updateUser, userInfo, removeUser}) => {
                 <button type="button" className="delete" onClick={() => removeUser(userInfo.no)} >
                   탈퇴하기
                 </button>
-                <button type="button" className="change-password">
+              <Link to='/ChangePw'>  <button type="button" className="change-password">
                   비밀번호 수정
-                </button>
+                </button></Link>
               </div>
               <button style={{ float: "right" }} type="submit">
                 수정완료

@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.gym.gym.domain.Board;
+import com.gym.gym.domain.ChangePwRequest;
 import com.gym.gym.domain.CustomUser;
 import com.gym.gym.domain.Option;
 import com.gym.gym.domain.Page;
@@ -116,7 +117,7 @@ public class UserController {
     
 
     //  @PreAuthorize("hasRole('ROLE_ADMIN') or #p0 == authentication.no") // 관리자 + 작성자 본인 
-    @DeleteMapping("/use/{no}")
+    @DeleteMapping("/user/{no}")
     public ResponseEntity<?> delete(@PathVariable("no") Long no) throws Exception{
      log.info("여기옴?" + no);
         int result = userService.deleteAuth(no);
@@ -196,48 +197,34 @@ public class UserController {
         return "redirect:/admin/user/update";
     }
 
-    @GetMapping("user/findId")
-    public String findId() {
-        return "/user/findId";
-    }
-
-    @PostMapping("/user/findId")
-    public String findId(Model model, @RequestParam("name") String name,
-            @RequestParam("phone") String phone, @RequestParam("question") String question,
-            @RequestParam("answer") String answer) throws Exception {
+    @PostMapping("/findId")
+    public ResponseEntity<?> findId(@RequestBody Users user) throws Exception {
 
 
+        String name = user.getName();
+        String phone = user.getPhone();
+        String question = user.getQuestion();
+        String answer = user.getAnswer();
         // 이름, 전화번호, 질문, 답변을 기준으로 사용자 찾기
         Users foundUser = userService.findUserByDetails(name, phone, question, answer);
 
         if (foundUser != null && foundUser.getId() != null) {
-            // model.addAttribute("user", foundUser);
-            // model.addAttribute("no", 1);
-            return "/user/find";
+            return new ResponseEntity<>(foundUser.getId(), HttpStatus.OK);
         } else {
-            // model.addAttribute("users", null);
-            // model.addAttribute("message", "사용자를 찾을 수 없습니다.");
-            return "/user/find";
+       log.info("사용자를 찾을 수 없습니다.");
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("/user/find")
-    public String getMethodName() {
-        return "/user/find";
-    }
-    
-
-    // 비밀번호 찾기페이지 이동
-    @GetMapping("/user/findPassword")
-    public String findPassword() {
-        return "/user/findPassword";
-    }
-
     // 비밀번호 찾기페이지 처리
-    @PostMapping("/user/findPassword")
-    public String findPassword(Model model, @RequestParam("name") String name,
-            @RequestParam("phone") String phone, @RequestParam("question") String question,
-            @RequestParam("answer") String answer, @RequestParam("id") String id) throws Exception {
+    @PostMapping("/findPw")
+    public ResponseEntity<?> findPassword(@RequestBody Users user) throws Exception {
+
+        String name = user.getName();
+        String phone = user.getPhone();
+        String question = user.getQuestion();
+        String answer = user.getAnswer();
+        String id = user.getId();
 
         // 이름, 전화번호, 질문, 답변을 기준으로 사용자 찾기
         Users foundUser = userService.findUserByPassword(name, phone, question, answer, id);
@@ -248,19 +235,15 @@ public class UserController {
             // model.addAttribute("no", foundUser.getNo());
             foundUser.setCode(code);
             userService.codeInsert(foundUser);
-            return "/user/changePassword";
+
+            // 생성한 uuid정보 전달해야함
+
+             return new ResponseEntity<>(code, HttpStatus.OK);
         } else {
-            // model.addAttribute("users", null);
-            // model.addAttribute("message", "입력하신 사용자를 찾을 수 없습니다.");
-            return "/user/find";
+            log.info("사용자를 찾을 수 없습니다.");
+            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
         }
 
-    }
-
-    // 비밀번호 변경 페이지 이동
-    @GetMapping("/user/changePassword")
-    public String changePassword() {
-        return "/user/changePassword";
     }
 
     // 비밀번호 변경 페이지 처리
@@ -287,43 +270,39 @@ public class UserController {
         return "redirect:/login";
     }
 
-    // 회원정보 수정 비밀번호 변경 페이지 이동
-    @GetMapping("/user/myPage/changePw")
-    public String changePw() {
-        return "/user/myPage/changePw";
-    }
+
 
    // 회원정보 수정 비밀번호 변경 처리
-@PostMapping("/user/myPage/changePw")
-public String changePw(@RequestParam("password") String password, 
-                        @RequestParam("newPassword") String newPassword,  
-                        @AuthenticationPrincipal CustomUser authuser,
-                        RedirectAttributes redirectAttributes, Model model) throws Exception {
-    String code = UUID.randomUUID().toString().substring(0, 6);
-
-    Users user = userService.select(authuser.getNo());
-    user.setCode(code);
-    userService.codeInsert(user);
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-    if (encoder.matches(password, user.getPassword())) {
-        String encodedNewPassword = encoder.encode(newPassword);
-        user.setPassword(encodedNewPassword);
-        
-        int result = userService.passwordUpdate(user);
-        if (result > 0) {
-            user.setCode(null);
-            userService.codeInsert(user);
-            redirectAttributes.addFlashAttribute("message", "비밀번호 변경이 완료됐습니다.");
-            return "redirect:info";
-        }
-    }
-
-    user.setCode(null);
-    userService.codeInsert(user);
-    redirectAttributes.addFlashAttribute("message", "비밀번호 변경 실패!");
-    return "redirect:info";
-}
+   @PostMapping("/changePw")
+   public ResponseEntity<?> changePw(@RequestBody ChangePwRequest request,
+                          @AuthenticationPrincipal CustomUser authuser,
+                          RedirectAttributes redirectAttributes, Model model) throws Exception {
+       String code = UUID.randomUUID().toString().substring(0, 6);
+   
+       Users user = userService.select(authuser.getNo());
+       user.setCode(code);
+       userService.codeInsert(user);
+       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+   
+       if (encoder.matches(request.getPassword(), user.getPassword())) {
+           String encodedNewPassword = encoder.encode(request.getNewPassword());
+           user.setPassword(encodedNewPassword);
+           
+           int result = userService.passwordUpdate(user);
+           if (result > 0) {
+               user.setCode(null);
+               userService.codeInsert(user);
+               redirectAttributes.addFlashAttribute("message", "비밀번호 변경이 완료됐습니다.");
+               return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+           }
+       }
+   
+       user.setCode(null);
+       userService.codeInsert(user);
+       redirectAttributes.addFlashAttribute("message", "비밀번호 변경 실패!");
+       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+   }
+   
 
 @GetMapping("/user/myPage/myBoardList")
 public String boardList(Model model,

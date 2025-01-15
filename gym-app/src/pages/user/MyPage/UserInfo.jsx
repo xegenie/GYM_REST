@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import UserInfoForm from '../../../components/user/UserInfoForm'
+import Cookies from 'js-cookie'; // js-cookie 임포트
+import UserInfoForm from '../../../components/MyPage/UserInfoForm'
 import { useNavigate } from 'react-router-dom'
 import { LoginContext } from '../../../contexts/LoginContextProvider'
 import * as auth from '../../../apis/auth'
@@ -45,22 +46,25 @@ const UserInfo = () => {
    console.log("이거 왜 안나옴?" + no)
 
    let response
-   let data
+
    try {
      response = await auth.remove(no)
+     console.log("sdfsdfsdf"+response)
    } catch (error) {
  console.log(error)
  console.log('회원 탈퇴 처리 중 에러가 발생하였습니다.');
  
  
    }
-   data = response.data
    const status = response.status
 
    if(status == 200){
+    Cookies.remove('remember-id'); // 쿠키에서 아이디 삭제
      Swal.alert("회원탈퇴 성공", "그동안 감사했습니다.🎁", "success", 
        // 로그아웃 처리
        () => { logout(true) } )
+       navigete("/")
+    
    }
    else
    Swal.alert("회원탈퇴 실패", "들어올 땐 마음대로 들어왔지만 나갈 때 그럴 수 없습니다..🎁", "error",

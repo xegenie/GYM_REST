@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'; // js-cookie 임포트
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import logo from '../../assets/imges/logo2.png';
 import '../user/css/login.css';
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
   const { isLogin, login, logout, userInfo } = useContext(LoginContext);
@@ -145,9 +146,9 @@ const LoginForm = () => {
                 <div className="subbutton">
                   <a href="/join">회원가입</a>
                   <span>|</span>
-                  <a href="/user/findId">아이디 찾기</a>
+                  <Link to="/findId">아이디 찾기</Link>
                   <span>|</span>
-                  <a href="/user/findPassword">비밀번호 찾기</a>
+                  <Link to="/FindPw">비밀번호 찾기</Link>
                 </div>
               </form>
             </div>

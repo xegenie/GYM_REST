@@ -18,3 +18,12 @@ export const remove = (no) => api.delete(`/user/${no}`)
 
 // 아이디 중복검사
 export const checking = (id) => api.get(`/check/${id}`)
+
+// 비밀번호 변경
+export const changePw = (data) => api.post(`/changePw`, data)
+
+// 아이디 찾기
+export const findId = (data) => api.post(`/findId`, data)
+
+// 비밀번호 찾기
+export const findPws = (data) => api.post(`/findPw`, data)

@@ -1,8 +1,11 @@
 import React from 'react'
+import ChangePwContainer from '../../../containers/User/ChangePwContainer'
 
 const ChangePw = () => {
   return (
-    <div>ChangePw</div>
+   <>
+    <ChangePwContainer/>
+   </>
   )
 }
 
