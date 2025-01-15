@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './Ranking.css'; 
 import { LoginContext } from '../../../contexts/LoginContextProvider';
+import Header from '../../../components/header/header';
 
 function Ranking() {
    const { isLoading, isLogin, roles, userInfo } = useContext(LoginContext);
@@ -60,6 +61,7 @@ function Ranking() {
 
    return (
      <div className="oswRanking">
+       <Header/>
        <div className="fullBody">
          <div className="main">
            <div className="content1">

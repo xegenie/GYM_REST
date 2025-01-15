@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import QRCode from 'qrcode';
 import { LoginContext } from '../../../contexts/LoginContextProvider';
-import * as api from '../../../apis/qrCode';
 import './QrCode.css';
 
 const QrCode = () => {
