@@ -1,8 +1,7 @@
 package com.gym.gym.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RankingController {
 
     @Autowired
@@ -68,15 +67,22 @@ public class RankingController {
                     .limit(100) // 상위 100명만
                     .collect(Collectors.toList());
 
-            // 로그인된 사용자의 ID 가져오기
-            String userId = authUser != null ? authUser.getUser().getId() : null;
+            // 로그인된 사용자의 랭킹 찾기 (선택 사항)
+            if (authUser != null) {
+                Optional<Ranking> userRanking = rankingList.stream()
+                        .filter(rank -> rank.getUserId().equals(authUser.getUser().getId())) // 로그인된 사용자 ID로 필터링
+                        .findFirst();
 
-            // 반환할 Map 객체 생성
-            Map<String, Object> response = new HashMap<>();
-            response.put("rankingList", rankingList);
-            response.put("userId", userId);  // 로그인된 사용자 ID 추가
+                if (userRanking.isPresent()) {
+                    // 사용자 랭킹을 추가하거나 처리
+                    Ranking ranking = userRanking.get();
+                    log.info("User Ranking: " + ranking);
+                } else {
+                    log.info("User ranking not found.");
+                }
+            }
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(rankingList, HttpStatus.OK);
 
         } catch (Exception e) {
             log.error("출석 랭킹 조회 중 오류 발생", e);
@@ -84,4 +90,3 @@ public class RankingController {
         }
     }
 }
-
