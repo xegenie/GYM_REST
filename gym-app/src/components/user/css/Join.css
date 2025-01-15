@@ -70,13 +70,7 @@
     display: block;
 }
 
-.join .formsignin {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 내부 아이템 중앙 정렬 */
-    justify-content: center;
-    text-align: center; /* 텍스트 중앙 정렬 */
-}
+
 
 .widd{
     width: 100%;
