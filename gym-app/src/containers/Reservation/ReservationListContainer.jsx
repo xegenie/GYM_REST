@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { LoginContext } from '../../contexts/LoginContextProvider'
 import * as reservation from '../../apis/reservation'
 import ReservationListTable from '../../components/Reservation/ReservationListTable'
+import ReservationPtListTable from '../../components/Reservation/ReservationPtListTable'
 
 const ReservationListContainer = () => {
 
@@ -48,8 +49,12 @@ const ReservationListContainer = () => {
 
   return (
     <>
-      <ReservationListTable reservationList={reservationList}/>
-    </>
+    {location.pathname.includes('/myPage/ptList') ? (
+      <ReservationPtListTable reservationList={reservationList} />
+    ) : (
+      <ReservationListTable reservationList={reservationList} />
+    )}
+  </>
   )
 }
 
