@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { LoginContext } from '../../contexts/LoginContextProvider'
 import * as reservation from '../../apis/reservation'
-import ReservationListTable from '../../components/Reservation/ReservationListTable'
-import ReservationPtListTable from '../../components/Reservation/ReservationPtListTable'
+import ReservationList from '../../components/Reservation/ReservationList'
+import ReservationPtList from '../../components/Reservation/ReservationPtList'
+import { LoginContext } from '../../contexts/LoginContextProvider'
 
 const ReservationListContainer = () => {
 
@@ -12,6 +12,7 @@ const ReservationListContainer = () => {
   const [keyword, setKeyword] = useState('')
   const [option, setOption] = useState('')
   const [page, setPage] = useState(1)
+  
 
   const location = useLocation()
 
@@ -47,12 +48,21 @@ const ReservationListContainer = () => {
     updatePage()
   }, [location.search])
 
+ 
+  const handleComplete = (reservationNo) => {
+    openModal(reservationNo, 'complete')
+  }
+
+  const handleCancel = (reservationNo) => {
+    openModal(reservationNo, 'cancel')
+  }
+  
   return (
     <>
     {location.pathname.includes('/myPage/ptList') ? (
-      <ReservationPtListTable reservationList={reservationList} />
+      <ReservationPtList reservationList={reservationList} />
     ) : (
-      <ReservationListTable reservationList={reservationList} />
+      <ReservationList reservationList={reservationList} />
     )}
   </>
   )

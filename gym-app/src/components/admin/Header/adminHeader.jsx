@@ -24,14 +24,16 @@ const Header = () => {
     <div className='header'>
       <header>
         <div className="logo">
-          <a href="/"><img src="/img/logo.png" alt="로고" /></a>
+          <a href="/"><img src="/images/logo.png" alt="로고" /></a>
         </div>
         <div className="header-link">
           <a href="/">메인화면</a>
           <button
             type="button"
             onClick={handleLogout}
-            style={{ textDecoration: 'none', color: 'inherit', border: 'none', background: 'none' }}>
+            style={{ textDecoration: 'none', color: 'inherit', border: 'none', background: 'none',
+                  fontSize: '18px', textShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)', fontWeight: 'bold', cursor: 'pointer'
+             }}>
             로그아웃
           </button>
         </div>

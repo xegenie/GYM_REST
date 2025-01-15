@@ -12,7 +12,7 @@ const ReservationListPage = () => {
           <div className="main">
             <div className="inner">
               <div className="title">
-                <h2>PT 예약 및 완료 목록</h2>
+                <h2 style={{fontWeight : 'bold', fontSize : '20px'}}>PT 예약 및 완료 목록</h2>
               </div>
               <ReservationListContainer />
             </div>

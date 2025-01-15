@@ -230,6 +230,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
+    height: auto;
     background: #fff;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -241,8 +242,17 @@
 .reservationList-container .modal-container {
     padding: 20px;
 }
+.reservationList-container .modal-container h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
 
 .reservationList-container .modal-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;  
     margin-top: 20px;
 }
 

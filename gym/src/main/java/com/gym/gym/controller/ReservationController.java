@@ -197,7 +197,7 @@ public class ReservationController {
     
     // 관리자 예약 취소/완료
     @PutMapping("/admin/reservation/list")
-    public ResponseEntity<?> updateReservationByAdmin(RedirectAttributes redirectAttributes, @RequestParam("action") String action, @RequestParam("no") int no) {
+    public ResponseEntity<?> updateReservationByAdmin(@RequestParam("action") String action, @RequestParam("no") int no) {
         try {
             Reservation reservation = reservationService.findByNo(no);
             int result = 0;
@@ -218,13 +218,11 @@ public class ReservationController {
                         userService.updateTrainerNo(user.getNo());
                     }
                 }
-                redirectAttributes.addFlashAttribute("message", "예약이 완료 처리되었습니다.");
 
             } else if ("cancel".equals(action)) {
                 reservation.setCanceledAt(new Date());
                 reservation.setEnabled(0);
                 result = reservationService.cancel(reservation);
-                redirectAttributes.addFlashAttribute("message", "예약이 취소되었습니다.");
             }
 
             if (result > 0) {
