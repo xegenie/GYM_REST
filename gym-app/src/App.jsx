@@ -39,6 +39,7 @@ import BoardRead from'./pages/user/Board/BoardRead'
 import BoardInsert from'./pages/user/Board/BoardInsert'
 import BoardUpdate from'./pages/user/Board/BoardUpdate'
 import AnswerUpdate from'./pages/user/Board/AnswerUpdate'
+import TicketBuyList from './pages/user/MyPage/TicketBuyList'
 
 function App() {
 
@@ -81,6 +82,9 @@ function App() {
         <Route path='/User' element={ <User /> }></Route>
         <Route path='/userInfo' element={<UserInfo/>}></Route>
         <Route path='/newPw' element={ <NewPw /> }></Route>
+        <Route path='/buyList/users/:userNo' element={ <TicketBuyList /> }></Route>
+
+
 
         {/* 보드 */}
         <Route path='/boardList' element={ <BoardList /> }></Route>

@@ -89,10 +89,9 @@ const UserInfo = () => {
   return (
     <>
     <Header/>
-    <div className="oswUserInfo">
+    <div className="oswUserInfo" style={{marginBottom: 0}}>
         <h1>UserInfo</h1>
         <hr />
-        <h2>마이페이지</h2>
        
         <UserInfoForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
         

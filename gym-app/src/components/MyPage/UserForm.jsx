@@ -10,6 +10,7 @@ const UserForm = ({}) => {
 
 
   return (
+    
     <div className="user">
    <div className="wrapper" style={{ marginTop: '80px' }}>
         <h2 style={{ marginBottom: '15px', fontWeight: 800, color: 'white' }}>내 정보</h2>
@@ -43,12 +44,25 @@ const UserForm = ({}) => {
                 </tr>
               </tbody>
             </table>
-            <Link to="/UserInfo" className="btn btn-primary">정보 수정</Link>
+            <Link 
+    to="/UserInfo" 
+    className="btn btn-primary" 
+    style={{
+        backgroundColor: '#142230', 
+        float: 'right', 
+        marginTop: '-20px', 
+        borderColor: '#333' // camelCase로 수정
+    }}
+>
+    정보 수정
+</Link>
+
        
           </div>
    
     </div>
   </div>
+
   )
 }
 
