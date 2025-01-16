@@ -4,6 +4,7 @@ import * as auth from '../../../apis/auth'
 import * as Swal from '../../../apis/alert'
 import { LoginContext } from '../../../contexts/LoginContextProvider'
 import UserForm from '../../../components/MyPage/UserForm'
+import './User.css';
 
 
 const User = () => {
@@ -80,17 +81,19 @@ const User = () => {
  
 
  return (
-   <>
-   <div className="container">
-       <h1>User</h1>
-       <hr />
-       <h2>마이페이지</h2>
-      
-       <UserForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
-       
-   </div>
-</>
- )
+  <div className="oswUser">
+    <div>
+      <div className="container">
+        <h1>User</h1>
+        <hr />
+        <h2>마이페이지</h2>
+
+        <UserForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
+      </div>
+    </div>
+  </div>
+);
 }
+
 
 export default User
