@@ -31,7 +31,7 @@ const ChangePwForm = ({changePw}) => {
         <h1 className="joins">비밀번호 변경</h1>
       </div>
 
-      <form id="form" onSubmit={changePws}>
+      <form id="form" onSubmit={(e) => changePws(e)}>
         <div className="centerdhkwnj">
           <div className="input-group my-2">
             <label>현재 비밀번호</label>
