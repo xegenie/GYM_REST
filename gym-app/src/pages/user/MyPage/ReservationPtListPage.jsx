@@ -1,14 +1,13 @@
 import React from 'react'
+import Footer from '../../../components/Footer/footer'
+import Header from '../../../components/header/header'
 import ReservationListContainer from '../../../containers/Reservation/ReservationListContainer'
-import Header from '../../../components/admin/Header/adminHeader'
-import Sidebar from '../../../components/admin/Header/adminSidebar'
 
 const ReservationPtListPage = () => {
   return (
     <>
       <Header />
       <div className="reservationList-container">
-        <Sidebar />
         <div className="main">
           <div className="inner">
             <div className="title">
@@ -18,6 +17,7 @@ const ReservationPtListPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

@@ -1,11 +1,16 @@
 import React from 'react'
+import ReservationInsertContainer from '../../../containers/Reservation/ReservationInsertContainer'
+import Header from '../../../components/header/header'
+import Footer from '../../../components/Footer/footer'
 
-const ReservationInsert = () => {
+const ReservationInsertPage = () => {
   return (
     <>
-      <ReservationInsertForm />
+      <Header />
+      <ReservationInsertContainer />
+      <Footer />
     </>
   )
 }
 
-export default ReservationInsert
+export default ReservationInsertPage
