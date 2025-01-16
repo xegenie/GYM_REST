@@ -11,8 +11,14 @@ const DateContextProvider = ({children}) => {
   const [comment, setComment] = useState();
   const [planList, setPlanList] = useState([]);
   const [rsvList, setRsvList] = useState([]);
+  
   const [clickedPlan, setClickedPlan] = useState({id: null, title: '', eventStart: null, eventEnd: null, description: ''});
   const [clickedRsv, setClickedRsv] = useState({id: null, title: '', eventStart: null, eventEnd: null, description: ''});
+  const [isPlanInsertVisible, setIsPlanInsertVisible] = useState(false);
+  const [isPlanInfoVisible, setIsPlanInfoVisible] = useState(false);
+  const [isRsvInfoVisible, setIsRsvInfoVisible] = useState(false);
+
+  const [insertDate, setInsertDate] = useState(currentDate);
 
   const getDataListByDate = async (date) => {
     console.log("getDataListByDate")
@@ -72,7 +78,10 @@ const DateContextProvider = ({children}) => {
   return (
     <DateContext.Provider value={{ 
       currentDate, setCurrentDate, comment, planList, rsvList, getDataList, formatPlanTime, 
-      clickedPlan, setClickedPlan, clickedRsv, setClickedRsv 
+      clickedPlan, setClickedPlan, clickedRsv, setClickedRsv,
+      isPlanInsertVisible, setIsPlanInsertVisible, isPlanInfoVisible, setIsPlanInfoVisible,
+      isRsvInfoVisible, setIsRsvInfoVisible,
+      insertDate, setInsertDate
       }}>
       {children}
     </DateContext.Provider>

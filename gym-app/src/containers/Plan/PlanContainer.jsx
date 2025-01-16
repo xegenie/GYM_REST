@@ -8,7 +8,10 @@ import { useDate } from "../../contexts/DateContextProvider";
 
 const PlanContainer = () => {
   
-  const { currentDate, setCurrentDate, comment, planList, rsvList, getDataList } = useDate();
+  const { currentDate, setCurrentDate, comment, planList, rsvList, getDataList,
+    isPlanInsertVisible, setIsPlanInsertVisible,
+    isPlanInfoVisible, setIsPlanInfoVisible, 
+    isRsvInfoVisible, setIsRsvInfoVisible } = useDate();
 
   // const [comment, setComment] = useState();
   // const [planList, setPlanList] = useState([]);
@@ -80,16 +83,26 @@ const PlanContainer = () => {
     };
   }
 
+  const handleClosePlanInsert = () => {
+    setIsPlanInsertVisible(false);
+  };
+  const handleClosePlanInfo = () => {
+    setIsPlanInfoVisible(false);
+  };
+  const handleCloseRsvInfo = () => {
+    setIsRsvInfoVisible(false);
+  };
+
   return (
-    <div className='schedule'>
+    <div className='schedule' style={{"overflowX": "hidden"}}>
       <PlanContent
         comment={comment} planList={planList} rsvList={rsvList} />
-      <PlanInsertModal 
-        times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown} />
-      <PlanInfoModal 
+      {isPlanInsertVisible && <PlanInsertModal 
+        times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown} onClose={handleClosePlanInsert} />}
+      {isPlanInfoVisible && <PlanInfoModal 
         times24Hour={times24Hour} times12Hour={times12Hour} setupDropdown={setupDropdown}
-        planList={planList} />
-      <RsvInfoModal rsvList={rsvList} />
+        planList={planList} onClose={handleClosePlanInfo} />}
+      {isRsvInfoVisible && <RsvInfoModal rsvList={rsvList} onClose={handleCloseRsvInfo} />}
     </div>
   )
 }
