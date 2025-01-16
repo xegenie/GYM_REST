@@ -24,7 +24,9 @@ public interface UserMapper {
     public Users selectId(String id) throws Exception;
 
     public Users select(Long no) throws Exception;
-    
+
+    public Users selectCode(String code) throws Exception;
+        
     public int join(Users user) throws Exception;
 
     public int update(Users user) throws Exception;

@@ -25,7 +25,6 @@ import QRCode from './pages/user/QrCode/QrCode'
 import Ranking from './pages/user/Ranking/ranking'
 import Login from './pages/user/User/Login'
 import Join from './pages/user/User/Join'
-import ResultId from './pages/user/User/ResultId'
 import ChangePw from './pages/user/User/ChangePw'
 import FindId from './pages/user/User/FindId'
 import FindPw from './pages/user/User/FindPw'
@@ -34,6 +33,7 @@ import UserList from './pages/admin/User/UserList'
 import UserUpdate from './pages/admin/User/UserUpdate'
 import LoginContextProvider from './contexts/LoginContextProvider';
 import UserInfo from './pages/user/MyPage/UserInfo'
+import NewPw from './pages/user/User/newPw'
 
 
 function App() {
@@ -71,13 +71,12 @@ function App() {
         {/* 회원 정보 */}
         <Route path='/login' element={ <Login /> }></Route>
         <Route path='/join' element={ <Join /> }></Route>
-        <Route path='/ResultId' element={ <ResultId /> }></Route>
         <Route path='/ChangePw' element={ <ChangePw /> }></Route>
         <Route path='/FindId' element={ <FindId /> }></Route>
         <Route path='/FindPw' element={ <FindPw /> }></Route>
         <Route path='/User' element={ <User /> }></Route>
         <Route path='/userInfo' element={<UserInfo/>}></Route>
-        <Route path='/newPw' element={ <newPw /> }></Route>
+        <Route path='/newPw' element={ <NewPw /> }></Route>
 
         {/* 어드민 */}
         <Route path='/UserUpdate' element=

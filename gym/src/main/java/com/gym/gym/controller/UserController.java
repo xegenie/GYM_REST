@@ -247,27 +247,26 @@ public class UserController {
     }
 
     // 비밀번호 변경 페이지 처리
-    @PostMapping("/user/changePassword")
-    public String changePassword(@RequestParam("code") String code,
-            @RequestParam("password") String password, @RequestParam("no") Long no,
-            RedirectAttributes redirectAttributes) throws Exception {
-        Users user = userService.select(no);
-
+    @PostMapping("/newPw")
+    public ResponseEntity<?> changePassword(@RequestBody Users user ) throws Exception {
+        String password = user.getPassword();
+              user = userService.selectCode(user.getCode());
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         String encodedNewPassword = encoder.encode(password);
+
         user.setPassword(encodedNewPassword);
         int result = userService.passwordUpdate(user);
+
         if (result > 0) {
             user.setCode(null);
             userService.codeInsert(user);
-            redirectAttributes.addFlashAttribute("message", "비밀번호 변경이 완료됐습니다.");
-            return "redirect:/login";
+            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }
-        redirectAttributes.addFlashAttribute("message", "비밀번호 찾기 실패 다시 시도해주세요.");
         user.setCode(null);
         userService.codeInsert(user);
-        return "redirect:/login";
+        log.info("사용자를 찾을 수 없습니다.");
+        return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
     }
 
 

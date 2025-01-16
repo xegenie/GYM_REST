@@ -46,6 +46,12 @@
         WHERE no = #{no}
     </select>
 
+    <select id="selectCode" resultMap="UserMap">
+        SELECT *
+        FROM users
+        WHERE code = #{code}
+    </select>
+
     <!-- 권한 조회 -->
     <select id="selectAuthList" resultType="UserAuth">
         SELECT *
@@ -78,6 +84,9 @@
     </if>
     LIMIT #{page.index}, #{page.rows}
 </select>
+
+
+
 
 
     <!-- 회원가입 -->

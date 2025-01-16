@@ -196,6 +196,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateTrainerNo(no);
     }
 
+    @Override
+    public Users selectCode(String code) throws Exception {
+        return userMapper.selectCode(code);
+    }
+
 
     
     
