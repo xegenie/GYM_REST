@@ -96,7 +96,7 @@ const BoardListForm = ({ boardList, page, rows, orderCode, keyword }) => {
                       className="tabletr"
                     >
                       <td>
-                        <Link className="titlebt" to={`/read?no=${board.no}`}>
+                        <Link className="titlebt" to={`/boardRead/${board.no}`}>
                           {board.title}
                         </Link>
                         {board.hasAnswer === 1 && (
@@ -134,7 +134,7 @@ const BoardListForm = ({ boardList, page, rows, orderCode, keyword }) => {
           </div>
     
           <div className="insert-button">
-            <Link to="/insert" className="btn-primary">
+            <Link to="/boardInsert" className="btn-primary">
               문의하기
             </Link>
           </div>
