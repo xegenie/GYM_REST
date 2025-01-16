@@ -61,13 +61,13 @@ function Header() {
                                 <i className="fa-solid fa-bell" style={{ marginRight: '10px' }}></i>
                                 헬스장 입장
                             </Link>
-                            <Link to="/user/myPage/info">
+                            <Link to="/User">
                                 <i className="fa-solid fa-bell" style={{ marginRight: '10px' }}></i>
                                 마이페이지
                             </Link>
                         <a href="#" onClick={handleLogout}>로그아웃</a>
                         {rolesArray.includes('ROLE_USER') && (
-                            <Link to="/user/myPage/info">마이페이지</Link>
+                            <Link to="/User">마이페이지</Link>
                         )}
                         {(rolesArray.includes('ROLE_ADMIN') || rolesArray.includes('ROLE_TRAINER')) && (
                             <Link to="/admin/user/list">관리자페이지</Link>

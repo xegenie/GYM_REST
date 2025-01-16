@@ -1,0 +1,196 @@
+.oswUser body {
+    background-color: #e9ecef;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+.oswUser .main-text1 {
+    text-align: center;
+    font-weight: 900;
+    font-size: xx-large;
+    padding-bottom: 10px;
+}
+.oswUser .wrapper {
+    width: 900px;
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #252222;
+    padding: 30px;
+    border-radius: 10px;
+}
+.oswUser .button-group {
+    display: flex;
+    background-color: #333;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+.oswUser .button-group button {
+    flex: 1;
+    padding: 15px 0;
+    border: none;
+    cursor: pointer;
+    background-color: #9FD0D5;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+}
+.oswUser .button-group button:hover {
+    background-color: #81d4fa;
+}
+.oswUser .button-group .active {
+    background-color: #7e57c2;
+    color: rgb(255, 255, 255);
+}
+
+.oswUser .info-table {
+    border-radius: 3px;
+    overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #0a0a0a;
+}
+.oswUser .info-table th, .oswUser .info-table td {
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+}
+.oswUser .info-table th {
+    background-color: #9FD0D5;
+    color: #fff;
+    width: 30%;
+}
+.oswUser .info-table td {
+    background-color: #f8f9fa;
+    width: 70%;
+    text-align: left !important;
+}
+.oswUser .info-table tr:nth-child(even) td {
+    background-color: #e9ecef;
+}
+.oswUser .edit-button {
+    padding: 20 30px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    float: right;
+}
+.oswUser .edit-button:hover {
+    font-size: 20px; /* 글자 크기 증가 */
+    font-weight: bold; /* 글씨 두껍게 */
+}
+
+.oswUser .main-text {
+    text-align: center;
+    font-weight: 900;
+    font-size: xx-large;
+    padding-bottom: 10px;
+}
+/* 기존 스타일에 추가 */
+.oswUser button, .oswUser .edit-button, .oswUser .password-button {
+    padding: 10px 20px;
+    border: none;
+    /* border-radius: 5px; */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 공통 버튼 스타일 */
+.oswUser button {
+    color: #000000;
+    background-color: #9FD0D5;
+    margin-right: 10px;
+}
+
+.oswUser button:hover {
+    background-color: #81d4fa;
+    color: #dee2e6;
+}
+
+/* 비밀번호 수정 버튼 */
+.oswUser .password-button {
+    color: #333;
+    background-color: #9FD0D5;
+    text-decoration: none;
+}
+
+.oswUser .password-button:hover {
+    background-color: #81d4fa;
+    color: #000;
+}
+
+/* 삭제 버튼 */
+.oswUser button.delete {
+    background-color: #d32f2f;
+}
+
+.oswUser button.delete:hover {
+    background-color: #b71c1c;
+}
+
+.oswUser .button-tr button {
+    border-radius: 8px;
+}
+
+/* 공통 입력 폼 컨테이너 스타일 */
+.oswUser .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 아이콘 스타일 */
+.oswUser .input-icon {
+    color: #7e57c2;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* 입력 필드 스타일 */
+.oswUser .styled-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    color: #333;
+    padding: 5px;
+}
+
+/* 포커스 시 효과 */
+.oswUser .styled-input:focus {
+    border-bottom: 2px solid #7e57c2;
+}
+
+.oswUser .input-container:hover {
+    box-shadow: 0 0 8px rgba(126, 87, 194, 0.6);
+}
+
+.oswUser .button-group {
+    display: flex;
+    background-color: #333;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.oswUser .button-group button {
+    flex: 1;
+    padding: 15px 0;
+    border: none;
+    cursor: pointer;
+    background-color: #9FD0D5;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+    margin: 0; /* 여백 제거 */
+}
