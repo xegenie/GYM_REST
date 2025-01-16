@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/user/board")
+@RequestMapping("/board")
 public class BoardController {
 
     @Autowired
@@ -68,18 +68,20 @@ public class BoardController {
         response.put("pageUrl", pageUrl);
         response.put("list",boardList);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
     @GetMapping("/{no}")
-    public String select(@AuthenticationPrincipal CustomUser authuser, @PathVariable("no") Long no)
+    public ResponseEntity<?> select(@PathVariable("no") Long no)
             throws Exception {
         // 게시글 조회
         Board board = boardService.select(no);
         List<Answer> answerList = answerService.listByParent(no);
-
-        return "user/board/read";
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("board", board);
+        response.put("answerList", answerList);      
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     // 등록처리
