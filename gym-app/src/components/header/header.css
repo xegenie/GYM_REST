@@ -1,16 +1,15 @@
-
-* {
+.oswHeader * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-html {height:100%;}
-body{
+.oswHeader html {height:100%;}
+.oswHeader body {
     display: flex;
     flex-direction: column;
 }
 
-body.fullBody {
+.oswHeader body.fullBody {
     display:flex;
     width:100%;
     height:100%;
@@ -18,14 +17,14 @@ body.fullBody {
     justify-content:space-between;
     align-items:center;
 }
-.top-space {
+.oswHeader .top-space {
     display:flex;
     width:100%;
     height:80px;
     min-height: 80px;
 }
 
-.header {
+.oswHeader .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,7 +38,7 @@ body.fullBody {
     z-index: 1000;
 }
 
-.menu-btn {
+.oswHeader .menu-btn {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -49,26 +48,25 @@ body.fullBody {
     position: relative;
 }
 
-.menu-btn div {
+.oswHeader .menu-btn div {
     background-color: white;
     height: 3px;
     transition: all 0.3s;
-    
 }
 
-.menu-btn.open div:nth-child(1) {
+.oswHeader .menu-btn.open div:nth-child(1) {
     transform: rotate(45deg) translate(8px, 6px);
 }
 
-.menu-btn.open div:nth-child(2) {
+.oswHeader .menu-btn.open div:nth-child(2) {
     opacity: 0;
 }
 
-.menu-btn.open div:nth-child(3) {
+.oswHeader .menu-btn.open div:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
-.logo {
+.oswHeader .logo {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -76,55 +74,51 @@ body.fullBody {
     align-items: center;
 }
 
-.logo img {
+.oswHeader .logo img {
     height: 75px;  
     margin-right: 10px;
     margin-top: 10px;
 }
 
-.nav-links {
+.oswHeader .nav-links {
     display: flex;
     gap: 30px;
     margin-left: auto;
     margin-right: 30px;
-
 }
 
-.nav-links a {
+.oswHeader .nav-links a {
     color: white;
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
 }
 
-.nav-links a:hover {
+.oswHeader .nav-links a:hover {
     color: #9FD0D5;
 }
 
-.menu {
+.oswHeader .menu {
     display: flex;
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.8);
     position: fixed;
-    top: 75px; /* 헤더 아래 */
-    left: 0; /* 위치를 화면 왼쪽으로 고정 */
-    transform: translateX(-100%); /* 초기 상태에서 화면 밖으로 숨김 */
+    top: 75px;
+    left: 0;
+    transform: translateX(-100%);
     height: calc(100% - 10px);
     width: 300px;
     color: white;
     overflow-y: auto;
     z-index: 999;
-    transition: transform 0.3s ease-in-out; /* 부드러운 애니메이션 */
+    transition: transform 0.3s ease-in-out;
 }
 
-
-
-.menu.open {
-    transform: translateX(0); /* 화면 안으로 슬라이드 */
+.oswHeader .menu.open {
+    transform: translateX(0);
 }
 
-
-.menu p {
+.oswHeader .menu p {
     font-weight: bold;
     display: block;
     height: 70px;
@@ -133,18 +127,17 @@ body.fullBody {
     color: #9FD0D5;
 }
 
-.menu ul {
+.oswHeader .menu ul {
     list-style-type: none;
     padding: 0;
     text-align: center;
-    
 }
 
-.menu ul li {
+.oswHeader .menu ul li {
     width: 100%;
 }
 
-.menu ul li a {
+.oswHeader .menu ul li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
@@ -154,49 +147,45 @@ body.fullBody {
     line-height: 80px;
 }
 
-.menu ul li a:hover {
+.oswHeader .menu ul li a:hover {
     background-color: #0f0f0f;
 }
 
-
-footer {
+.oswHeader footer {
     margin-top: auto;
     width:100%;
 }
 
-.footer{
+.oswHeader .footer {
     display: flex;
     flex-direction:column;
     height: 100px;
     width: 100%;
     text-align: center;
-   justify-content: center;
-   background-color: #000000;
+    justify-content: center;
+    background-color: #000000;
     margin-top: auto !important; 
 }
 
-.footer1 {
+.oswHeader .footer1 {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-.footer1 a{
-    margin:  30px; 
+.oswHeader .footer1 a {
+    margin: 30px; 
     color: white; 
     text-decoration: none; 
-    height: 10px; 
-  
-   
+    height: 10px;
 }
 
-.footer2{
+.oswHeader .footer2 {
     display: flex;  
     justify-content: center;  
     width: 100%;  
-  
 }
 
-.footer2-1{
+.oswHeader .footer2-1 {
     height: 1px;
     width: 100%;
     background-color: aliceblue;
@@ -204,20 +193,19 @@ footer {
     justify-content: center;
 }
 
-
-.footer3{
+.oswHeader .footer3 {
     color: white;
     height: 30px;
     font-size: small;
     text-align: center;
-   padding-top: 0;
-   margin-top: 10px;
-
+    padding-top: 0;
+    margin-top: 10px;
 }
 
-
-.footer1-1, .footer1-2, .footer1-3, .footer1-4{
+.oswHeader .footer1-1, 
+.oswHeader .footer1-2, 
+.oswHeader .footer1-3, 
+.oswHeader .footer1-4 {
     font-size: small;
     margin-top: 10px;
-    
 }

@@ -35,6 +35,8 @@ function Header() {
     const rolesArray = Array.isArray(roles) ? roles : [];
 
     return (
+        
+        <div className="oswHeader">
         <header className="header">
             <div className="menu-btn" id="menu-btn">
                 <div></div>
@@ -56,12 +58,9 @@ function Header() {
                 {isAuthenticated && (
                     <>
                         <a href="/generate-qr-code" onClick={handleQrSubmit}>
-                            <i className="fa-solid fa-bell" style={{ marginRight: '10px' }}>
-                                 
-                                </i>헬스장 입장
-                               
+                            <i className="fa-solid fa-bell" style={{ marginRight: '10px' }}></i>
+                            헬스장 입장
                         </a>
-                       
                         <a href="#" onClick={handleLogout}>로그아웃</a>
                         {rolesArray.includes('ROLE_USER') && (
                             <Link to="/user/myPage/info">마이페이지</Link>
@@ -72,26 +71,9 @@ function Header() {
                     </>
                 )}
             </nav>
-
-            <div className="menu" id="menu">
-                {isAuthenticated && (
-                    <p style={{ textAlign: 'center' }}>{userInfo?.name} 님 환영합니다.</p>
-                )}
-                <ul>
-                    <li><Link to="/ranking">출석 랭킹</Link></li>
-                    <li><Link to="/user/ticket/choice">이용권 구매</Link></li>
-                    {rolesArray.includes('ROLE_TRAINER') && (
-                        <li>
-                            <Link to={`/user/reservation/reservation?trainerNo=${userInfo?.trainerNo}`}>PT 예약</Link>
-                        </li>
-                    )}
-                    {rolesArray.includes('ROLE_USER') && (
-                        <li><Link to="/user/schedule/plan">운동계획표</Link></li>
-                    )}
-                    <li><Link to="/user/board/boardList">문의게시판</Link></li>
-                </ul>
-            </div>
         </header>
+    </div>
+    
     );
 }
 
