@@ -76,7 +76,8 @@ function App() {
         <Route path='/FindId' element={ <FindId /> }></Route>
         <Route path='/FindPw' element={ <FindPw /> }></Route>
         <Route path='/User' element={ <User /> }></Route>
-        <Route path='/UserInfo' element={<UserInfo/>}></Route>
+        <Route path='/userInfo' element={<UserInfo/>}></Route>
+        <Route path='/newPw' element={ <newPw /> }></Route>
 
         {/* 어드민 */}
         <Route path='/UserUpdate' element=
