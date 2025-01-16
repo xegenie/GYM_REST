@@ -15,7 +15,7 @@ public interface BuyListMapper {
     public List<BuyList> list(@Param("keyword") String keyword, @Param("page") Page page) throws Exception;
     
     public int insert(BuyList buyList) throws Exception;
-    public int updateTrainer(@Param("trainerNo") int trainerNo, @Param("userNo") int userNo) throws Exception;
+    public int updateTrainer(@Param("trainerNo") int trainerNo, @Param("userNo") Long userNo) throws Exception;
     
     public int cancel(int no) throws Exception;
 

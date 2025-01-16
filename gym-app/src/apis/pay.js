@@ -10,7 +10,7 @@ export const trainerList = () => api.get(`user/ticket/trainerList`)
 export const normal = () => api.get(`/user/ticket/normal`)
 
 // 결제
-export const paying = () => api.post(`/user/pay/paying`)
+export const paying = (buyList) => api.post(`/user/pay/paying`, buyList)
 
 // 결제 결과 페이지
 export const remove = () => api.delete(`/user/pay/payresult`)

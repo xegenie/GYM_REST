@@ -9,7 +9,7 @@ public class BuyList {
     
     private int no;
     private int ticketNo;
-    private int userNo;
+    private Long userNo;
     private int trainerNo;
     private Date buyDate;
     private Date startDate;

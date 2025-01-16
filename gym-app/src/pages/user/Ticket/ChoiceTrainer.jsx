@@ -1,8 +1,12 @@
 import React from 'react'
+import TrainerList from '../../../components/users/Ticket/ChoiceTrainer'
+import TrainerContextProvider from '../../../contexts/trainerContextProvider'
 
 const ChoiceTrainer = () => {
   return (
-    <div>ChoiceTrainer</div>
+    <TrainerContextProvider>
+      <TrainerList />
+    </TrainerContextProvider>
   )
 }
 
