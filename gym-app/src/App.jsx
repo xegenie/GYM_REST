@@ -34,7 +34,11 @@ import UserUpdate from './pages/admin/User/UserUpdate'
 import LoginContextProvider from './contexts/LoginContextProvider';
 import UserInfo from './pages/user/MyPage/UserInfo'
 import NewPw from './pages/user/User/newPw'
-
+import BoardList from'./pages/user/Board/BoardList'
+import BoardRead from'./pages/user/Board/BoardRead'
+import BoardInsert from'./pages/user/Board/BoardInsert'
+import BoardUpdate from'./pages/user/Board/BoardUpdate'
+import AnswerUpdate from'./pages/user/Board/AnswerUpdate'
 
 function App() {
 
@@ -77,6 +81,13 @@ function App() {
         <Route path='/User' element={ <User /> }></Route>
         <Route path='/userInfo' element={<UserInfo/>}></Route>
         <Route path='/newPw' element={ <NewPw /> }></Route>
+
+        {/* 보드 */}
+        <Route path='/boardList' element={ <BoardList /> }></Route>
+        <Route path='/boardRead' element={ <BoardRead /> }></Route>
+        <Route path='/boardInsert' element={ <BoardInsert /> }></Route>
+        <Route path='/boardUpdate' element={ <BoardUpdate /> }></Route>
+        <Route path='/answerUpdate' element={ <AnswerUpdate /> }></Route>
 
         {/* 어드민 */}
         <Route path='/UserUpdate' element=
