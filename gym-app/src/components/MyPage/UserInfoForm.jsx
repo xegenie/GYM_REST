@@ -20,7 +20,7 @@ const UserInfoForm = ({updateUser, userInfo, removeUser}) => {
   return (
     <div className='UserInfo'>
     <div id="edit-form">
-    <h2 style={{ marginBottom: "10px", fontWeight: 800, color: "white" }}>회원정보 수정</h2>
+    <h2 style={{ marginBottom: "10px", fontWeight: 800, color: "white", marginLeft: "600px" }}>회원정보 수정</h2>
     <form className='login-form' onSubmit={(e) => onUpdate(e)}>
 
       <table className="info-table">

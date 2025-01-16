@@ -71,7 +71,7 @@ body {
     text-align: left !important;
 }
 .info-table tr:nth-child(even) td {
-    background-color: #e9ecef;
+    background-color: #142230;
 }
 .edit-button {
     padding:  20 30px;

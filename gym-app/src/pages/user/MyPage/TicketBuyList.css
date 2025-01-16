@@ -1,26 +1,25 @@
-.osw html, .osw body {
+.oswTicketBuyList html, .oswTicketBuyList body {
     margin: 0;
     padding: 0;
     height: 100%;
 }
 
-.oswUserInfo {
+.oswTicketBuyList {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.oswUserInfo .container1 {
+.oswTicketBuyList .container1 {
     flex: 1;
 }
 
-.osw footer {
+.oswTicketBuyList footer {
     margin: 0;
     padding: 0;
 }
 
-
-.oswUserInfo {
+.oswTicketBuyList {
     background-color: #333;
     font-family: 'Arial', sans-serif;
     color: #333;
@@ -28,7 +27,7 @@
     padding: 0;
 }
 
-.oswUserInfo .container {
+.oswTicketBuyList .container {
     max-width: 900px;
     margin: 50px auto;
     background-color: #302c2c;
@@ -37,14 +36,14 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.oswUserInfo .button-group {
+.oswTicketBuyList .button-group {
     display: flex;
     background-color: #333;
     overflow: hidden;
     margin-bottom: 30px;
 }
 
-.oswUserInfo .button-group button {
+.oswTicketBuyList .button-group button {
     flex: 1;
     padding: 15px 0;
     border: none;
@@ -55,35 +54,35 @@
     font-size: 16px;
 }
 
-.oswUserInfo .button-group button:hover {
+.oswTicketBuyList .button-group button:hover {
     background-color: #81d4fa;
 }
 
-.oswUserInfo .osw .button-group .osw .active {
+.oswTicketBuyList .osw .button-group .osw .active {
     background-color: #7e57c2;
     color: rgb(0, 0, 0);
 }
 
-.oswUserInfo .osw .wrapper {
+.oswTicketBuyList .osw .wrapper {
     background-color: #333;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.oswUserInfo h1 {
+.oswTicketBuyList h1 {
     font-size: 2.5em;
     color: #fff;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.oswUserInfo hr {
+.oswTicketBuyList hr {
     border-top: 1px solid #fff;
     margin-bottom: 30px;
 }
 
-.oswUserInfo body {
+.oswTicketBuyList body {
     background-color: #e9ecef;
     font-family: 'Arial', sans-serif;
     color: #333;
@@ -91,14 +90,14 @@
     padding: 0;
 }
 
-.oswUserInfo .main-text1 {
+.oswTicketBuyList .main-text1 {
     text-align: center;
     font-weight: 900;
     font-size: xx-large;
     padding-bottom: 10px;
 }
 
-.oswUserInfo .wrapper {
+.oswTicketBuyList .wrapper {
     width: 900px;
     max-width: 900px;
     margin: 50px auto;
@@ -107,14 +106,14 @@
     border-radius: 10px;
 }
 
-.oswUserInfo .button-group {
+.oswTicketBuyList .button-group {
     display: flex;
     background-color: #333;
     overflow: hidden;
     margin-bottom: 30px;
 }
 
-.oswUserInfo .button-group button {
+.oswTicketBuyList .button-group button {
     flex: 1;
     padding: 15px 0;
     border: none;
@@ -122,12 +121,10 @@
     background-color: #9FD0D5;
     color: black;
     transition: background-color 0.3s, color 0.3s;
-    font-size: 16px;
 }
- 
 
 .edit-button {
-    padding:  20 30px;
+    padding: 20 30px;
     color: #fff;
     text-decoration: none;
     font-size: 20px;
@@ -136,18 +133,18 @@
 .edit-button:hover {
     font-size: 20px; /* 글자 크기 증가 */
     font-weight: bold; /* 글씨 두껍게 */
-   
 }
-.oswUserInfo .button-group button:hover {
+
+.oswTicketBuyList .button-group button:hover {
     background-color: #81d4fa;
 }
 
-.oswUserInfo .button-group .active {
+.oswTicketBuyList .button-group .active {
     background-color: #7e57c2;
     color: rgb(255, 255, 255);
 }
 
-.oswUserInfo .info-table {
+.oswTicketBuyList .info-table {
     border-radius: 3px;
     overflow: hidden;
     width: 700px;
@@ -158,29 +155,29 @@
     margin-left: 650px;
 }
 
-.oswUserInfo .info-table th, .oswUserInfo .info-table td {
+.oswTicketBuyList .info-table th, .oswTicketBuyList .info-table td {
     padding: 20px;
     text-align: center;
     border: 1px solid #dee2e6;
 }
 
-.oswUserInfo .info-table th {
+.oswTicketBuyList .info-table th {
     background-color: #9FD0D5;
     color: #fff;
     width: 30%;
 }
 
-.oswUserInfo .info-table td {
+.oswTicketBuyList .info-table td {
     background-color: #f8f9fa;
     width: 70%;
     text-align: left !important;
 }
 
-.oswUserInfo .info-table tr:nth-child(even) td {
+.oswTicketBuyList .info-table tr:nth-child(even) td {
     background-color: #e9ecef;
 }
 
-.oswUserInfo .edit-button {
+.oswTicketBuyList .edit-button {
     padding: 20 30px;
     color: #fff;
     text-decoration: none;
@@ -188,19 +185,19 @@
     float: right;
 }
 
-.oswUserInfo .edit-button:hover {
+.oswTicketBuyList .edit-button:hover {
     font-size: 20px;
     font-weight: bold;
 }
 
-.oswUserInfo .main-text {
+.oswTicketBuyList .main-text {
     text-align: center;
     font-weight: 900;
     font-size: xx-large;
     padding-bottom: 10px;
 }
 
-.oswUserInfo button, .oswUserInfo .edit-button, .oswUserInfo .password-button {
+.oswTicketBuyList button, .oswTicketBuyList .edit-button, .oswTicketBuyList .password-button {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
@@ -209,41 +206,41 @@
     font-weight: bold;
 }
 
-.oswUserInfo button {
+.oswTicketBuyList button {
     color: #000000;
     background-color: #9FD0D5;
     margin-right: 10px;
 }
 
-.oswUserInfo button:hover {
+.oswTicketBuyList button:hover {
     background-color: #81d4fa;
     color: #ffffff;
 }
 
-.oswUserInfo .password-button {
+.oswTicketBuyList .password-button {
     color: #333;
     background-color: #9FD0D5;
     text-decoration: none;
 }
 
-.oswUserInfo .password-button:hover {
+.oswTicketBuyList .password-button:hover {
     background-color: #81d4fa;
     color: #000;
 }
 
-.oswUserInfo button.delete {
+.oswTicketBuyList button.delete {
     background-color: #d32f2f;
 }
 
-.oswUserInfo button.delete:hover {
+.oswTicketBuyList button.delete:hover {
     background-color: #b71c1c;
 }
 
-.oswUserInfo .button-tr button {
+.oswTicketBuyList .button-tr button {
     border-radius: 8px;
 }
 
-.oswUserInfo .input-container {
+.oswTicketBuyList .input-container {
     position: relative;
     display: flex;
     align-items: center;
@@ -255,13 +252,13 @@
     box-sizing: border-box;
 }
 
-.oswUserInfo .input-icon {
+.oswTicketBuyList .input-icon {
     color: #7e57c2;
     margin-right: 10px;
     font-size: 16px;
 }
 
-.oswUserInfo .styled-input {
+.oswTicketBuyList .styled-input {
     flex: 1;
     border: none;
     outline: none;
@@ -271,22 +268,22 @@
     padding: 5px;
 }
 
-.oswUserInfo .styled-input:focus {
+.oswTicketBuyList .styled-input:focus {
     border-bottom: 2px solid #7e57c2;
 }
 
-.oswUserInfo .input-container:hover {
+.oswTicketBuyList .input-container:hover {
     box-shadow: 0 0 8px rgba(126, 87, 194, 0.6);
 }
 
-.oswUserInfo .button-group {
+.oswTicketBuyList .button-group {
     display: flex;
     background-color: #333;
     overflow: hidden;
     margin-bottom: 30px;
 }
 
-.oswUserInfo .button-group button {
+.oswTicketBuyList .button-group button {
     flex: 1;
     padding: 15px 0;
     border: none;

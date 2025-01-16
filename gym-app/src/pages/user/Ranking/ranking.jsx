@@ -61,8 +61,8 @@ function Ranking() {
    };
 
    return (
-     <div className="oswRanking">
-       <Header/>
+     <><div className="oswRanking">
+       <Header />
        <div className="fullBody">
          <div className="main">
            <div className="content1">
@@ -123,16 +123,15 @@ function Ranking() {
            </div>
          </div>
 
-         <footer className="footer">
-           {/* 공통 푸터 추가 */}
-         </footer>
+
 
          <script>
            {/* 공통 스크립트 추가 */}
          </script>
        </div>
-       <Footer/>
      </div>
+     <Footer />
+     </>
    );
 }
 

@@ -108,6 +108,8 @@ const Home = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 className="youtube"
+                style={{width : '1300px', height: '800px'}}
+                
               ></iframe>
             </div>
           </div>
@@ -122,6 +124,7 @@ const Home = () => {
                 allowFullScreen
                 loading="lazy"
                 className="map"
+                style={{width : '1300px', height: '700px'}}
               ></iframe>
             </div>
           </div>

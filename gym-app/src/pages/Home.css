@@ -177,7 +177,7 @@ html {
 .osw .map-osw {
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto 20px;
+    margin: 0 auto ;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -190,6 +190,7 @@ html {
     color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 280px;
 }
 
 .osw .location-info h2 {
