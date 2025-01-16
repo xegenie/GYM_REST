@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Home.css'; // CSS 파일 임포트
 import { Link } from 'react-router-dom';
 import Header from '../components/header/header'; // Header 임포트
+import Footer from '../components/Footer/footer';
 
 const Home = () => {
   const [userCount, setUserCount] = useState(0);
@@ -52,7 +53,7 @@ const Home = () => {
       {/* Header 컴포넌트 추가 */}
       <Header />
 
-      <div className='osw'> {/* 첫 번째 섹션 */}
+      <div className='osw'> 
         <div>
           {/* ranking 페이지로 가는 링크 */}
           <Link to="/ranking">
@@ -74,7 +75,7 @@ const Home = () => {
             <button>로그인</button>
           </Link>
 
-          <div className="container" style={{ height: '100vh', width: '100%' }}>
+          <div className="osw" style={{ height: '100vh', width: '100%' }}>
             <img src="/images/메인.png" alt="메인 이미지" className="main-image zoom-animation" />
             <div className="icon">
               <img src="/images/icon.png" alt="로고" className="logo bounce-animation" style={{ zIndex: '-100000' }} />
@@ -146,6 +147,7 @@ const Home = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

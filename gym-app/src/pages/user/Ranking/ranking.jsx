@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import './Ranking.css'; 
 import { LoginContext } from '../../../contexts/LoginContextProvider';
 import Header from '../../../components/header/header';
+import Footer from '../../../components/Footer/footer';
 
 function Ranking() {
    const { isLoading, isLogin, roles, userInfo } = useContext(LoginContext);
@@ -130,6 +131,7 @@ function Ranking() {
            {/* 공통 스크립트 추가 */}
          </script>
        </div>
+       <Footer/>
      </div>
    );
 }
