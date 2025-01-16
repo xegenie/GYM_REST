@@ -5,7 +5,7 @@ import './Reservation.css'
 const ReservationPtList = ({ reservationList }) => {
   return (
     <>
-      <div className="list">
+      <div className="ReservationPtList-container">
         <table>
           <thead style={{ fontWeight: 'bold' }}>
             <tr>
