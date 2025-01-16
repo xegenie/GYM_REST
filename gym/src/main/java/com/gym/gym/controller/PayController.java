@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.BuyList;
@@ -50,16 +52,52 @@ public class PayController {
 
         Long no = userDetails != null ? userDetails.getNo() : 0L;
         List<BuyList> buyList = buyListService.ticketByUser(no);
+
+        // 최근 구매내역 전달
+        BuyList lastBuy = buyListService.lastBuyList(no);
+        Date startDate = new Date();
+        if (lastBuy != null && !"만료".equals(lastBuy.getStatus())) {
+            startDate = lastBuy.getEndDate(); // 마지막 구매 날짜
+            startDate = addDays(startDate, 1); // 1일 추가
+        }
         
         // 정상이면서 제일 오래된 이용권
         List<BuyList> filteredList = buyList.stream()
-            .sorted(Comparator.comparing(BuyList::getStartDate))
-            .collect(Collectors.toList());
-        BuyList startedTicket = filteredList.isEmpty() ? null : filteredList.get(0);
+        .sorted(Comparator.comparing(BuyList::getStartDate))
+        .collect(Collectors.toList());
+        BuyList oldTicket = filteredList.isEmpty() ? null : filteredList.get(0);
         
         Map<String, Object> response = new HashMap<>();
         response.put("buyList", buyList);
-        response.put("startedTicket", startedTicket);
+        response.put("startDate", startDate);
+        response.put("oldTicket", oldTicket);
+        
+        return ResponseEntity.ok(response);
+    }
+    // 이용권 선택 (REST API)
+    @GetMapping("/ticketDateTEST")
+    public ResponseEntity<Map<String, Object>> ticketDateTES(@RequestParam("userNo") Long no) throws Exception {
+
+        List<BuyList> buyList = buyListService.ticketByUser(no);
+
+        // 최근 구매내역 전달
+        BuyList lastBuy = buyListService.lastBuyList(no);
+        Date startDate = new Date();
+        if (lastBuy != null && !"만료".equals(lastBuy.getStatus())) {
+            startDate = lastBuy.getEndDate(); // 마지막 구매 날짜
+            startDate = addDays(startDate, 1); // 1일 추가
+        }
+        
+        // 정상이면서 제일 오래된 이용권
+        List<BuyList> filteredList = buyList.stream()
+        .sorted(Comparator.comparing(BuyList::getStartDate))
+        .collect(Collectors.toList());
+        BuyList oldTicket = filteredList.isEmpty() ? null : filteredList.get(0);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("buyList", buyList);
+        response.put("startDate", startDate);
+        response.put("oldTicket", oldTicket);
         
         return ResponseEntity.ok(response);
     }
@@ -107,6 +145,7 @@ public class PayController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @PostMapping("/pay/paying")
     public ResponseEntity<Map<String, Object>> paying(@AuthenticationPrincipal CustomUser userDetails, @RequestBody BuyList buyList) throws Exception {
+        buyList.setUserNo(userDetails.getNo());
         buyListService.insert(buyList);
         log.info("buyList : " + buyList);
 

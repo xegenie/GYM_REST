@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+.ChoiceTrainer body {
+    background-color: #000000dc;
+}
+
+.ChoiceTrainer a { text-decoration: none; }
+
+.ChoiceTrainer .card {
+    width: 280px;
+    height: 430px;
+    box-shadow: 2px 2px 5px rgba(225, 225, 225 ,0.6);
+}
+
+.ChoiceTrainer .card a {
+    display: block;
+    background-color: #02C16E;
+    color: #fff;
+    width: 70px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+}
+.ChoiceTrainer a:hover {
+    filter: brightness(90%);
+}
+
+.ChoiceTrainer .card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.ChoiceTrainer .card-body h5,
+.ChoiceTrainer .simple {
+    text-align: center;
+    font-weight: bold;
+}
+
+.ChoiceTrainer h1 { 
+    font-size: 60px;
+    color: #fff;
+    margin: auto;
+    font-weight: bold;
+}
+
+.ChoiceTrainer .img {
+    width: 100%;
+    min-height: 250px;
+    max-height: 250px;
+}
+
+.ChoiceTrainer .img img {
+    width: 100%;
+    height: 100%;
+}
+
+.ChoiceTrainer .userCount {
+    font-size: 14px;
+}
+
+.ChoiceTrainer .disabled {
+    pointer-events: none;
+    background-color: #a7a7a7 !important;
+}

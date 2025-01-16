@@ -1,96 +1,93 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { TicketContext } from '../../../contexts/TicketContextProvider';
-import './css/TicketDetail.css';
+import React, { useContext, useEffect } from 'react';
+import * as pay from '../../../apis/pay';
 import { LoginContext } from '../../../contexts/LoginContextProvider';
 import { PayContext } from '../../../contexts/PayContextProvider';
+import { TicketContext } from '../../../contexts/TicketContextProvider';
+import './css/TicketDetail.css';
 
 const NormalTicket = () => {
-  const { ticketList, setTicketList, buyList, startDate } = useContext(TicketContext);
+  const { ticketList, setTicketList, buyList, startDate, oldTicket } = useContext(TicketContext);
   const { userinfo, isLogin } = useContext(LoginContext);
   const { isScriptLoaded } = useContext(PayContext)
 
   const handleTicketChange = (selectedTicketNo) => {
-    setTicketList(prevTicketList => 
-      prevTicketList.map(ticket => 
+    setTicketList(prevTicketList =>
+      prevTicketList.map(ticket =>
         ticket.no === selectedTicketNo
           ? { ...ticket, checked: !ticket.checked }
           : ticket
       )
     );
   };
+  
 
-  const requestPay = () => {
+  const requestPay = async () => {
     if (!isLogin) {
       alert('사용자 정보가 없습니다. 로그인해주세요.');
       return;
     }
 
-    const checkedTicket = ticketList.find(ticket => ticket.checked);
+    const checkedTicket = ticketList.find((ticket) => ticket.checked);
     if (!checkedTicket) {
       alert('상품을 선택하세요.');
       return;
     }
 
-    const { ticketName, ticketPrice, months } = checkedTicket;
-    const name = userinfo?.name;
-    const tel = userinfo?.phone;
-    const email = userinfo?.email;
-    const userNo = userinfo?.no;
-    const startDate = new Date().toISOString();
+    console.log('Checked Ticket:', checkedTicket);
 
-    let endDate = new Date(startDate);
+    const { name, price, months } = checkedTicket;
+    const start = new Date(startDate).toISOString();
+
+    let endDate = new Date(start);
     endDate.setMonth(endDate.getMonth() + months);
 
-    // IAMPORT 스크립트가 로드된 후 결제 요청
     if (isScriptLoaded && window.IMP) {
       window.IMP.init('imp24820185');
-      window.IMP.request_pay({
-        pg: 'html5_inicis',
-        pay_method: 'card',
-        merchant_uid: "IMP" + Date.now(),
-        name: ticketName,
-        amount: ticketPrice,
-        buyer_email: email,
-        buyer_name: name,
-        buyer_tel: tel,
-      }, function (rsp) {
-        if (rsp.success) {
-          const csrfToken = document.querySelector('input[name="csrf"]').value;
+      window.IMP.request_pay(
+        {
+          pg: 'html5_inicis',
+          pay_method: 'card',
+          merchant_uid: 'IMP' + Date.now(),
+          name: name,
+          amount: price,
+          buyer_email: userinfo?.email,
+          buyer_name: userinfo?.name,
+          buyer_tel: userinfo?.phone,
+        },
+        async function (rsp) {
+          if (!rsp.success) {
+            console.error(`결제 실패: ${rsp.error_msg}`);
+          }
 
-          fetch('/user/pay/paying', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': csrfToken,
-            },
-            body: JSON.stringify({
-              ticketNo: checkedTicket.no, 
-              userNo: userNo,
-              startDate: startDate,
-              endDate: endDate.toISOString(),
-            }),
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                window.location.href = '/user/pay/payResult?result=ok';
+          if (rsp.success) {
+            try {
+              const response = await pay.paying({
+                ticketNo: checkedTicket.no,
+                userNo: userinfo?.no,
+                startDate: start,
+                endDate: endDate.toISOString(),
+              });
+
+              // 서버 응답 처리
+              if (response.data.success) {
+                window.location.href = '/pay/payResult?result=ok';
               } else {
                 alert('구매 목록에 추가하는데 실패했습니다.');
               }
-            })
-            .catch(error => {
+            } catch (error) {
+              console.error('결제 요청 중 오류 발생:', error);
               alert('서버와의 통신에 실패했습니다.');
-              console.error(error);
-            });
-        } else {
-          alert('결제가 실패했습니다. 다시 시도해주세요.');
+            }
+          } else {
+            alert('결제가 실패했습니다. 다시 시도해주세요.');
+          }
         }
-      });
+      );
     } else {
-      alert("IAMPORT 라이브러리 로드 후 결제를 시도해주세요.");
+      alert('IAMPORT 라이브러리 로드 후 결제를 시도해주세요.');
     }
   };
-
+  
   return (
     <div className="ticketDetail">
       <div className="ticket-container" style={{ marginTop: '150px', marginBottom: '100px' }}>
@@ -102,7 +99,7 @@ const NormalTicket = () => {
             <span>보유중인 이용권 : &ensp;</span>
             <span>{buyList.length > 0 ? buyList[buyList.length - 1].ticketName : '없음'}</span>
             &ensp;(&ensp;
-            <span>{startDate ? new Date(startDate.startDate).toLocaleDateString() + ' ~ ' : '-'}</span>
+            <span>{oldTicket ? new Date(oldTicket.startDate).toLocaleDateString() + ' ~ ' : '-'}</span>
             &nbsp;
             <span>{buyList.length > 0 ? new Date(buyList[buyList.length - 1].endDate).toLocaleDateString() : ''}</span>
             &ensp;)

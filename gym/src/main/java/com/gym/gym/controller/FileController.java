@@ -1,59 +1,83 @@
 package com.gym.gym.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gym.gym.domain.Files;
 import com.gym.gym.service.FileService;
-import com.gym.gym.util.MediaUtil;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/files")
+@CrossOrigin("*")
 public class FileController {
 
     @Autowired
     private FileService fileService;
+    @Autowired 
+    private ResourceLoader resourceLoader;
 
     /**
      * 이미지 썸네일 제공
      * @param no (파일 ID)
-     * @return 이미지 데이터
      * @throws Exception
      */
     @GetMapping("/{no}/thumbnail")
-    public ResponseEntity<byte[]> getThumbnail(@PathVariable("no") int no) throws Exception {
-        Files file = fileService.select(no);
-        if (file == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public void getThumbnail(@PathVariable("no") int no, HttpServletResponse response) throws Exception {
+        try {
+            Files file = fileService.select(no);
+            String filePath = file != null ? file.getPath() : null;
+
+            File imgFile;
+            Resource resource = resourceLoader.getResource("classpath:static/img/no-image.png");
+
+            if (filePath == null || !(imgFile = new File(filePath)).exists()) {
+                imgFile = resource.getFile();
+                filePath = imgFile.getPath();
+            }
+
+            String ext = filePath.substring(filePath.lastIndexOf(".") + 1);
+            String mimeType = MimeTypeUtils.parseMimeType("image/" + ext).toString();
+            MediaType mType = MediaType.valueOf(mimeType);
+
+            if (mType == null) {
+                response.setContentType(MediaType.IMAGE_PNG_VALUE);
+                imgFile = resource.getFile();
+            } else {
+                response.setContentType(mType.toString());
+            }
+
+            FileInputStream fis = new FileInputStream(imgFile);
+            ServletOutputStream sos = response.getOutputStream();
+            FileCopyUtils.copy(fis, sos);
+        } catch (Exception e) {
+            log.error("Error while serving thumbnail", e);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
-        File f = new File(file.getPath());
-        byte[] fileData = FileCopyUtils.copyToByteArray(f);
-        String ext = file.getPath().substring(file.getPath().lastIndexOf(".") + 1);
-        MediaType mediaType = MediaUtil.getMediaType(ext);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(mediaType);
-        return ResponseEntity.ok().headers(headers).body(fileData);
     }
-
+    
     /**
      * 파일 다운로드
      * @param no (파일 ID)
@@ -99,8 +123,8 @@ public class FileController {
      * @return 파일 목록
      * @throws Exception
      */
-    @GetMapping
-    public ResponseEntity<List<Files>> getFileList(@RequestParam("profileNo") int profileNo) throws Exception {
+    @GetMapping("/{profileNo}")
+    public ResponseEntity<List<Files>> getFileList(@PathVariable("profileNo") int profileNo) throws Exception {
         Files file = new Files();
         file.setProfileNo(profileNo);
         List<Files> fileList = fileService.listByParent(file);

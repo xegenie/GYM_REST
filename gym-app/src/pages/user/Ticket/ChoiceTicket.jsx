@@ -1,11 +1,11 @@
 import React from 'react'
-import Choice from '../../../components/users/Ticket/ChoiceTicket'
+import TicketType from '../../../components/users/Ticket/ChoiceTicket'
 import TicketContextProvider from '../../../contexts/TicketContextProvider'
 
 const ChoiceTicket = () => {
   return (
     <TicketContextProvider>
-      <Choice />
+      <TicketType />
     </TicketContextProvider>
   )
 }
