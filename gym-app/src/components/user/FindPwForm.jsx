@@ -44,7 +44,7 @@ const FindPwForm = ({findPw}) => {
         </div>
   
         <main className="form-signin login-box w-100 m-auto">
-          <form id="form" onSubmit={validateForm} className="needs-validation">
+          <form id="form" onSubmit={(e) => validateForm(e)} className="needs-validation">
             <div className="centerdhkwnj">
               <div className="input-group my-2">
                 <label htmlFor="name">이름</label>
