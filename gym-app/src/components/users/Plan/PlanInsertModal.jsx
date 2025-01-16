@@ -3,9 +3,9 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import { useDate } from "../../../contexts/DateContextProvider";
 
-const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown}) => {
+const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
 
-  const { currentDate, setCurrentDate, formatDate } = useDate();
+  const { currentDate, formatDate, insertDate, setInsertDate } = useDate();
 
   // ⚪❗ 초기값 세팅하기
   const [start, setStart] = useState(currentDate)
@@ -25,24 +25,31 @@ const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown}) => {
   };
 
   useEffect(() => {
+    setInsertDate(currentDate)
+  }, [currentDate]);
+
+  useEffect(() => {
     // 드롭다운 세팅
     const cleanupStart = setupDropdown("dropdown-button-start", "options-start");
     const cleanupEnd = setupDropdown("dropdown-button-end", "options-end");
 
-    const formattedDate = `${currentDate.getMonth() + 1}/${currentDate.getDate()} (${currentDate.toLocaleDateString('ko-KR', { weekday: 'short' })})`;
-    setFormattedDate(formattedDate);
-
     return () => {
       cleanupStart();
       cleanupEnd();
-    }
-  }, [currentDate]);
+    };
+  }, [setupDropdown]);
+
+  useEffect(() => {
+    const formattedDate = `${insertDate.getMonth() + 1}/${insertDate.getDate()} (${insertDate.toLocaleDateString('ko-KR', { weekday: 'short' })})`;
+    setFormattedDate(formattedDate);
+    console.log("insertDate formattedDate: " + formattedDate);
+  }, [insertDate]);
   
   return (
     <div className='pop-up input-schedule'>
       <div className="popup-type">
         <div className="icons">
-          <a className="input-schedule-close"><CloseRoundedIcon /></a>          
+          <a className="input-schedule-close" onClick={onClose}><CloseRoundedIcon /></a>          
         </div>
       </div>
       <div className="popup-content">

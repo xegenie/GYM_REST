@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction';
 import { useDate } from '../../../contexts/DateContextProvider';
 
 const MainCalendar = () => {
 
-  const { currentDate, setCurrentDate, planList, rsvList, setClickedPlan, setClickedRsv } = useDate();
+  const { currentDate, setCurrentDate, planList, rsvList, setClickedPlan, setClickedRsv,
+          isPlanInfoVisible, setIsPlanInfoVisible,
+          isRsvInfoVisible, setIsRsvInfoVisible,
+          isPlanInsertVisible, setIsPlanInsertVisible, insertDate, setInsertDate } = useDate();
   const [events, setEvents] = useState([]);
   const calendarRef = useRef(null);
+  const [dateClicked, setDateClicked] = useState(false);
 
   useEffect(() => {
     var formattedevents = [planList, rsvList].flatMap(events =>
@@ -67,21 +72,35 @@ const MainCalendar = () => {
     switch (info.event.extendedProps.type) {
       case 'plan':
         setClickedPlan(clickedEvent)
+        setIsPlanInfoVisible(true)
         break;
-      case 'reservation':
-        setClickedRsv(clickedEvent)
+        case 'reservation':
+          setClickedRsv(clickedEvent)
+          setIsRsvInfoVisible(true)
         break;
       default:
         break;
     }
   }
 
+  const handleDateClick = (info) => {
+    setInsertDate(info.date);
+    setDateClicked(true); // 날짜 클릭 시 상태 업데이트
+  };
+
+  useEffect(() => {
+    if (dateClicked) {
+      setIsPlanInsertVisible(true);
+      setDateClicked(false); // 상태 초기화
+    }
+  }, [insertDate]);
+
   return (
     <div className="card flex-grow-1 flex-shrink-1">
       <div className="container flex-grow-1 flex-shrink-1 border-0">
         <FullCalendar
           ref={calendarRef}
-          plugins={[ dayGridPlugin ]}
+          plugins={[ dayGridPlugin, interactionPlugin ]}
           initialView="dayGridMonth"
           locale={'ko'}
           events={events}
@@ -100,6 +119,7 @@ const MainCalendar = () => {
             right: 'myCustomPrevButton,myCustomNextButton',
           }}
           eventClick={handleEvnetClick}
+          dateClick={handleDateClick}
         />
       </div>
     </div>
