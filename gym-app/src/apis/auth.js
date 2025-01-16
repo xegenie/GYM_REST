@@ -1,5 +1,8 @@
 import api from './api'
 
+// 회원 목록
+export const list = () => api.get('/user/list')
+
 // 회원가입
 export const join = (data) => api.post(`/user`, data)
 

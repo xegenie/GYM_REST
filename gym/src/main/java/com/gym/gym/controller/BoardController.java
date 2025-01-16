@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -76,40 +77,31 @@ public class BoardController {
     public ResponseEntity<?> select(@PathVariable("no") Long no)
             throws Exception {
         // 게시글 조회
+        log.info(no+"no");
         Board board = boardService.select(no);
         List<Answer> answerList = answerService.listByParent(no);
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("board", board);
-        response.put("answerList", answerList);      
+        response.put("answer", answerList);      
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     // 등록처리
     // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @PostMapping()
-    public String insertPost(@AuthenticationPrincipal CustomUser authuser,
-            Board board) throws Exception {
+    public ResponseEntity<?> insertPost(@RequestBody Board board, @AuthenticationPrincipal CustomUser authuser ) throws Exception {
 
         board.setUserNo(authuser.getUser().getNo());
         int result = boardService.insert(board);
 
         if (result > 0) {
-
-            return "redirect:boardList";
+            log.info("등록 성공");
+            return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
         }
-        return "redirect:insert?error";
+        return new ResponseEntity<>("FAIL",HttpStatus.BAD_REQUEST);
     }
 
-    // 수정
-    /**
-     * #p0, #p1로 파라미터 인덱스를 지정하여, 가져올 수 있다.
-     * 여기서는 요청 파라미터로 넘어온 id => #p0
-     * "@빈이름" 형태로 특정 변의 메소드를 호출할 수 있다.
-     * @Service("BoardService")
-     */
-    // @PreAuthorize("hasRole('ADMIN') or hasRole('TRAINER') or (#p0 != null and
-    // @BoardService.isOwner(#p0, authentication.principal.user.no))")
-    // @PreAuthorize(" hasRole('ADMIN') or hasRole('TRAINER')")
+
     @GetMapping("/answerUpdate")
     public String answerUpdate(@RequestParam("no") Long no, Model model) throws Exception {
         Answer answer = answerService.select(no);
@@ -122,31 +114,35 @@ public class BoardController {
     // @PreAuthorize("hasRole('ADMIN') or (#p0 != null and
     // @BoardService.isOwner(#p0, authentication.principal.user.no))")
     @PutMapping()
-    public String updatePost(@RequestParam("no") Long no, Board board) throws Exception {
+    public ResponseEntity<?> updatePost(@RequestBody Board board) throws Exception {
+        
         int result = boardService.update(board);
+
         if (result > 0) {
 
-            return "redirect:read?no=" + board.getNo();
+            return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
         }
-        return "redirect:update?error&no=" + board.getNo();
+        return new ResponseEntity<>("FAIL",HttpStatus.BAD_REQUEST);
     }
 
     // 삭제 처리
     // @PreAuthorize("hasRole('ADMIN') or (#p0 != null and
-    // @BoardService.isOwner(#p0, authentication.principal.user.no))")
-    @DeleteMapping()
-    public String delete(@RequestParam("no") Long no) throws Exception {
-        int result1 = answerService.deleteByParent(no);
-            if (result1 > 0) {
-                int result = boardService.delete(no);
-            
-            if (result > 0) {
-                return "redirect:boardList";
-            }
-        }
-            return "redirect:/board/update?error&id=" + no;
-    }
+    // @BoardService.isOwner(#p0, .principal.user.no))")
+    @DeleteMapping("/{no}")
+    public ResponseEntity<?> delete(@PathVariable("no") Long no) throws Exception {
+        log.info(no+"sdfdgs");
 
+        
+            answerService.deleteByParent(no);
+        int result = boardService.delete(no);
+            
+                if (result > 0) {
+
+                    return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+                }
+            
+            return new ResponseEntity<>("FAIL",HttpStatus.BAD_REQUEST);
+    }
    
 
    @PutMapping("/answerUpdate")

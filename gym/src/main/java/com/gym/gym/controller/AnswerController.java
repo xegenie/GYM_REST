@@ -3,6 +3,8 @@ package com.gym.gym.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,15 +48,18 @@ public class AnswerController {
     
     @ResponseBody
     @PostMapping()
-    public String answerInsert( @AuthenticationPrincipal CustomUser authuser,@RequestBody Answer answer) throws Exception {
+    public ResponseEntity<?> answerInsert( @AuthenticationPrincipal CustomUser authuser,@RequestBody Answer answer) throws Exception {
         Users user = authuser.getUser();
         answer.setUserNo(user.getNo());
         int result = answerService.insert(answer);
-        if (result > 0) {
-            return "SUCCESS";
-        }
-        return "FAIL";
+            if (result > 0) {
+
+                    return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+                }
+            
+            return new ResponseEntity<>("FAIL",HttpStatus.BAD_REQUEST);
     }
+   
     
 
     @GetMapping
@@ -68,16 +73,17 @@ public class AnswerController {
     }
     
 
-    @ResponseBody
     @DeleteMapping("/{no}")
-    public String deleteAnswer(  @PathVariable("no") Long no) throws Exception{
+    public ResponseEntity<?> deleteAnswer(@PathVariable("no") Long no) throws Exception{
       
-        int result = answerService.delete(no);
+        int result = answerService.deleteByParent(no);
 
-        if(result > 0){
-            return "SUCCESS";
+        if (result > 0) {
+
+            return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
         }
-        return "FAIL";
+    
+            return new ResponseEntity<>("FAIL",HttpStatus.BAD_REQUEST);
     }
 
 
@@ -90,17 +96,16 @@ public class AnswerController {
         return "FAIL";
     }
 
-    @ResponseBody
-    @PutMapping("")
-    public String updateAnswer(@RequestBody Answer answer) throws Exception {
+    @PutMapping
+    public ResponseEntity<?> updateAnswer(@RequestBody Answer answer) throws Exception {
         int result = answerService.update(answer);
-        if(result > 0){
-            return "SUCCESS";
+        if (result > 0) {
+
+            return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
         }
-        return "FAIL";
-
+    
+            return new ResponseEntity<>("FAIL",HttpStatus.BAD_REQUEST);
     }
-
 
 
 

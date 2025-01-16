@@ -22,7 +22,7 @@ public interface BoardService {
     // 수정
     public int update(Board board) throws Exception;
     // 삭제
-    public int delete(@Param("no") Long no) throws Exception;
+    public int delete(Long no) throws Exception;
 
     // 데이터 개수
     public int count(@Param("option")Option option) throws Exception;

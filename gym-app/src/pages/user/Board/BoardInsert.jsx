@@ -1,8 +1,9 @@
 import React from 'react'
+import BoardInsertContainer from '../../../containers/User/Board/BoardInsertContainer'
 
 const BoardInsert = () => {
   return (
-    <div>BoardInsert</div>
+    <BoardInsertContainer/>
   )
 }
 

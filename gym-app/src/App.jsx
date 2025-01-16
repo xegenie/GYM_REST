@@ -88,15 +88,15 @@ function App() {
 
         {/* 보드 */}
         <Route path='/boardList' element={ <BoardList /> }></Route>
-        <Route path='/boardRead' element={ <BoardRead /> }></Route>
+        <Route path='/boardRead/:no' element={ <BoardRead /> }></Route>
         <Route path='/boardInsert' element={ <BoardInsert /> }></Route>
-        <Route path='/boardUpdate' element={ <BoardUpdate /> }></Route>
-        <Route path='/answerUpdate' element={ <AnswerUpdate /> }></Route>
+        <Route path='/boardUpdate/:no' element={ <BoardUpdate /> }></Route>
+        <Route path='/answerUpdate/:no' element={ <AnswerUpdate /> }></Route>
 
         {/* 어드민 */}
-        <Route path='/UserUpdate' element=
+        <Route path='/userUpdate' element=
         { <UserUpdate /> }></Route>
-        <Route path='/UserList' element={ <UserList /> }></Route>
+        <Route path='/admin/userList' element={ <UserList /> }></Route>
       </Routes>
       </LoginContextProvider>
     </BrowserRouter>

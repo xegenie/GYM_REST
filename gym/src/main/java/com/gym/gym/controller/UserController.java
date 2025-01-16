@@ -1,6 +1,8 @@
 package com.gym.gym.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,21 +139,24 @@ public class UserController {
 
     // 유저리스트
     // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @GetMapping("/admin/user/list")
-    public String userlist(Model model
-                        ,@ModelAttribute Option option, @ModelAttribute Page page) throws Exception {
+    @GetMapping("/user/list")
+    public ResponseEntity<?> userlist( @ModelAttribute Option option, @ModelAttribute Page page) throws Exception {
         List<Users> userList = userService.list(option,page);
 
-        String pageUrl = UriComponentsBuilder.fromPath("")
+            String pageUrl = UriComponentsBuilder.fromPath("user/board/boardList")
                 .queryParam("keyword", option.getKeyword())
                 .queryParam("code", option.getCode())
                 .queryParam("rows", page.getRows())
                 .queryParam("orderCode", option.getOrderCode())
                 .build()
                 .toUriString();
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("pageUrl", pageUrl);
+        response.put("list",userList);
 
-        return "admin/user/list";
-                        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
 
     // 관리자 : 회원 정보 수정 이동
     // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")

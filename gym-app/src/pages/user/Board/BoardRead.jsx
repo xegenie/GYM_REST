@@ -1,8 +1,9 @@
 import React from 'react'
+import BoardReadContainer from '../../../containers/User/Board/BoardReadContainer'
 
 const BoardRead = () => {
   return (
-    <div>BoardRead</div>
+    <BoardReadContainer />
   )
 }
 
