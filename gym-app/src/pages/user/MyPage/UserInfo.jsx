@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { LoginContext } from '../../../contexts/LoginContextProvider'
 import * as auth from '../../../apis/auth'
 import * as Swal from '../../../apis/alert'
+import './UserInfo.css';
+import Header from '../../../components/header/header';
+import Footer from '../../../components/Footer/footer';
 
 const UserInfo = () => {
 
@@ -85,13 +88,15 @@ const UserInfo = () => {
 
   return (
     <>
-    <div className="container">
+    <Header/>
+    <div className="oswUserInfo">
         <h1>UserInfo</h1>
         <hr />
         <h2>마이페이지</h2>
        
         <UserInfoForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
         
+        <Footer/>
     </div>
  </>
   )

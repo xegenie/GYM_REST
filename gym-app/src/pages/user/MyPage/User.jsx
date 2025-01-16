@@ -5,6 +5,9 @@ import * as Swal from '../../../apis/alert'
 import { LoginContext } from '../../../contexts/LoginContextProvider'
 import UserForm from '../../../components/MyPage/UserForm'
 import './User.css';
+import '../../../components/header/header'
+import Header from '../../../components/header/header'
+import Footer from '../../../components/Footer/footer'
 
 
 const User = () => {
@@ -81,16 +84,18 @@ const User = () => {
  
 
  return (
-  <div className="oswUser">
+   <div className="oswUser" style={{backgroundColor:'black'}}>
+    <Header/>
     <div>
       <div className="container">
         <h1>User</h1>
         <hr />
-        <h2>마이페이지</h2>
+        <h2 style={{backgroundColor:'black'}}>마이페이지</h2>
 
         <UserForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
       </div>
     </div>
+    <Footer/>
   </div>
 );
 }
