@@ -40,6 +40,9 @@ import BoardInsert from'./pages/user/Board/BoardInsert'
 import BoardUpdate from'./pages/user/Board/BoardUpdate'
 import AnswerUpdate from'./pages/user/Board/AnswerUpdate'
 import TicketBuyList from './pages/user/MyPage/TicketBuyList'
+import TrainerList from './pages/admin/TrainerPorfile/TrainerList'
+import TrainerInsert from './pages/admin/TrainerPorfile/TrainerInsert'
+import TrainerUpdate from './pages/admin/TrainerPorfile/TrainerUpdate'
 
 function App() {
 
@@ -59,6 +62,9 @@ function App() {
         <Route path='/admin/ticket/ticketInsert' element={ <TicketInsert /> }></Route>
         <Route path='/admin/ticket/ticketList' element={ <TicketListAdmin /> }></Route>
         <Route path='/admin/ticket/ticketUpdate' element={ <TicketUpdate /> }></Route>
+        <Route path='/admin/trainer/list' element={ <TrainerList /> }></Route>
+        <Route path='/admin/trainer/insert' element={ <TrainerInsert /> }></Route>
+        <Route path='/admin/trainer/update' element={ <TrainerUpdate /> }></Route>
         <Route path='/admin/attendanceList' element={ <AttendanceList /> }></Route>
 
         <Route path='/myPage/ptList' element={ <ReservationPtListPage /> }></Route>
