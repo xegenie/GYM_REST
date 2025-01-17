@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/buyList")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:5178", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BuyListController {
 
     @Autowired
