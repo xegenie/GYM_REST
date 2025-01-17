@@ -17,7 +17,7 @@ const LoginContextProvider = ({ children }) => {
   // 👩‍💼 사용자 정보 
   const [userInfo, setUserInfo] = useState(null)
   // 💎 권한 정보
-  const [roles, setRoles] = useState( {isUser : false, isAdmin : false} )
+  const [roles, setRoles] = useState( {isUser : false, isAdmin : false, isTrainer : false} )
 
   // 페이지 이동
   const navigate = useNavigate()
@@ -83,7 +83,7 @@ const LoginContextProvider = ({ children }) => {
     localStorage.removeItem("userInfo")
 
     // 권한 정보 초기화
-    setRoles({ isUser: false, isAdmin: false })
+    setRoles({ isUser: false, isAdmin: false, isTrainer: false })
     localStorage.removeItem("roles")
 }
 
@@ -92,26 +92,25 @@ const LoginContextProvider = ({ children }) => {
   // 🌞 로그아웃 함수
     // 로그아웃 함수
     const logout = (force = false) => {
-
-      if (force) {
-
-          setIsLoading(true)
-          // 로그아웃 세팅
-          logoutSetting()
-
-          setIsLoading(false)
-
-
-      }
-
+      
       Swal.confirm("로그아웃 하시겠습니까?", "로그아웃을 진행합니다", "warning", (result) => {
-          if (result.isConfirmed) {
-              Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success")
+        if (result.isConfirmed) {
+            if (force) {
+          
+                setIsLoading(true)
+                // 로그아웃 세팅
+                logoutSetting()
+      
+                setIsLoading(false)
+      
+                
+                Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success")
+            }
               // 로그아웃 세팅
               logoutSetting()
 
               // 페이지 이동 > "/" (메인)
-              navigate("/")
+             
               return
           }
       }

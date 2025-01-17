@@ -160,29 +160,35 @@ public class UserController {
 
     // 관리자 : 회원 정보 수정 이동
     // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @GetMapping("/admin/user/update")
-    public String adminUpdate(Model model, @RequestParam("no") Long no) throws Exception {
+
+    @GetMapping("/admin/update/{no}")
+    public ResponseEntity<?> getMethodName(@PathVariable("no") Long no) throws Exception {
+
         Users user = userService.select(no);
-        UserAuth userAuth = userService.selectAuth(no);
-        return "/admin/user/update";
+
+        Map<String, Object> response = new HashMap<String, Object>();
+        response.put("user", user);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    
+
 
     // 관리자 : 회원 정보 수정 처리
     // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
-    @PostMapping("admin/user/update")
-    public String adminupdate(Users user, @RequestParam("no") Long no, @RequestParam("auth") String auth, RedirectAttributes redirectAttributes)
+    @PutMapping("/admin/update")
+    public ResponseEntity<?> adminupdate(@RequestBody Users user)
             throws Exception {
         boolean result = userService.update(user);
-        UserAuth userAuth = userService.selectAuth(no);
+        String auth = user.getUserAuth();
+        UserAuth userAuth = userService.selectAuth(user.getNo());
         userAuth.setAuth(auth);
-        int result2 = userService.updateAuth(userAuth);
+        userService.updateAuth(userAuth);
 
         if (result) {
-            redirectAttributes.addFlashAttribute("message", "회원 수정 완료..");
-            return "redirect:list";
+            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }
-        redirectAttributes.addFlashAttribute("message", "회원 수정 실패..");
-        return "/";
+        return new ResponseEntity<>( "FAIL",HttpStatus.BAD_REQUEST);
     }
 
     // 관리자 : 회원 탈퇴

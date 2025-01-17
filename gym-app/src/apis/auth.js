@@ -13,8 +13,14 @@ export const login = (id, password) => {
 // 회원 정보
 export const info = () => api.get(`/user/info`)
 
+// 회원 조회
+export const select = (no) => api.get(`/admin/update/${no}`)
+
 // 회원 정보 수정
 export const update = (data) => api.put(`/user`, data)
+
+// 회원 정보 수정(어드민)
+export const adminUpdate = (data) => api.put(`/admin/update`, data)
 
 // 회원 탈퇴
 export const remove = (no) => api.delete(`/user/${no}`)

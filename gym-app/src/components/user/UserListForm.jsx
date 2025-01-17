@@ -85,7 +85,7 @@ const UserListForm = ({userList}) => {
                           <td>{new Date(user.createdAt).toLocaleString()}</td>
                           {user.userAuth !== "ROLE_ADMIN" && (
                             <td>
-                              <a className="updateBtn" href={`update?no=${user.no}`}>
+                              <a className="updateBtn" href={`update/${user.no}`}>
                                 수정
                               </a>
                             </td>

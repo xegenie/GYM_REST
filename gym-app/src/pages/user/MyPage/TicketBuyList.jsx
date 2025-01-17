@@ -74,7 +74,7 @@ const TicketBuyList = () => {
 
   useEffect(() => {
     if (isLoading) return; // 로딩 중일 때는 처리하지 않음
-    if (!isLogin || !roles.isUser) {
+    if (!isLogin) {
       Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => navigate('/login'));
     }
   }, [isLoading]);
