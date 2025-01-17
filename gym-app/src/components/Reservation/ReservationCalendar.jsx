@@ -6,7 +6,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Reservation.css'
 
-const ReservationCalendar = ({ reservationList, handleFilterChange, keyword, code }) => {
+const ReservationCalendar = ({ reservationList, trainerUserList, keyword, code, setKeyword, setCode }) => {
+
 
   const navigate = useNavigate()
 
@@ -26,16 +27,16 @@ const ReservationCalendar = ({ reservationList, handleFilterChange, keyword, cod
   return (
     <div className="Reservation-calendar">
       <div className="select-trainer">
-        <select id="trainerList" name='keyword' value={keyword} onChange={(e) => handleFilterChange('keyword', e.target.value)}>
+        <select id="trainerList" name='keyword' value={keyword} onChange={(e) => setKeyword(e.target.value)}>
           <option value="">전체</option>
-          {reservationList.map((trainer) => (
+          {trainerUserList.map((trainer) => (
             <option key={trainer.no} value={trainer.no}>{trainer.name}</option>
           ))}
         </select>
-      </div>
-      <div className="select-status">
-        <select name="code" value={code} onChange={(e) => handleFilterChange('code, e.target.value')}>
-          <option value="">전체</option>
+      {/* </div> */}
+      {/* <div className="select-status"> */}
+        <select id="code" name="code" value={code} onChange={(e) => setCode(e.target.value)}>
+          <option value="0">전체</option>
           <option value="1">예약중</option>
           <option value="2">완료건</option>
         </select>
@@ -67,20 +68,20 @@ const ReservationCalendar = ({ reservationList, handleFilterChange, keyword, cod
               eventEl.style.backgroundColor = originalColor;
             });
 
-            const count = info.event.title.split(' ')[0];
+            // const count = info.event.title.split(' ')[0];
             const date = info.event.startStr.slice(0, 10);
-            const dateCell = document.querySelector(`.fc-day[data-date="${date}"]`);
+            // const dateCell = document.querySelector(`.fc-day[data-date="${date}"]`);
 
-            if (dateCell) {
-              const countByDateDiv = document.createElement('div');
-              countByDateDiv.classList.add('reservation-count');
-              countByDateDiv.textContent = count;
-              dateCell.appendChild(countByDateDiv);
-            }
+            // if (dateCell) {
+            //   const countByDateDiv = document.createElement('div');
+            //   countByDateDiv.classList.add('reservation-count');
+            //   countByDateDiv.textContent = count;
+            //   dateCell.appendChild(countByDateDiv);
+            // }
           }}
-          dateClick={(info) => {
-            showTimeSelectionModal(info.dateStr);
-          }}
+          // dateClick={(info) => {
+          //   showTimeSelectionModal(info.dateStr);
+          // }}
           eventClick={(info) => {
             const userNo = info.event.extendedProps.user_no;
             navigate(`/plan/plan?userNo=${userNo}`);

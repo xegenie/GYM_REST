@@ -35,7 +35,7 @@ public interface ReservationService {
     public List<Users> trainerUsers() throws Exception;
 
     // 트레이너별 예약 목록
-    public List<Reservation> sortByTrainer(@Param("option") Option option) throws Exception;
+    public List<Reservation> sortByTrainer(String keyword, int code) throws Exception;
 
     // 날짜별 예약 개수
     public List<Map<String, Object>> countByDate(Option option) throws Exception;

@@ -23,16 +23,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           from user_auth ua
           where ua.auth = 'ROLE_TRAINER'
         )
-        <if test="option.keyword != null and option.keyword != ''">
-          and r.trainer_no = #{option.keyword}
+        <if test="keyword != null and keyword != ''">
+          and r.trainer_no = #{keyword}
         </if>
-        <if test="option.code == 0">
+        <if test="code == 0">
           and (r.enabled = 1 or 2)
         </if>
-        <if test="option.code == 1">
+        <if test="code == 1">
           and r.enabled = 1
         </if>
-        <if test="option.code == 2">
+        <if test="code == 2">
           and r.enabled = 2
         </if>
     </select>
