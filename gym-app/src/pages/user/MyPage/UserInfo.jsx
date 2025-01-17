@@ -76,8 +76,15 @@ const UserInfo = () => {
  }
 
  useEffect(() => {
-   if(isLoading) return
 
+   
+   if(!isLogin){
+       Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigete('/login')})
+       return
+     }
+   
+   if(isLoading) return
+ 
  }, [isLoading])
  
 

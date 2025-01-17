@@ -18,6 +18,12 @@ const User = () => {
   // userInfo가 변경될 때마다 userNo 상태를 업데이트
   useEffect(() => {
     console.log('userInfo:', userInfo); // userInfo 값 로그로 확인
+
+    if(!isLogin ){
+        Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login')})
+        return
+      }
+    
     if (userInfo && userInfo.no) { // userInfo가 null이 아니고 no가 있을 때만
       setUserNo(userInfo.no);
       console.log('userNo:', userInfo.no);
