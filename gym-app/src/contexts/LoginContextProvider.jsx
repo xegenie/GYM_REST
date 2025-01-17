@@ -99,11 +99,9 @@ const LoginContextProvider = ({ children }) => {
           // 로그아웃 세팅
           logoutSetting()
 
-          // 페이지 이동 > "/" (메인)
-          navigate("/")
-
           setIsLoading(false)
-          return
+
+
       }
 
       Swal.confirm("로그아웃 하시겠습니까?", "로그아웃을 진행합니다", "warning", (result) => {
