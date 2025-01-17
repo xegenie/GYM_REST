@@ -62,14 +62,14 @@ const Sidebar = () => {
           <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
             <h3>출석</h3>
             <ul className="sub-menu">
-              <li><Link to="/admin/attendance/list">출석 회원 목록</Link></li>
+              <li><Link to="/admin/attendanceList">출석 회원 목록</Link></li>
             </ul>
           </li>
           <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
             <h3>이용권</h3>
             <ul className="sub-menu">
               <li><Link to="/admin/ticket/ticketList">이용권 목록</Link></li>
-              <li><Link to="/admin/ticket/insert">이용권 등록</Link></li>
+              <li><Link to="/admin/ticket/ticketInsert">이용권 등록</Link></li>
             </ul>
           </li>
           <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>

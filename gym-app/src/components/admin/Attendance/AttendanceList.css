@@ -1,0 +1,150 @@
+.oswAttendanceList .container {
+    margin: auto;
+    width: 1440px;
+    height: 935px;
+    display: flex;
+}
+
+.oswAttendanceList .main {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 270px; /* 사이드바와 겹치지 않도록 조정 */
+}
+
+.oswAttendanceList .oswAttendanceList {
+    width: 250px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+/* 버튼 스타일 */
+.oswAttendanceList .button, 
+.oswAttendanceList .search button, 
+.oswAttendanceList .search-form button {
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.oswAttendanceList .button:hover, 
+.oswAttendanceList .search button:hover, 
+.oswAttendanceList .search-form button:hover {
+    background-color: #005f73;
+}
+
+/* 검색바 스타일 */
+.oswAttendanceList .search {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 30px;
+    margin-left: 47px;
+}
+
+.oswAttendanceList .search input[type="text"],
+.oswAttendanceList .search-form input[type="text"] {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+/* 리스트 및 테이블 스타일 */
+.oswAttendanceList .list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-height: 550px;
+}
+
+.oswAttendanceList .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.oswAttendanceList .attendance-table th, 
+.oswAttendanceList .attendance-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.oswAttendanceList .attendance-table th {
+    background-color: #f4f4f4;
+}
+
+/* 페이징 스타일 */
+.oswAttendanceList .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 170px;
+}
+
+.oswAttendanceList .pagination a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #008CBA;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.oswAttendanceList .pagination a:hover {
+    background-color: #005f73;
+    color: white;
+}
+
+.oswAttendanceList .pagination a.active {
+    background-color: #008CBA;
+    color: white;
+    border: 1px solid #008CBA;
+    pointer-events: none;
+}
+
+.oswAttendanceList .ticketList .container {
+    margin: auto;
+    width: 1440px;
+    height: 935px;
+    display: flex;
+}
+
+.oswAttendanceList .ticketList .inner {
+    width: 1100px;
+    height: 900px;
+    background-color: #E7ECEF;
+    border-radius: 5%;
+}
+.oswAttendanceList .ticketList .inner .title {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.oswAttendanceList .ticketList .mainTitle {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
