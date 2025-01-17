@@ -25,6 +25,12 @@ const LoginForm = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isLogin) {
+      setAutoLogin(false); // 로그아웃 시 자동 로그인 해제
+    }
+  }, [isLogin]);
+
   const onLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -59,13 +65,11 @@ const LoginForm = () => {
                     ?
                     <>
                         <li>마이페이지 </li>
-                        <li><button className='link' onClick={ () => logout()}> 로그아웃 </button></li>
-                        <input type="text" name="username" id="username"
-                placeholder='username' autoComplete='username' required readOnly defaultValue={userInfo}/>
+                        <li><button className='link' onClick={ () => {   logout(); setAutoLogin(false);}}> 로그아웃 </button></li>
                     </>
                 :
                 <>
-                  
+                
                     <li>회원가입</li>
             
                 </>
