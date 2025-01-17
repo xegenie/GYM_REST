@@ -113,17 +113,17 @@ public class ReservationController {
     // }
     // }
 
+    // 관리자 캘린더 예약 목록
     @GetMapping("/admin/reservation/calendar")
     public ResponseEntity<?> getCalendarReservation(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "code", required = false) int code
             ) {
         try {
-            Option option = new Option();
-            option.setKeyword(keyword);
-            option.setCode(code);
 
-            List<Reservation> sortByTrainer = reservationService.sortByTrainer(option);
+            List<Users> trainerUsers = reservationService.trainerUsers();
+
+            List<Reservation> sortByTrainer = reservationService.sortByTrainer(keyword, code);
             List<Map<String, Object>> reservationResponse = new ArrayList<>();
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
@@ -150,19 +150,10 @@ public class ReservationController {
                 reservationResponse.add(response);
             }
 
-            // 트레이너 목록 조회
-            List<Users> trainerList = reservationService.trainerUsers();
-            List<Map<String, Object>> trainerResponse = new ArrayList<>();
-            for (Users tr : trainerList) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("no", tr.getNo());
-                response.put("name", tr.getName());
-                trainerResponse.add(response);
-            }
 
             Map<String, Object> result = new HashMap<>();
-            result.put("reservation", reservationResponse);
-            result.put("trainer", trainerResponse);
+            result.put("reservationList", reservationResponse);
+            result.put("trainerUserList", trainerUsers);
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
