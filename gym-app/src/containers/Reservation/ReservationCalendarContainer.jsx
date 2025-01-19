@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import ReservationCalendar from '../../components/Reservation/ReservationCalendar'
 import * as reservation from '../../apis/reservation'
-import { useLocation } from 'react-router-dom'
-import { use } from 'react'
+import ReservationCalendar from '../../components/Reservation/ReservationCalendar'
 
 const ReservationCalendarContainer = () => {
 

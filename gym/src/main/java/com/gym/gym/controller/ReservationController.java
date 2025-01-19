@@ -25,6 +25,7 @@ import com.gym.gym.domain.CustomUser;
 import com.gym.gym.domain.Option;
 import com.gym.gym.domain.Page;
 import com.gym.gym.domain.Reservation;
+import com.gym.gym.domain.TrainerProfile;
 import com.gym.gym.domain.Users;
 import com.gym.gym.service.ReservationService;
 import com.gym.gym.service.TrainerProfileService;
@@ -59,66 +60,11 @@ public class ReservationController {
         }
     }
 
-    // // 관리자 캘린더 예약 목록
-    // @GetMapping("/admin/reservation/calendar")
-    // public ResponseEntity<?> getCalendarReservation(Option option) {
-    // try {
-    // List<Reservation> sortByTrainer = reservationService.sortByTrainer(option);
-
-    // List<Map<String, Object>> reservationResponse = new ArrayList<>();
-    // SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-    // for (Reservation rv : sortByTrainer) {
-
-    // Map<String, Object> response = new HashMap<>();
-    // String formattedTime = timeFormat.format(rv.getRvDate());
-
-    // response.put("start", rv.getRvDate());
-    // response.put("end", "");
-    // response.put("description", "");
-    // response.put("textColor", "white");
-    // response.put("user_no", rv.getUserNo());
-
-    // if (rv.getEnabled() == 2) {
-    // response.put("title", formattedTime + " " + rv.getUserName() + "님 완료");
-    // response.put("color", "#2a9c1b");
-    // response.put("type", "completed");
-    // } else {
-    // response.put("title", formattedTime + " " + rv.getUserName() + "님 예약");
-    // response.put("color", "cornflowerblue");
-    // response.put("type", "reservation");
-    // }
-
-    // reservationResponse.add(response);
-    // }
-
-    // List<Users> trainerList = reservationService.trainerUsers();
-    // List<Map<String, Object>> trainerResponse = new ArrayList<>();
-
-    // for (Users tr : trainerList) {
-    // Map<String, Object> response = new HashMap<>();
-    // response.put("no", tr.getNo());
-    // response.put("name", tr.getName());
-
-    // trainerResponse.add(response);
-    // }
-
-    // Map<String, Object> result = new HashMap<>();
-    // result.put("reservation", reservationResponse);
-    // result.put("trainer", trainerResponse);
-
-    // return new ResponseEntity<>(result, HttpStatus.OK);
-    // } catch (Exception e) {
-    // log.error("캘린더 조회 오류");
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
-
     // 관리자 캘린더 예약 목록
     @GetMapping("/admin/reservation/calendar")
     public ResponseEntity<?> getCalendarReservation(
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "code", required = false) int code
-            ) {
+            @RequestParam(value = "code", required = false) int code) {
         try {
 
             List<Users> trainerUsers = reservationService.trainerUsers();
@@ -149,7 +95,6 @@ public class ReservationController {
 
                 reservationResponse.add(response);
             }
-
 
             Map<String, Object> result = new HashMap<>();
             result.put("reservationList", reservationResponse);
@@ -225,6 +170,62 @@ public class ReservationController {
     // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     // }
     // }
+
+    // 예약 등록 페이지
+    @GetMapping("/user/reservation/reservationInsert")
+    public ResponseEntity<?> getMyTrainer(
+            @RequestParam(value = "keyword", defaultValue = "") String keyword,
+            @RequestParam(value = "code", defaultValue = "1") int code,
+            @AuthenticationPrincipal CustomUser userDetails
+            ) {
+
+        try {
+            int trainerNo = userDetails.getTrainerNo();
+
+            TrainerProfile trainerProfile = trainerProfileService.selectTrainer(trainerNo);
+
+            log.info("담당 트레이너 번호 : " + trainerNo);
+            log.info("trainerProfile : " + trainerProfile);
+
+            List<Reservation> reservationByTrainer = reservationService.sortByTrainer(keyword, code);
+
+            log.info(("트레이너 예약 목록 : " + reservationByTrainer));
+
+            List<Map<String, Object>> reservationResponse = new ArrayList<>();
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+            for (Reservation rv : reservationByTrainer) {
+                Map<String, Object> response = new HashMap<>();
+                String formattedTime = timeFormat.format(rv.getRvDate());
+
+                response.put("start", rv.getRvDate());
+                response.put("end", "");
+                response.put("description", "");
+                response.put("textColor", "white");
+                response.put("user_no", rv.getUserNo());
+
+                if (rv.getEnabled() == 2) {
+                    response.put("title", formattedTime + " " + rv.getUserName() + "님 완료");
+                    response.put("color", "#2a9c1b");
+                    response.put("type", "completed");
+                } else {
+                    response.put("title", formattedTime + " " + rv.getUserName() + "님 예약");
+                    response.put("color", "cornflowerblue");
+                    response.put("type", "reservation");
+                }
+
+                reservationResponse.add(response);
+            }
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("trainerProfile", trainerProfile);
+            result.put("reservationByTrainer", reservationByTrainer);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     // 예약 등록
     @PostMapping("/user/reservation/reservationInsert")
