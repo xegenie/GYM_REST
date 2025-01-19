@@ -4,8 +4,25 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import './Reservation.css'
+import { useNavigate } from 'react-router-dom'
 
-const ReservationInsert = () => {
+const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
+
+  const navigate = useNavigate()
+
+  const formattedEvents = reservationByTrainer.map((event) => ({
+    title: event.title,
+    start: event.start,
+    end: event.end,
+    description: event.description,
+    color: event.color,
+    textColor: event.textColor,
+    type: event.type,
+    user_no: event.user_no,
+    display: "block"
+  }))
+
+
   return (
     <div className='ReservationInsert'>
       <div className="ReservationInsert-container">
@@ -19,7 +36,7 @@ const ReservationInsert = () => {
               height: '450px'
             }} />
             <div className="info">
-              <h1>트레이너명</h1>
+              <h1>{trainerProfile.name}</h1>
             </div>
           </div>
         </div>
@@ -28,6 +45,33 @@ const ReservationInsert = () => {
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
+            events={formattedEvents}
+            displayEventTime={false}
+            dayMaxEventRows={3}
+            eventDidMount={(info) => {
+              const eventEl = info.el;
+              eventEl.style.cursor = 'pointer';
+  
+              const originalColor = info.event.backgroundColor;
+              const hoverColor =
+                info.event.extendedProps.type === 'completed'
+                  ? 'green'
+                  : 'royalblue';
+  
+              eventEl.addEventListener('mouseover', () => {
+                eventEl.style.backgroundColor = hoverColor;
+              });
+  
+              eventEl.addEventListener('mouseout', () => {
+                eventEl.style.backgroundColor = originalColor;
+              });
+  
+              const date = info.event.startStr.slice(0, 10);
+            }}
+            eventClick={(info) => {
+              const userNo = info.event.extendedProps.user_no;
+              navigate(`/plan/plan?userNo=${userNo}`);
+            }}
           />
         </div>
         <div id="timeSelectionModal">
