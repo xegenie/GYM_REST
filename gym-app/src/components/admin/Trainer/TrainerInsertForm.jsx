@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './css/TrainerInsertForm.css';
 import Sidebar from '../Header/adminSidebar';
+import * as trainerApi from '../../../apis/trainerProfile';
 
 const TrainerInsertForm = ({ onInsert, trainerUsers }) => {
   const [previewSrc, setPreviewSrc] = useState('');
-  const [trainerNo, setTrainerNo] = useState('');
+  const [trainerUserNo, setTrainerUserNo] = useState('');
   const [formData, setFormData] = useState({});
 
   const handleFileChange = (event) => {
@@ -21,29 +22,12 @@ const TrainerInsertForm = ({ onInsert, trainerUsers }) => {
     }
   };
 
-  const handleTrainerChange = (event) => {
-    const trainerId = event.target.value;
-    if (trainerId) {
-      fetch(`/admin/trainer/getTrainerNo?trainerId=${trainerId}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('트레이너 정보를 가져올 수 없습니다.');
-          }
-          return response.text();
-        })
-        .then((data) => {
-          setTrainerNo(data || '');
-          setFormData({ ...formData, trainerId });
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          alert('트레이너 번호를 가져오는 중 문제가 발생했습니다.');
-        });
-    } else {
-      setTrainerNo('');
-      setFormData({ ...formData, trainerId: '' });
-    }
+  const handleTrainerChange = async (event) => {
+    const selectedTrainerNo = event.target.value; // 선택된 값 가져오기
+    setTrainerUserNo(selectedTrainerNo);
   };
+  
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -114,7 +98,7 @@ const TrainerInsertForm = ({ onInsert, trainerUsers }) => {
                           type="text"
                           id="trainerNo"
                           name="trainerNo"
-                          value={trainerNo}
+                          value={trainerUserNo}
                           readOnly
                         />
                       </td>
