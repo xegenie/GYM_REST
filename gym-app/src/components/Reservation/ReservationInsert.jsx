@@ -1,27 +1,60 @@
-import React from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import './Reservation.css'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import './Reservation.css';
+
 
 const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
+  const [selectedDate, setSelectedDate] = useState('');
+  const [timeButtons, setTimeButtons] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    if (selectedDate) {
+      generateTimeButtons(selectedDate);
+    }
+  }, [selectedDate]);
 
-  const formattedEvents = reservationByTrainer.map((event) => ({
-    title: event.title,
-    start: event.start,
-    end: event.end,
-    description: event.description,
-    color: event.color,
-    textColor: event.textColor,
-    type: event.type,
-    user_no: event.user_no,
-    display: "block"
-  }))
+  const generateTimeButtons = (date) => {
+    const buttons = [];
+    for (let hour = 10; hour <= 21; hour++) {
+      const selectedDateTime = new Date(`${date}T${hour}:00`);
+      const isReserved = reservationByTrainer.some((reservation) => {
+        const reservationDate = new Date(reservation.rvDate);
+        return reservationDate.getTime() === selectedDateTime.getTime();
+      });
+      const isPast = selectedDateTime.getTime() <= new Date().getTime();
 
+      buttons.push({
+        time: `${hour}:00`,
+        disabled: isReserved || isPast,
+        isReserved,
+      });
+    }
+    setTimeButtons(buttons);
+  };
+
+  const handleDateClick = (info) => {
+    setSelectedDate(info.dateStr);
+    setModalVisible(true);
+  };
+
+  const handleTimeClick = (time) => {
+    if (confirm(`${selectedDate} ${time} 예약하시겠습니까?`)) {
+      submitReservation(selectedDate, time);
+    }
+  };
+
+  const submitReservation = (date, time) => {
+    console.log(`예약한 시간: ${date} ${time}`);
+    setModalVisible(false);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   return (
     <div className='ReservationInsert'>
@@ -31,10 +64,15 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
         </div>
         <div className="trainer-info">
           <div className="info-container">
-            <img src="/images/sample.jpg" alt="트레이너이미지" className='card-img-top' style={{
-              width: '500px',
-              height: '450px'
-            }} />
+            <img
+              src="/images/sample.jpg"
+              alt="트레이너이미지"
+              className='card-img-top'
+              style={{
+                width: '500px',
+                height: '450px',
+              }}
+            />
             <div className="info">
               <h1>{trainerProfile.name}</h1>
             </div>
@@ -45,49 +83,51 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            events={formattedEvents}
-            displayEventTime={false}
-            dayMaxEventRows={3}
-            eventDidMount={(info) => {
-              const eventEl = info.el;
-              eventEl.style.cursor = 'pointer';
-  
-              const originalColor = info.event.backgroundColor;
-              const hoverColor =
-                info.event.extendedProps.type === 'completed'
-                  ? 'green'
-                  : 'royalblue';
-  
-              eventEl.addEventListener('mouseover', () => {
-                eventEl.style.backgroundColor = hoverColor;
-              });
-  
-              eventEl.addEventListener('mouseout', () => {
-                eventEl.style.backgroundColor = originalColor;
-              });
-  
-              const date = info.event.startStr.slice(0, 10);
-            }}
-            eventClick={(info) => {
-              const userNo = info.event.extendedProps.user_no;
-              navigate(`/plan/plan?userNo=${userNo}`);
-            }}
+            dateClick={handleDateClick}
           />
         </div>
-        <div id="timeSelectionModal">
-          <div className="modal-container">
-            <div className="modal-info">
-              <h3>예약 시간 선택</h3>
-              <p id="selecteddate">선택한 날짜</p>
+        {modalVisible && (
+          <div
+            id="timeSelectionModal"
+            className={modalVisible ? 'show' : ''}
+          >
+            <div className="modal-container">
+              <div className="modal-info">
+                <p className='modal-info-timeSelect'>예약 시간 선택</p>
+                <p id="selectedDate"> {selectedDate}</p>
+              </div>
+              <div id="timeButtons">
+                {timeButtons.map((button, index) => (
+                  <button
+                    key={index}
+                    disabled={button.disabled}
+                    onClick={() => handleTimeClick(button.time)}
+                    style={{
+                      cursor: button.disabled ? 'not-allowed' : 'pointer',
+                      backgroundColor: button.disabled ? 'gray' : 'royalblue',
+                    }}
+                  >
+                    {button.time}
+                  </button>
+                ))}
+              </div>
+              <button className='modalCloseButton' onClick={closeModal}
+              style={{
+                width: "50px",
+                border: "none",
+                backgroundColor: "transparent",
+                color: "#333",
+                cursor: "pointer",
+                fontWeight: "bold",
+                transition: "color 0.3s ease"
+              }}
+              >Close</button>
             </div>
-            <div id="timeButtons"></div>
-            <button>Close</button>
           </div>
-        </div>
-
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ReservationInsert
+export default ReservationInsert;

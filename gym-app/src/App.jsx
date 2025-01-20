@@ -70,7 +70,7 @@ function App() {
         <Route path='/myPage/ptList' element={ <ReservationPtListPage /> }></Route>
         <Route path='/pay/payResult' element={ <PayResult /> }></Route>
         <Route path='/plan/plan' element={ <Plan /> }></Route>
-        <Route path='/reservation/reservationInsert' element={ <ReservationInsertPage /> }></Route>
+        <Route path='/reservation/reservationInsert/:no' element={ <ReservationInsertPage /> }></Route>
         <Route path='/ticket/normalTicket' element={ <NormalTicket /> }></Route>
         <Route path='/ticket/ptTicket' element={ <PtTicket /> }></Route>
         <Route path='/ticket/ChoiceTicket' element={ <ChoiceTicket /> }></Route>
