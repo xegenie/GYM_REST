@@ -57,11 +57,13 @@ public class BoardController {
       @GetMapping()
     public ResponseEntity<?> list(Option option, Page page) throws Exception {
 
-        List<Board> boardList = boardService.list(option, page);
+    
+        List<Board> boardList = boardService.boardlist(option, page);
 
         // 페이지 URL 생성
         String pageUrl = String.format("/api/boardList?keyword=%s&code=%s&rows=%d&orderCode=%s",
                 option.getKeyword(), option.getCode(), page.getRows(), option.getOrderCode());
+
                 Map<String, Object> response = new HashMap<String, Object>();
                 response.put("boardList", boardList);
                 response.put("pageUrl", pageUrl);

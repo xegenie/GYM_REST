@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import BoardListForm from "../../../components/user/Board/BoardListForm";
 
 const BoardListContainer = () => {
-  const [boardList, setBoardList] = useState([]);
+  const [boards, setBoards] = useState([]);
   const [option, setOption] = useState({
     keyword: "",
     rows: 10,
@@ -24,8 +24,10 @@ const BoardListContainer = () => {
       );
       if (response.ok) {
         const { boardList, page: newPage } = await response.json();
-        setBoardList(boardList);
+        setBoards(boardList);
         setPage(newPage);
+        console.log(boardList)
+
       } else {
         console.error("데이터를 가져오는 데 실패했습니다.");
       }
@@ -48,7 +50,7 @@ const BoardListContainer = () => {
 
   return (
     <BoardListForm
-      boardList={boardList}
+    boards={boards}
       option={option}
       page={page}
       handlePageChange={handlePageChange}

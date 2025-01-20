@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import '../Board/css/BoardList.css';
 
-const BoardListForm = ({ option, boardList, page, handlePageChange, setOption, onSearch }) => {
+const BoardListForm = ({ option, boards, page, handlePageChange, setOption, onSearch }) => {
   // 검색 및 필터 변경 처리
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-  
+
     // 상태 업데이트와 동시에 최신 상태로 검색 실행
     const updatedOption = { ...option, [name]: value };
     setOption(updatedOption); // 상태 업데이트
@@ -29,7 +30,6 @@ const BoardListForm = ({ option, boardList, page, handlePageChange, setOption, o
             <form onSubmit={handleFilterSubmit} className="forms">
               <select
                 name="rows"
-                style={{ fontSize: "15px", cursor: "pointer" }}
                 value={option.rows}
                 onChange={handleFilterChange}
               >
@@ -40,7 +40,6 @@ const BoardListForm = ({ option, boardList, page, handlePageChange, setOption, o
               </select>
               <select
                 name="orderCode"
-                style={{ cursor: "pointer" }}
                 value={option.orderCode}
                 onChange={handleFilterChange}
               >
@@ -49,6 +48,7 @@ const BoardListForm = ({ option, boardList, page, handlePageChange, setOption, o
               </select>
               <input
                 type="text"
+                id="keyword"
                 name="keyword"
                 placeholder="검색어를 입력해주세요"
                 value={option.keyword}
@@ -57,7 +57,6 @@ const BoardListForm = ({ option, boardList, page, handlePageChange, setOption, o
               <button
                 type="submit"
                 className="scButton"
-                style={{ borderRadius: "5px", cursor: "pointer" }}
               >
                 검색
               </button>
@@ -65,25 +64,25 @@ const BoardListForm = ({ option, boardList, page, handlePageChange, setOption, o
           </div>
 
           {/* 게시글 목록 테이블 */}
-          <table className="table table-bordered text-center">
+          <table className="table table-bordered text-center" style={{ marginBottom: "30px", borderCollapse: "collapse", boxShadow: "1px 2px 2px rgba(0, 0.5, 0.5, 0.5)" }}>
             <thead className="table-light">
               <tr>
-                <th>문의내용</th>
-                <th>문의자</th>
-                <th>유저</th>
-                <th>등록일자</th>
+                <th style={{ width: "45%" }}>문의내용</th>
+                <th style={{ width: "20%" }}>문의자</th>
+                <th style={{ width: "10%" }}>유저</th>
+                <th style={{ width: "25%" }}>등록일자</th>
               </tr>
             </thead>
             <tbody>
-              {boardList.length > 0 ? (
-                boardList.map((board) => (
-                  <tr key={board.no}>
-                    <td>
+              {boards.length > 0 ? (
+                boards.map((board) => (
+                  <tr key={board.no} className="tabletr" style={{ textAlign: "center", borderBottom: "1px solid white" }}>
+                      <td className="wlskrkdy">
                       <Link className="titlebt" to={`/boardRead/${board.no}`}>
                         {board.title}
                       </Link>
                       {board.hasAnswer === 1 && (
-                        <label style={{ color: "rgb(15, 255, 15)" }}>
+                        <label style={{ color: "rgb(241, 10, 10)", fontSize:"20px" }}>
                           (답변 완료)
                         </label>
                       )}
@@ -108,43 +107,60 @@ const BoardListForm = ({ option, boardList, page, handlePageChange, setOption, o
                   </tr>
                 ))
               ) : (
-                <tr>
+                <tr className="tabletr">
                   <td colSpan="4">조회된 데이터가 없습니다.</td>
                 </tr>
               )}
             </tbody>
           </table>
 
-          {/* 페이지 네비게이션 */}
-          <div className="pagination">
-            <a onClick={() => handlePageChange(page.first)} className="first">
-              [처음]
-            </a>
-            {page.page !== page.first && (
-              <a onClick={() => handlePageChange(page.page - 1)} className="prev">
-                [이전]
-              </a>
-            )}
-            {Array.from({ length: page.end - page.start + 1 }, (_, idx) => page.start + idx).map(
-              (no) => (
-                <a
-                  key={no}
-                  onClick={() => handlePageChange(no)}
-                  className={page.page === no ? "active" : ""}
-                >
-                  {no}
-                </a>
-              )
-            )}
-            {page.page !== page.last && (
-              <a onClick={() => handlePageChange(page.page + 1)} className="next">
-                [다음]
-              </a>
-            )}
-            <a onClick={() => handlePageChange(page.last)} className="last">
-              [마지막]
-            </a>
+          <div className="insert-button">
+            <Link to="/boardInsert" style={{ color: "white", textDecoration: "none", fontSize:"23px" }}>
+              문의하기
+            </Link>
           </div>
+
+        {/* 페이지 네비게이션 */}
+<div className="pagination">
+  <a
+    onClick={() => handlePageChange(page.first)}
+    className={`pagetag first ${page.page === page.first }`}
+  >
+    [처음]
+  </a>
+  {page.page !== page.first && (
+    <a
+      onClick={() => handlePageChange(page.page - 1)}
+      className={`pagetag prev ${page.page === page.first ? "disabled" : ""}`}
+    >
+      [이전]
+    </a>
+  )}
+  {Array.from({ length: page.end - page.start + 1 }, (_, idx) => page.start + idx).map((no) => (
+    <a
+      key={no}
+      onClick={() => handlePageChange(no)}
+      className={`pagetag ${page.page === no ? "active" : ""}`}
+    >
+      {no}
+    </a>
+  ))}
+  {page.page !== page.last && (
+    <a
+      onClick={() => handlePageChange(page.page + 1)}
+      className={`pagetag next ${page.page === page.last ? "disabled" : ""}`}
+    >
+      [다음]
+    </a>
+  )}
+  <a
+    onClick={() => handlePageChange(page.last)}
+    className={`pagetag last ${page.page === page.last}`}
+  >
+    [마지막]
+  </a>
+</div>
+
         </div>
       </div>
     </div>
