@@ -44,9 +44,8 @@
 }
 
 .ChoiceTrainer .img {
-    width: 100%;
-    min-height: 250px;
-    max-height: 250px;
+    width: 250px;
+    height: 250px;
 }
 
 .ChoiceTrainer .img img {

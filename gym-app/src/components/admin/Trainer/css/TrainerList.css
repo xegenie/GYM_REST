@@ -1,28 +1,19 @@
 @charset "UTF-8";
 
-.ticketList * {
-    margin: 0;
-    padding: 0;
+.adminTrainerList * {
     border: none;
     box-sizing: border-box;
     font: inherit;
 }
 
-.ticketList .container {
+.adminTrainerList .container {
     margin: auto;
     width: 1440px;
     height: 935px;
     display: flex;
 }
 
-.ticketList .inner {
-    width: 1100px;
-    height: 900px;
-    background-color: #E7ECEF;
-    border-radius: 5%;
-}
-
-.ticketList .main {
+.adminTrainerList .main {
     width: 1160px;
     height: 100%;
     display: flex;
@@ -32,7 +23,14 @@
     flex-shrink: 0;
 }
 
-.ticketList .inner .title {
+.adminTrainerList .inner {
+    width: 1100px;
+    height: 900px;
+    background-color: #E7ECEF;
+    border-radius: 5%;
+}
+
+.adminTrainerList .inner .title {
     width: 100%;
     height: 150px;
     display: flex;
@@ -40,8 +38,7 @@
     align-items: center;
 }
 
-
-.ticketList .mainTitle {
+.adminTrainerList .mainTitle {
     width: 100%;
     height: 100px;
     text-align: center;
@@ -50,19 +47,19 @@
     font-size: 1.2em;
 }
 
-.ticketList .searchContainer {
+.adminTrainerList .searchContainer {
     display: flex;
     justify-content: center;
 }
 
-.ticketList .search {
+.adminTrainerList .search {
     width: 1000px;
     height: 30px;
     display: flex;
     justify-content: end;
 }
 
-.ticketList .search input[type="text"] {
+.adminTrainerList .search input[type="text"] {
     padding: 8px;
     width: 200px;
     margin-right: 10px;
@@ -71,7 +68,7 @@
     background-color: #fff;
 }
 
-.ticketList .search button {
+.adminTrainerList .search button {
     padding: 0px 20px;
     background-color: #008CBA;
     color: white;
@@ -83,11 +80,11 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); 
 }
 
-.ticketList .search button:hover {
+.adminTrainerList .search button:hover {
     background-color: #005f73;
 }
 
-.ticketList .list {
+.adminTrainerList .list {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -95,7 +92,7 @@
     padding: 0 50px;
 }
 
-.ticketList .paging {
+.adminTrainerList .paging {
     width: 100%;
     height: 100px;
     display: flex;
@@ -103,13 +100,13 @@
     align-items: end;
 }
 
-.ticketList .pagination {
+.adminTrainerList .pagination {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-.ticketList .pagination a {
+.adminTrainerList .pagination a {
     margin: 0 5px;
     padding: 8px 16px;
     text-decoration: none;
@@ -120,20 +117,20 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1); 
 }
 
-.ticketList .pagination a:hover {
+.adminTrainerList .pagination a:hover {
     background-color: #005f73;
     color: white;
 }
 
-.ticketList .pagination a.active {
+.adminTrainerList .pagination a.active {
     background-color: #008CBA;
     color: white;
     border: 1px solid #008CBA;
     pointer-events: none;
 }
 
-.ticketList .updateBtn,
-.ticketList .deleteBtn {
+.adminTrainerList .updateBtn,
+.adminTrainerList .deleteBtn {
     display: inline-block;
     border: none;
     border-radius: 4px;
@@ -143,93 +140,32 @@
     cursor: pointer;
 }
 
-.ticketList .updateBtn {
+.adminTrainerList .updateBtn {
     background-color: #7c92c0;
 }
 
-.ticketList .deleteBtn {
+.adminTrainerList .deleteBtn {
     background-color: #e46262;
 }
 
-.ticketList .updateBtn:hover,
-.ticketList .deleteBtn:hover {
+.adminTrainerList .updateBtn:hover,
+.adminTrainerList .deleteBtn:hover {
     filter: brightness(90%);
 }
 
-.ticketList .ticket {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 10px;
-}
-
-.ticketList .ticketContent {
-    width: 320px;
-    line-height: 25px;
-    display: flex;
-    flex-direction: column;
-}
-
-.ticketList .checkbox {
-    width: 105px;
-    text-align: center;
-}
-
-.ticketList .ticket .items {
-    width: 100%;
-    height: 500px; 
-    overflow-y: auto;
-}
-
-.ticketList .ticket .ticketItem {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #bbb;
-    width: 100%;
-    height: 100px;
-}
-
-.ticketList .ticketName,
-.ticketList .ticketPrice {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.ticketList .ticketInfo {
-    font-size: 15px;
-    color: #5a5a5afb;
-}
-
-.ticketList input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: #06ac00;
-}
-
-.ticketList .ticket label {
-    display: inline-block;
-    width: 100px;
-    height: 30px;
-    font-size: 14px;
-    line-height: 30px;
-    text-align: center;
-    color: #fff;
-    border-radius: 4px 4px 0 0;
-}
-
-.ticketList .normal {
-    background-color: #0DB4D4;
-}
-
-.ticketList .pt {
-    background-color: #E74A4A;
-}
-
-.ticketList .delete {
+.adminTrainerList .delete {
     width: 100%;
     padding: 33px;
     text-align: right;
+}
+
+.adminTrainerList .card-img-top {
+    width : 238px;
+    height: 238px;
+}
+
+.adminTrainerList .trainerForm {
+    width: 1100px;
+    height: 650px;
+    overflow-y: auto;
 }

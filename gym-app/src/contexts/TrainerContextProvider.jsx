@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import * as trainerApi from '../apis/tarinerPorfile';
+import * as trainerApi from '../apis/trainerProfile';
 
 // Context 생성
 const TrainerContext = createContext();
