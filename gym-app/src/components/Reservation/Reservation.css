@@ -623,8 +623,8 @@
 }
 
 .ptList button,
-.edit-button,
-.password-button {
+.ptList .edit-button,
+.ptList .password-button {
     padding: 10px 20px;
     border: none;
     /* border-radius: 5px; */
@@ -678,7 +678,7 @@
 }
 
 .ptList th,
-td {
+.ptList td {
     height: 50px;
     padding: 10px;
     text-align: center;
