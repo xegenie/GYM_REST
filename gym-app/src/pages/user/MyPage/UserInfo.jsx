@@ -79,7 +79,7 @@ const UserInfo = () => {
   return (
     <>
       <Header />
-      <div className="oswUserInfo" style={{ marginBottom: 0 }}>
+      <div className="oswUserInfo" >
         <h1>UserInfo</h1>
         <hr />
         <UserInfoForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />

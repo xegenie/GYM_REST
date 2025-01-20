@@ -1,0 +1,28 @@
+.oswUserInfo html{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.oswUserInfo body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.oswUserInfo {
+    background-color: #333; /* 배경색 */
+    /* color: white; */
+    min-height: calc(100vh - 120px); 
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center;
+    padding: 20px;
+}
+
+/* 필요하면 Header와 Footer도 margin 제거 */
+.oswUserInfo header, .oswUserInfo footer {
+    margin: 0;
+    padding: 0;
+}

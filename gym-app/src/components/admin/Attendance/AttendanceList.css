@@ -5,10 +5,20 @@
     display: flex;
 }
 
+
+.ticketList .mainTitle {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
 .oswAttendanceList .main {
     flex-grow: 1;
     padding: 20px;
-    margin-left: 270px; /* 사이드바와 겹치지 않도록 조정 */
+    /* margin-left: 270px; 사이드바와 겹치지 않도록 조정 */
 }
 
 .oswAttendanceList .oswAttendanceList {
@@ -71,7 +81,7 @@
 }
 
 .oswAttendanceList .attendance-table {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -92,7 +102,7 @@
 .oswAttendanceList .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 170px;
+    margin-top: 100px;
 }
 
 .oswAttendanceList .pagination a {
@@ -118,20 +128,20 @@
     pointer-events: none;
 }
 
-.oswAttendanceList .ticketList .container {
+.oswAttendanceList .container {
     margin: auto;
     width: 1440px;
     height: 935px;
     display: flex;
 }
 
-.oswAttendanceList .ticketList .inner {
+.oswAttendanceList .inner {
     width: 1100px;
     height: 900px;
     background-color: #E7ECEF;
     border-radius: 5%;
 }
-.oswAttendanceList .ticketList .inner .title {
+.oswAttendanceList .inner .title {
     width: 100%;
     height: 150px;
     display: flex;
@@ -140,7 +150,7 @@
 }
 
 
-.oswAttendanceList .ticketList .mainTitle {
+.oswAttendanceList .mainTitle {
     width: 100%;
     height: 100px;
     text-align: center;

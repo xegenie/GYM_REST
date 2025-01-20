@@ -43,7 +43,7 @@ const AttendanceTable = () => {
           <div className="inner">
 
             <div className="mainTitle">
-              <h2 style={{ fontWeight: 'bold', fontSize: '20px' }}>출석 내역</h2>
+              <h2 style={{ fontSize: '22px', top: '40px' , font: 'inherit' }}>출석 내역</h2>
             </div>
 
             {/* 검색 폼 */}
@@ -61,7 +61,7 @@ const AttendanceTable = () => {
                 value={option.keyword}
                 onChange={(e) => setOption({ ...option, keyword: e.target.value })}
               />
-              <button type="submit" className="button">검색</button>
+              <button type="submit" className="button" style={{zIndex: 10000}}>검색</button>
             </form>
 
             {/* 출석 테이블 */}
