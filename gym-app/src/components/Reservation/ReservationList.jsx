@@ -3,11 +3,12 @@ import * as format from '../../utils/format';
 import './Reservation.css'
 import ReservationListModal from './ReservationListModal';
 
-const ReservationList = ({ reservationList }) => {
+const ReservationList = ({ reservationList, getReservationList }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedReservationNo, setSelectedReservationNo] = useState(null)
   const [action, setAction] = useState('')
+  
 
   const openModal = (reservationNo, action) => {
     setSelectedReservationNo(reservationNo)
@@ -16,10 +17,12 @@ const ReservationList = ({ reservationList }) => {
   }
 
   const closeModal = () => {
-    setIsModalOpen(false)
     setSelectedReservationNo(null)
+    setAction(null)
     setIsModalOpen(false)
   }
+
+  
 
 
   return (
@@ -100,7 +103,12 @@ const ReservationList = ({ reservationList }) => {
         </table>
       </div>
       {isModalOpen && (
-        <ReservationListModal reservationNo={selectedReservationNo} action={action} isModalOpen={isModalOpen} closeModal={closeModal} />
+        <ReservationListModal 
+        reservationNo={selectedReservationNo} 
+        action={action} 
+        isModalOpen={isModalOpen} 
+        closeModal={closeModal}
+        getReservationList={getReservationList} />
       )}
     </>
   )

@@ -35,7 +35,7 @@ const ReservationPtList = ({ reservationList }) => {
 
   return (
     <>
-      <body className="fullBody ptList" style={{ color: "rgb(3, 3, 3)", backgroundColor: "#252222" }}>
+      <body className="fullBody ptList" style={{ color: "rgb(3, 3, 3)", backgroundColor: "#333" }}>
         <div className="wrapper" style={{ marginTop: '80px' }}>
           <main>
             <div className="main-text1" style={{ color: '#9FD0D5' }}>마이페이지</div>
@@ -43,7 +43,7 @@ const ReservationPtList = ({ reservationList }) => {
             <div className="button-group">
               <button onClick={() => navigate('/User')}>내 정보</button>
               <button onClick={() => navigate(`/buyList/users/${userNo}`)}>이용권 내역</button>
-              <button className="active" onClick={() => navigate('/user/myPage/ptList')}>PT 이용 내역</button>
+              <button className="active" onClick={() => navigate(`/myPage/ptList/${userNo}`)}>PT 이용 내역</button>
               <button onClick={() => navigate('/user/myPage/myBoardList')}>내 문의사항</button>
             </div>
 
