@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.gym.gym.controller.AttendanceController.AttendanceListResponse;
 import com.gym.gym.domain.Answer;
+import com.gym.gym.domain.Attendance;
 import com.gym.gym.domain.Board;
 import com.gym.gym.domain.CustomUser;
 import com.gym.gym.domain.Option;
@@ -52,27 +54,25 @@ public class BoardController {
 
     // 목록
 
-    @GetMapping()
-    public ResponseEntity<?> list(
-    @ModelAttribute Option option, 
-    @ModelAttribute Page page) throws Exception {
-        List<Board> boardList = boardService.boardlist(option, page);
+      @GetMapping()
+    public ResponseEntity<?> list(Option option, Page page) throws Exception {
 
-        String pageUrl = UriComponentsBuilder.fromPath("user/board/boardList")
-                .queryParam("keyword", option.getKeyword())
-                .queryParam("code", option.getCode())
-                .queryParam("rows", page.getRows())
-                .queryParam("orderCode", option.getOrderCode())
-                .build()
-                .toUriString();
-        Map<String, Object> response = new HashMap<String, Object>();
-        response.put("pageUrl", pageUrl);
-        response.put("list",boardList);
-        response.put("page", page);
+        List<Board> boardList = boardService.list(option, page);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        // 페이지 URL 생성
+        String pageUrl = String.format("/api/boardList?keyword=%s&code=%s&rows=%d&orderCode=%s",
+                option.getKeyword(), option.getCode(), page.getRows(), option.getOrderCode());
+                Map<String, Object> response = new HashMap<String, Object>();
+                response.put("boardList", boardList);
+                response.put("pageUrl", pageUrl);
+                response.put("option",option);
+                response.put("page",page);
 
+                
+        // 응답 객체에 데이터를 담아서 반환
+        return new ResponseEntity<> (response, HttpStatus.OK);
     }
+    
 
     @GetMapping("/{no}")
     public ResponseEntity<?> select(@PathVariable("no") Long no)

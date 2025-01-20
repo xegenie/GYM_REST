@@ -43,6 +43,7 @@ import TicketBuyList from './pages/user/MyPage/TicketBuyList'
 import TrainerList from './pages/admin/TrainerPorfile/TrainerList'
 import TrainerInsert from './pages/admin/TrainerPorfile/TrainerInsert'
 import TrainerUpdate from './pages/admin/TrainerPorfile/TrainerUpdate'
+import MyBoardList from './pages/user/Board/MyBoardList'
 
 function App() {
 
@@ -89,6 +90,7 @@ function App() {
         <Route path='/userInfo' element={<UserInfo/>}></Route>
         <Route path='/newPw' element={ <NewPw /> }></Route>
         <Route path='/buyList/users/:userNo' element={ <TicketBuyList /> }></Route>
+        <Route path='/myPage/boardList' element={ <MyBoardList /> }></Route>
 
 
 
