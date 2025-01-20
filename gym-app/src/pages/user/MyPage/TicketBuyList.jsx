@@ -12,7 +12,7 @@ const TicketBuyList = () => {
   const navigate = useNavigate();
 
   const [userNo, setUserNo] = useState(null);
-  const [ticketBuyList, setTicketBuyList] = useState([]);
+  const [ticketBuyList, setTicketBuyList] = useState([]); // 빈 배열로 초기화
   const [startedTicket, setStartedTicket] = useState(null);
 
   // userNo 상태 추가
@@ -33,13 +33,14 @@ const TicketBuyList = () => {
         .then(response => response.json())
         .then(data => {
           console.log('구매 리스트 데이터:', data);
-          console.log('구매 리스트 데이터2:', ticketBuyList);
 
           // 데이터에서 티켓 구매 내역과 가장 오래된 티켓 가져오기
-          setTicketBuyList(data.ticketBuyList);
+          setTicketBuyList(data.ticketBuyList || []); // 기본값 빈 배열로 처리
 
-          const startedTicket = data.ticketBuyList.filter(b => b.status === '정상')
-            .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))[0];
+          // 구매 내역이 있을 때만 정상 상태인 티켓 필터링
+          const startedTicket = data.ticketBuyList?.length > 0 ?
+            data.ticketBuyList.filter(b => b.status === '정상')
+              .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))[0] : null;
 
           setStartedTicket(startedTicket);
         })
@@ -75,7 +76,7 @@ const TicketBuyList = () => {
 
   useEffect(() => {
     if (isLoading) return; // 로딩 중일 때는 처리하지 않음
-    if (!isLogin || !roles.isUser) {
+    if (!isLogin) {
       Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => navigate('/login'));
     }
   }, [isLoading]);
@@ -95,7 +96,7 @@ const TicketBuyList = () => {
                 <button className="active">내 정보</button>
               </Link>
               <Link to={`/buyList/users/${userNo}`}>
-                <button>과거이용권 내역</button>
+                <button>이용권 내역</button>
               </Link>
               <button>PT 이용 내역</button>
               <button>내 문의사항</button>
@@ -143,13 +144,10 @@ const TicketBuyList = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4" style={{ textAlign: 'center' }}>구매 내역이 없습니다.</td>
+                    <td colSpan="4" style={{ textAlign: 'center', width: '600px', color: '#ffffff' }}>구매 내역이 없습니다.</td>
                   </tr>
                 )}
               </tbody>
-
-
-
             </table>
 
           </div>

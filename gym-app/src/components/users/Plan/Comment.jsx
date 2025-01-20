@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDate } from '../../../contexts/DateContextProvider';
+import * as plan from '../../../apis/plan'
 
 const Comment = () => {
 
@@ -46,6 +47,18 @@ const Comment = () => {
   const handleFcontentChange = (e) => {
     setFcontent(e.target.value);
   }
+
+  // const handleCommentInsert = async () => {
+  //   try {
+  //     const data = {
+
+  //     }
+
+  //     plan.insertComment()
+  //   } catch (error) {
+      
+  //   }
+  // }
   
   return (
     <div className='comment-container pt-4'>

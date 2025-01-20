@@ -68,8 +68,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     // 트레이너별 예약 목록
     @Override
-    public List<Reservation> sortByTrainer(Option option) throws Exception {
-        List<Reservation> sortByTrainer = reservationMapper.sortByTrainer(option);
+    public List<Reservation> sortByTrainer(String keyword, int code) throws Exception {
+        List<Reservation> sortByTrainer = reservationMapper.sortByTrainer(keyword, code);
         return sortByTrainer;
     }
     

@@ -27,7 +27,7 @@ const ReservationList = ({ reservationList }) => {
       <div className="search-container">
 
       </div>
-      <div className="list">
+      <div className="ReservationList">
         <table>
           <thead style={{ fontWeight: 'bold' }}>
             <tr>

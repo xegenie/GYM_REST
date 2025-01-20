@@ -100,7 +100,7 @@ function App() {
         <Route path='/answerUpdate/:no' element={ <AnswerUpdate /> }></Route>
 
         {/* 어드민 */}
-        <Route path='/userUpdate' element=
+        <Route path='/admin/update/:no' element=
         { <UserUpdate /> }></Route>
         <Route path='/admin/userList' element={ <UserList /> }></Route>
       </Routes>
