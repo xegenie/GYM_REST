@@ -1,60 +1,61 @@
-import React, { useEffect, useState } from 'react'
-import BoardListForm from '../../../components/user/Board/BoardListForm'
-import * as boards from '../../../apis/board'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import BoardListForm from "../../../components/user/Board/BoardListForm";
 
 const BoardListContainer = () => {
+  const [boardList, setBoardList] = useState([]);
+  const [option, setOption] = useState({
+    keyword: "",
+    rows: 10,
+    orderCode: 0,
+  });
+  const [page, setPage] = useState({
+    page: 1,
+    rows: 10,
+    first: 1,
+    last: 1,
+    start: 1,
+    end: 1,
+  });
 
- // 🧊 state
- const [boardList, setBoardList] = useState([])
- const [pagination, setPagination] = useState({})
- const [page, setPage] = useState(1)
- const [size, setSize] = useState(10)
+  const fetchList = async (pageNumber = 1, currentOption = option) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/board?page=${pageNumber}&rows=${currentOption.rows}&keyword=${currentOption.keyword}&orderCode=${currentOption.orderCode}`
+      );
+      if (response.ok) {
+        const { boardList, page: newPage } = await response.json();
+        setBoardList(boardList);
+        setPage(newPage);
+      } else {
+        console.error("데이터를 가져오는 데 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("API 요청 중 오류 발생:", error);
+    }
+  };
 
- const location = useLocation()
- 
- const updatePage = () => {
-   const query = new URLSearchParams(location.search)
-   const newPage = query.get("page") ?? 1
-   const newSize = query.get("size") ?? 10
+  const handleSearch = (updatedOption = option) => {
+    fetchList(1, updatedOption); // 검색 시 첫 페이지로 이동
+  };
 
-   setPage(newPage)
-   setSize(newSize)
+  const handlePageChange = (pageNumber) => {
+    fetchList(pageNumber);
+  };
 
- }
-
- // 🎁 게시글 목록 데이터
- const getList = async () => {
-   const response = await boards.list(page, size)
-   const data = await response.data
-   const list = data.list
-   console.dir(data.list +"리스트 넘어옴?")
-   const pagination = data.pagination
-   console.dir(data)
-   
-   console.dir(data.pagination)
-
-   setBoardList( list )
-   setPagination( pagination)
-   
-   
-   
- }
-
- // ❓ 
- useEffect( () => {
-   getList()
- }, [page, size])
-
- useEffect(() => {
-   updatePage()
- }, [location.search])
- 
-
+  useEffect(() => {
+    fetchList();
+  }, []);
 
   return (
-  <BoardListForm  boardList={boardList} pagination={pagination}/>
-  )
-}
+    <BoardListForm
+      boardList={boardList}
+      option={option}
+      page={page}
+      handlePageChange={handlePageChange}
+      setOption={setOption}
+      onSearch={handleSearch}
+    />
+  );
+};
 
-export default BoardListContainer
+export default BoardListContainer;
