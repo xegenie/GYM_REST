@@ -68,6 +68,7 @@ public class BoardController {
         Map<String, Object> response = new HashMap<String, Object>();
         response.put("pageUrl", pageUrl);
         response.put("list",boardList);
+        response.put("page", page);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
 
