@@ -240,6 +240,7 @@ public class ReservationController {
         try {
             Long no = userDetails.getNo();
             reservation.setUserNo(no);
+
             int result = reservationService.insert(reservation);
 
             if (result > 0) {
