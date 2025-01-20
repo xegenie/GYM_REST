@@ -9,7 +9,6 @@ const AttendanceList = () => {
     <>
       <Header />
       <AttendanceTable />
-     
       <AdminFooter />
     
     </>

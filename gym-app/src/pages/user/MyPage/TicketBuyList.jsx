@@ -113,18 +113,19 @@ const TicketBuyList = () => {
   <tbody>
     {ticketBuyList.length > 0 && startedTicket ? (
       <>
-        <tr>
-          <td style={{ color: '#ffffff' , borderBottom: '1px solid #ffffff',  borderTop: 'none', backgroundColor: '#444444'}}>이용권</td>
-          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{startedTicket.ticketName}</td>
-        </tr>
-        <tr>
-          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', backgroundColor: '#444444' }}>구매일시</td>
-          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{new Date(startedTicket.startDate).toLocaleDateString()}</td>
-        </tr>
-        <tr>
-          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', backgroundColor: '#444444'}}>만료일시</td>
-          <td style={{ color: '#ffffff' , borderBottom: '1px solid #ffffff'}}>{new Date(startedTicket.endDate).toLocaleDateString()}</td>
-        </tr>
+      <tr>
+  <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', borderTop: 'none', backgroundColor: '#444444', padding: '15px 0' }}>이용권</td>
+  <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', padding: '15px 0' }}>{startedTicket.ticketName}</td>
+</tr>
+<tr>
+  <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', backgroundColor: '#444444', padding: '15px 0' }}>구매일시</td>
+  <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', padding: '15px 0' }}>{new Date(startedTicket.startDate).toLocaleDateString()}</td>
+</tr>
+<tr>
+  <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', backgroundColor: '#444444', padding: '15px 0' }}>만료일시</td>
+  <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', padding: '15px 0' }}>{new Date(startedTicket.endDate).toLocaleDateString()}</td>
+</tr>
+
       </>
     ) : (
       <tr>

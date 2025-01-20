@@ -48,11 +48,11 @@ const UserForm = ({}) => {
     to="/UserInfo" 
     className="btn btn-primary" 
     style={{
-        backgroundColor: '#142230', 
+        backgroundColor: '#7562ba', 
         float: 'right', 
-        marginTop: '-15px', 
+        marginTop: '3px', 
         borderColor: '#333',
-        margin : '30px'
+        margin : '15px'
     }}
 >
     정보 수정
