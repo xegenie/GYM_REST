@@ -22,7 +22,7 @@ public interface ReservationMapper {
     public List<Reservation> list(@Param("keyword") String keyword, @Param("option") Option option, @Param("page") Page page) throws Exception;
 
     // 유저 예약 목록
-    public List<Reservation> userByList(@Param("no") Long no, @Param("option") Option option, @Param("page") Page page) throws Exception;
+    public List<Reservation> userByList(Long no) throws Exception;
 
     // 예약 상세 조회
     public Reservation findByNo(int no) throws Exception;

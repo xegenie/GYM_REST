@@ -135,15 +135,15 @@ public class ReservationController {
     // }
 
     // 회원 내 예약 목록
-    @GetMapping("/user/myPage/ptList/{userNo}")
-    public ResponseEntity<?> getMyReservation(@PathVariable Long userNo,
-            @AuthenticationPrincipal CustomUser userDetails, Option option, Page page) {
+    @GetMapping("/user/myPage/ptList/{no}")
+    public ResponseEntity<?> getMyReservation(@PathVariable("no") Long no,
+            @AuthenticationPrincipal CustomUser userDetails) {
         try {
-            if (userNo != userDetails.getNo()) {
+            if (no != userDetails.getNo()) {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
 
-            List<Reservation> reservationCount = reservationService.userByList(userNo, option, new Page());
+            List<Reservation> reservationCount = reservationService.userByList(no);
             long disabledCount = reservationService.disabledCount(userDetails.getNo());
 
             if (!reservationCount.isEmpty()) {
@@ -154,7 +154,7 @@ public class ReservationController {
                 ptCount = Math.max(ptCount, 0);
             }
 
-            List<Reservation> reservationList = reservationService.userByList(userNo, option, page);
+            List<Reservation> reservationList = reservationService.userByList(no);
             return new ResponseEntity<>(reservationList, HttpStatus.OK);
         } catch (Exception e) {
             log.error("회원 예약 조회 오류");
@@ -162,21 +162,11 @@ public class ReservationController {
         }
     }
 
-    // @GetMapping("/{no}")
-    // public ResponseEntity<?> getOneReservation(@PathVariable Integer no) {
-    // try {
-    // return new ResponseEntity<>("GetOne Result", HttpStatus.OK);
-    // } catch (Exception e) {
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
 
     // 예약 등록 페이지
     @GetMapping("/user/reservation/reservationInsert/{no}")
     public ResponseEntity<?> getMyTrainer(
             @PathVariable("no") int no,
-            // @RequestParam(value = "keyword", defaultValue = "") String keyword,
-            // @RequestParam(value = "code", defaultValue = "1") int code,
             @AuthenticationPrincipal CustomUser userDetails
             ) {
 
@@ -190,10 +180,6 @@ public class ReservationController {
             log.info("trainerProfile : " + trainerProfile);
 
             List<Reservation> reservationByTrainer = reservationService.sortByTrainer(String.valueOf(no), code);
-
-                            // .stream()
-                            // .filter(reservation -> reservation.getTrainerNo() == no)
-                            // .toList();
 
             log.info(("트레이너 예약 데이터 : " + reservationByTrainer));
 
@@ -287,8 +273,7 @@ public class ReservationController {
                 reservation.setEnabled(2);
                 result = reservationService.complete(reservation);
 
-                List<Reservation> reservationCount = reservationService.userByList(reservation.getUserNo(),
-                        new Option(), new Page());
+                List<Reservation> reservationCount = reservationService.userByList(reservation.getUserNo());
                 long disabledCount = reservationService.disabledCount(reservation.getUserNo());
                 if (!reservationCount.isEmpty()) {
                     Reservation lastReservation = reservationCount.get(reservationCount.size() - 1);

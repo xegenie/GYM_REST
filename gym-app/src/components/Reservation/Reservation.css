@@ -469,7 +469,7 @@
     z-index: 1000;
 }
 
-.ReservationInsert-container  #timeSelectionModal.show {
+.ReservationInsert-container #timeSelectionModal.show {
     display: block;
 }
 
@@ -491,7 +491,7 @@
     align-items: center;
     padding: 0 10px;
     font-weight: bold;
-  }
+}
 
 .ReservationInsert-container .modal-info-timeSelect {
     width: 150px;
@@ -500,7 +500,7 @@
     display: flex;
     align-items: center;
     justify-content: start;
-  }
+}
 
 .ReservationInsert-container #selectedDate {
     width: 100px;
@@ -554,20 +554,100 @@
 
 /* ---------- 마이페이지 예약 리스트 css ---------- */
 
+.ptList .main-text1 {
+    text-align: center;
+    font-weight: 900;
+    font-size: xx-large;
+    padding-bottom: 10px;
+}
 
-.ReservationPtList-container .pt-count {
+.ptList body {
+    background-color: #e9ecef;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.ptList .btn-primary {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #008CBA;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ptList .btn-primary:hover {
+    background-color: #005f73;
+    color: white;
+}
+
+.ptList .wrapper {
+    width: 900px;
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #252222;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.ptList .button-group {
+    display: flex;
+    background-color: #333;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.ptList .button-group button {
+    flex: 1;
+    padding: 15px 0;
+    border: none;
+    cursor: pointer;
+    background-color: #9FD0D5;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+}
+
+.ptList .button-group button:hover {
+    background-color: #81d4fa;
+}
+
+.ptList .button-group .active {
+    background-color: #7e57c2;
+    color: rgb(255, 255, 255);
+}
+
+.ptList button,
+.edit-button,
+.password-button {
+    padding: 10px 20px;
+    border: none;
+    /* border-radius: 5px; */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.ptList .pt-count {
     display: flex;
     justify-content: end;
     width: 100%;
 }
 
-.ReservationPtList-container .pt-count-container {
+.ptList .pt-count-container {
     width: 140px;
     height: 40px;
     color: white;
 }
 
-.ReservationPtList-container .disabled-count {
+.ptList .disabled-count {
     width: 140px;
     height: 40px;
     color: white;
@@ -575,14 +655,14 @@
 
 
 
-.ReservationPtList-container {
+.ptList .list {
     width: 100%;
     display: flex;
     justify-content: center;
     height: 100%;
 }
 
-.ReservationPtList-container table {
+.ptList table {
     width: 100%;
     height: 100%;
     max-width: 1000px;
@@ -593,19 +673,19 @@
     overflow-y: auto;
 }
 
-.ReservationPtList-container thead {
+.ptList thead {
     background-color: #9FD0D5;
 }
 
-.ReservationPtList-container th,
-.ReservationPtList-container td {
+.ptList th,
+td {
     height: 50px;
     padding: 10px;
     text-align: center;
     border: 1px solid #ddd;
 }
 
-.ReservationPtList-container button.complete {
+.ptList button.complete {
     background-color: orange;
     color: white;
     border: none;
@@ -616,21 +696,21 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
-.ReservationPtList-container button.complete:hover {
+.ptList button.complete:hover {
     background-color: #FF4500;
 }
 
-.ReservationPtList-container .cancel-text {
+.ptList .cancel-text {
     font-weight: bold;
     color: #dc3545;
 }
 
-.ReservationPtList-container .ptComplete {
+.ptList .ptComplete {
     font-weight: bold;
     color: #2a9c1b;
 }
 
-.ReservationPtList-container #cancelModal {
+.ptList #cancelModal {
     display: none;
     position: absolute;
     top: 50%;
@@ -643,4 +723,78 @@
     padding: 20px;
     text-align: center;
     z-index: 1000;
+}
+
+.ptList .modal-container {
+    padding: 20px;
+}
+
+.ptList .modal-action {
+    margin-top: 20px;
+}
+
+.ptList .modal-action button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.ptList .modal-action button:hover {
+    background-color: #0056b3;
+}
+
+.ptList .paging {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.ptList .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.ptList a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.ptList .titlebt {
+    color: #012953;
+}
+
+.ptList .titlebt:hover {
+    filter: brightness(90%);
+    font-size: 20px;
+}
+
+.ptList .pagination a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #008CBA;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ptList .pagination a:hover {
+    background-color: #005f73;
+    color: white;
+}
+
+.ptList .pagination a.active {
+    background-color: #008CBA;
+    color: white;
+    border: 1px solid #008CBA;
+    pointer-events: none;
 }

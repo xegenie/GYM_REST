@@ -79,7 +79,7 @@ const User = () => {
             <Link to={`/buyList/users/${userNo}`}>
               <button>이용권 내역</button>
             </Link>
-            <Link to={`/reservation/reservationInsert/${userInfo.trainerNo}`}>
+            <Link to={`/myPage/ptList/${userNo}`}>
             <button>PT 이용 내역</button>
             </Link>
             <button>내 문의사항</button>

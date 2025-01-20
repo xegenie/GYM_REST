@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       WHERE
         u.no = #{no}
       ORDER BY r.created_at DESC
-      LIMIT #{page.index}, #{page.rows}
+      <!-- LIMIT #{page.index}, #{page.rows} -->
     </select>
 
     <select id="disabledCount" resultType="int">
