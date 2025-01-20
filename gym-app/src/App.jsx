@@ -68,7 +68,7 @@ function App() {
         <Route path='/admin/trainer/update' element={ <TrainerUpdate /> }></Route>
         <Route path='/admin/attendanceList' element={ <AttendanceList /> }></Route>
 
-        <Route path='/myPage/ptList' element={ <ReservationPtListPage /> }></Route>
+        <Route path='/myPage/ptList/:no' element={ <ReservationPtListPage /> }></Route>
         <Route path='/pay/payResult' element={ <PayResult /> }></Route>
         <Route path='/plan/plan' element={ <Plan /> }></Route>
         <Route path='/reservation/reservationInsert/:no' element={ <ReservationInsertPage /> }></Route>

@@ -89,13 +89,13 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> userByList(Long no, Option option, Page page) throws Exception {
+    public List<Reservation> userByList(Long no) throws Exception {
         
         int total = reservationMapper.countByUser(no);
-        page.setTotal(total);
+        // page.setTotal(total);
 
         // reservationMapper.ptComplete();
-        List<Reservation> reservationList = reservationMapper.userByList(no, option, page);
+        List<Reservation> reservationList = reservationMapper.userByList(no);
 
         return reservationList;
     }

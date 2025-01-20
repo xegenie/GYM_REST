@@ -20,7 +20,7 @@ public interface ReservationService {
     public List<Reservation> list(String keyword, Option option, Page page) throws Exception;
 
     // 유저 예약 목록
-    public List<Reservation> userByList(Long no, Option option, Page page) throws Exception;
+    public List<Reservation> userByList(Long no) throws Exception;
 
     // 예약 상세 조회
     public Reservation findByNo(int no) throws Exception;
