@@ -43,6 +43,7 @@ const MainCalendar = () => {
       const calendarApi = calendarRef.current.getApi();
       calendarApi.gotoDate(newDate);
     }
+    // handleAllModal()
     setCurrentDate(newDate);
   };
 
@@ -51,9 +52,16 @@ const MainCalendar = () => {
     setCurrentDate(newDate);
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
+      // handleAllModal()
       calendarApi.gotoDate(newDate);
     }
   };
+
+  // const handleAllModal = () => {
+  //   // setIsPlanInsertVisible(false);
+  //   setIsPlanInfoVisible(false);
+  //   setIsRsvInfoVisible(false);
+  // }
 
   const handleEvnetClick = (info) => {
 

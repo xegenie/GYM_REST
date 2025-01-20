@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PlanContent from '../../components/users/Plan/PlanContent'
 import PlanInsertModal from '../../components/users/Plan/PlanInsertModal'
 import PlanInfoModal from '../../components/users/Plan/PlanInfoModal'
 import RsvInfoModal from '../../components/users/Plan/RsvInfoModal'
 import * as plan from '../../apis/plan'
 import { useDate } from "../../contexts/DateContextProvider";
+import { LoginContext } from '../../contexts/LoginContextProvider'
 
 const PlanContainer = () => {
+
+  const { roles } = useContext(LoginContext)
   
-  const { currentDate, setCurrentDate, comment, planList, rsvList, getDataList,
+  const { currentDate, setCurrentDate, comment, planList, rsvList, getDataList, getPlansbyUserNo,
     isPlanInsertVisible, setIsPlanInsertVisible,
     isPlanInfoVisible, setIsPlanInfoVisible, 
     isRsvInfoVisible, setIsRsvInfoVisible } = useDate();
@@ -23,7 +26,13 @@ const PlanContainer = () => {
   
 
   useEffect(() => {
-    getDataList()
+    if (roles.isUser) {
+      console.log("PlanContainer roles isUser: " + roles.isUser)
+      getDataList()
+    } else {
+      console.log("PlanContainer roles isUser: " + roles.isUser)
+      getPlansbyUserNo()
+    }
     const { times24Hour, times12Hour } = generateTimeLists();
     setTimes24Hour(times24Hour);
     setTimes12Hour(times12Hour);
@@ -94,7 +103,7 @@ const PlanContainer = () => {
   };
 
   return (
-    <div className='schedule' style={{"overflowX": "hidden"}}>
+    <div className='schedule' style={{"overflowX": "hidden", "paddingTop": "80px"}}>
       <PlanContent
         comment={comment} planList={planList} rsvList={rsvList} />
       {isPlanInsertVisible && <PlanInsertModal 
