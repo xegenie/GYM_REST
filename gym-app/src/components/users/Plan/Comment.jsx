@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useDate } from '../../../contexts/DateContextProvider';
+import * as plan from '../../../apis/plan'
+import { LoginContext } from '../../../contexts/LoginContextProvider';
+import { useLocation } from 'react-router-dom';
 
 const Comment = () => {
 
-  const { currentDate, setCurrentDate, comment } = useDate();
+  const { roles } = useContext(LoginContext)
+  const location = useLocation();
+
+  const { currentDate, setCurrentDate, comment, getPlansbyDateUserNo } = useDate();
 
   const [ccontent, setCcontent] = useState('');
   const [fcontent, setFcontent] = useState('');
@@ -24,6 +30,12 @@ const Comment = () => {
 
   }, [comment])
 
+  useEffect(() => {
+    if (isEditMode) {
+      setIsEditMode(false)
+    }
+  }, [currentDate])
+  
   const handleEditClick = () => {
     setIsEditMode(true);
   };
@@ -46,10 +58,56 @@ const Comment = () => {
   const handleFcontentChange = (e) => {
     setFcontent(e.target.value);
   }
+
+  const handleInsertComment = async () => {
+    const params = new URLSearchParams(location.search);
+    const userNo = params.get('userNo');
+    console.log("comment userNo: " + userNo);
+    
+    const commentDate = new Date(currentDate).setHours(0,0,0,0);
+    try {
+      const data = {
+        ccontent: ccontent,
+        fcontent: fcontent,
+        userNo: userNo,
+        commentDate: commentDate
+      }
+      console.log("comment Insert : ", data);
+      plan.insertComment(data)
+    } catch (error) {
+      console.error('오류 발생:', error.response ? error.response.data : error.message);
+    }
+    getPlansbyDateUserNo(currentDate)
+    setIsEditMode(false)
+  }
+
+  const handleUpdateComment = async () => {
+    if(ccontent!== comment.ccontent || fcontent !== comment.fcontent) {
+      const params = new URLSearchParams(location.search);
+      const userNo = params.get('userNo');
+      console.log("comment userNo: " + userNo);
+
+      const commentDate = new Date(currentDate).setHours(0,0,0,0);
+      try {
+        const data = {
+          ccontent: ccontent,
+          fcontent: fcontent,
+          userNo: userNo,
+          commentDate: commentDate,
+          no: no
+        }
+        plan.updateComment(data)
+      } catch (error) {
+        console.error('오류 발생:', error.response ? error.response.data : error.message);
+      }
+    }
+    getPlansbyDateUserNo(currentDate)
+    setIsEditMode(false)
+  }
   
   return (
     <div className='comment-container pt-4'>
-      <form id="updateCommentForm">
+      <div id="updateCommentForm">
         <div className="comment">
           <div className="comment-title">
             <p>trainer's comment</p>
@@ -85,17 +143,19 @@ const Comment = () => {
             </div>
           </div>
         </div>
-        <div className="comment-btn-container button-container pt-2">
-          <button type="button" id="editCommentButton" onClick={handleEditClick} className={`${isEditMode ? 'hidden' : ''}`}>comment 입력</button>
-          <div className={`comment-edit ${isEditMode ? '' : 'hidden'}`}>
-            <div className="comment-edit-container">
-              <button type="button" id="cancelEditComment" onClick={handleCancelClick}>취소</button>
-              <button type="submit"  id="updateCommentButton" className={`${no===0 ? 'hidden' : ''}`} >수정</button>
-              <button type="button" id="insertCommentButton" className={`${no===0 ? '' : 'hidden'}`} >저장</button>
+        {roles.isTrainer && (
+          <div className="comment-btn-container button-container pt-2">
+            <button type="button" id="editCommentButton" onClick={handleEditClick} className={`${isEditMode ? 'hidden' : ''}`}>comment 입력</button>
+            <div className={`comment-edit ${isEditMode ? '' : 'hidden'}`}>
+              <div className="comment-edit-container">
+                <button type="button" id="cancelEditComment" onClick={handleCancelClick}>취소</button>
+                <button type="submit"  id="updateCommentButton" onClick={handleUpdateComment} className={`${no===0 ? 'hidden' : ''}`} >수정</button>
+                <button type="button" id="insertCommentButton" onClick={handleInsertComment} className={`${no===0 ? '' : 'hidden'}`} >저장</button>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        )}
+      </div>
     </div>
   )
 }

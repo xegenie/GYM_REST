@@ -43,6 +43,7 @@ import TicketBuyList from './pages/user/MyPage/TicketBuyList'
 import TrainerList from './pages/admin/TrainerPorfile/TrainerList'
 import TrainerInsert from './pages/admin/TrainerPorfile/TrainerInsert'
 import TrainerUpdate from './pages/admin/TrainerPorfile/TrainerUpdate'
+import MyBoardList from './pages/user/Board/MyBoardList'
 
 function App() {
 
@@ -67,10 +68,10 @@ function App() {
         <Route path='/admin/trainer/update' element={ <TrainerUpdate /> }></Route>
         <Route path='/admin/attendanceList' element={ <AttendanceList /> }></Route>
 
-        <Route path='/myPage/ptList' element={ <ReservationPtListPage /> }></Route>
+        <Route path='/myPage/ptList/:no' element={ <ReservationPtListPage /> }></Route>
         <Route path='/pay/payResult' element={ <PayResult /> }></Route>
         <Route path='/plan/plan' element={ <Plan /> }></Route>
-        <Route path='/reservation/reservationInsert' element={ <ReservationInsertPage /> }></Route>
+        <Route path='/reservation/reservationInsert/:no' element={ <ReservationInsertPage /> }></Route>
         <Route path='/ticket/normalTicket' element={ <NormalTicket /> }></Route>
         <Route path='/ticket/ptTicket' element={ <PtTicket /> }></Route>
         <Route path='/ticket/ChoiceTicket' element={ <ChoiceTicket /> }></Route>
@@ -89,6 +90,7 @@ function App() {
         <Route path='/userInfo' element={<UserInfo/>}></Route>
         <Route path='/newPw' element={ <NewPw /> }></Route>
         <Route path='/buyList/users/:userNo' element={ <TicketBuyList /> }></Route>
+        <Route path='/myPage/boardList' element={ <MyBoardList /> }></Route>
 
 
 

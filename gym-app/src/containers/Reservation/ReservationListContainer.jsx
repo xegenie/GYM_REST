@@ -1,18 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import * as reservation from '../../apis/reservation'
 import ReservationList from '../../components/Reservation/ReservationList'
 import ReservationPtList from '../../components/Reservation/ReservationPtList'
+import * as Swal from '../../apis/alert'
 import { LoginContext } from '../../contexts/LoginContextProvider'
 
 const ReservationListContainer = () => {
+  
+  const {no} = useParams()
 
-  const {userInfo} = useContext(LoginContext)
+  const {userInfo, isLoading, isLogin} = useContext(LoginContext)
   const [reservationList, setReservationList] = useState([])
   const [keyword, setKeyword] = useState('')
   const [option, setOption] = useState('')
   const [page, setPage] = useState(1)
-  
+
+  const navigate = useNavigate()
 
   const location = useLocation()
 
@@ -30,8 +34,7 @@ const ReservationListContainer = () => {
     let response 
     
     if (location.pathname.includes('/myPage/ptList')) {
-      const userNo = await userInfo.no
-      response = await reservation.userByList(userNo, option, page)
+      response = await reservation.userByList(no)
     } else {
       response = await reservation.list(keyword, option, page)
     }
@@ -48,6 +51,17 @@ const ReservationListContainer = () => {
     updatePage()
   }, [location.search])
 
+  // useEffect(() => {
+  
+     
+  //    if(!isLogin){
+  //        Swal.alert('잘못된 접근입니다.', '비정상적 경로 이동이 감지되었습니다.', 'warning', () => { navigate('/')})
+  //        return
+  //      }
+     
+  //    if(isLoading) return
+   
+  //  }, [isLoading])
  
   const handleComplete = (reservationNo) => {
     openModal(reservationNo, 'complete')

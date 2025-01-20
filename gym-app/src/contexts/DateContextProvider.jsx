@@ -1,11 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import * as plan from '../apis/plan'
+import { LoginContext } from './LoginContextProvider';
+import { useLocation } from 'react-router-dom';
 
 const DateContext = createContext();
 
 export const useDate = () => useContext(DateContext);
 
 const DateContextProvider = ({children}) => {
+
+  const { roles } = useContext(LoginContext)
+  const location = useLocation();
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const [comment, setComment] = useState();
@@ -17,8 +23,6 @@ const DateContextProvider = ({children}) => {
   const [isPlanInsertVisible, setIsPlanInsertVisible] = useState(false);
   const [isPlanInfoVisible, setIsPlanInfoVisible] = useState(false);
   const [isRsvInfoVisible, setIsRsvInfoVisible] = useState(false);
-
-  const [insertDate, setInsertDate] = useState(currentDate);
 
   const getDataListByDate = async (date) => {
     console.log("getDataListByDate")
@@ -40,22 +44,56 @@ const DateContextProvider = ({children}) => {
     setRsvList(data.reservationEvents)
 
   };
+  const getPlansbyDateUserNo = async (date) => {
+    console.log("getPlansbyDateUserNo")
+    const params = new URLSearchParams(location.search);
+    const userNo = params.get('userNo');
+    const formDate = new Date(date)
+    const year = formDate.getFullYear();
+    const month = (formDate.getMonth() + 1);
+    const day = formDate.getDate();
+
+    const response = await plan.getPlansbyDateUserNo(year, month, day, userNo)
+    const data = await response.data
+
+    console.dir(data)
+    console.dir(data.comment)
+    console.dir(data.planEvents)
+    console.dir(data.reservationEvents)
+
+    setComment(data.comment)
+    setPlanList(data.planEvents)
+    setRsvList(data.reservationEvents)
+
+  };
 
   const getDataList = async () => {
-      const response = await plan.getPlans()
-      const data = await response.data
-      console.dir(response)
-      console.dir(data)
-      console.dir(data.comment)
-      console.dir(data.planEvents)
-      console.dir(data.reservationEvents)
-  
-      setComment(data.comment)
-      setPlanList(data.planEvents)
-      setRsvList(data.reservationEvents)
+    const response = await plan.getPlans()
+    const data = await response.data
+    console.dir(response)
+    console.dir(data)
+    console.dir(data.comment)
+    console.dir(data.planEvents)
+    console.dir(data.reservationEvents)
+    
+    setComment(data.comment)  
+    setPlanList(data.planEvents)
+    setRsvList(data.reservationEvents)
   
   };
 
+  const getPlansbyUserNo = async () => {
+    const params = new URLSearchParams(location.search);
+    const userNo = params.get('userNo');
+    console.log("getPlansbyUserNo : " + userNo)
+    const response = await plan.getPlansbyUserNo(userNo)
+    const data = await response.data
+
+    setComment(data.comment)
+    setPlanList(data.planEvents)
+    setRsvList(data.reservationEvents)
+  }
+    
   const formatPlanTime = (start, end) => {
     const startDate = new Date(start) 
     const endDate = new Date(end)
@@ -71,8 +109,37 @@ const DateContextProvider = ({children}) => {
 
   useEffect(() => {
     console.log("DateContext currentDate : " + currentDate);
-    getDataListByDate(currentDate);
+    if (roles.isUser) {
+      getDataListByDate(currentDate);
+    } else {
+      getPlansbyDateUserNo(currentDate);
+    }
+    setIsPlanInfoVisible(false)
+    setIsRsvInfoVisible(false)
+
   }, [currentDate])
+
+  useEffect(() => {
+    if (isPlanInfoVisible) {
+      setIsPlanInsertVisible(false)
+      setIsRsvInfoVisible(false)
+    }
+  }, [isPlanInfoVisible])
+
+  useEffect(() => {
+    if (isPlanInsertVisible) {
+      setIsPlanInfoVisible(false)
+      setIsRsvInfoVisible(false)
+    }
+  }, [isPlanInsertVisible])
+
+  useEffect(() => {
+    if (isRsvInfoVisible) {
+      setIsPlanInsertVisible(false)
+      setIsPlanInfoVisible(false)
+    }
+  }, [isRsvInfoVisible])
+  
     
 
   return (
@@ -81,7 +148,7 @@ const DateContextProvider = ({children}) => {
       clickedPlan, setClickedPlan, clickedRsv, setClickedRsv,
       isPlanInsertVisible, setIsPlanInsertVisible, isPlanInfoVisible, setIsPlanInfoVisible,
       isRsvInfoVisible, setIsRsvInfoVisible,
-      insertDate, setInsertDate
+      getDataListByDate, getPlansbyUserNo, getPlansbyDateUserNo
       }}>
       {children}
     </DateContext.Provider>

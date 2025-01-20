@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import * as trainerApi from '../../apis/tarinerPorfile';
+import * as trainerApi from '../../apis/trainerProfile';
 import TrainerList from '../../components/admin/Trainer/TrainerList.jsx';
 
 const ListContainer = () => {

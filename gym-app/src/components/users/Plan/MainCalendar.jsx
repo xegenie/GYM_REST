@@ -9,7 +9,7 @@ const MainCalendar = () => {
   const { currentDate, setCurrentDate, planList, rsvList, setClickedPlan, setClickedRsv,
           isPlanInfoVisible, setIsPlanInfoVisible,
           isRsvInfoVisible, setIsRsvInfoVisible,
-          isPlanInsertVisible, setIsPlanInsertVisible, insertDate, setInsertDate } = useDate();
+          isPlanInsertVisible, setIsPlanInsertVisible } = useDate();
   const [events, setEvents] = useState([]);
   const calendarRef = useRef(null);
   const [dateClicked, setDateClicked] = useState(false);
@@ -43,6 +43,7 @@ const MainCalendar = () => {
       const calendarApi = calendarRef.current.getApi();
       calendarApi.gotoDate(newDate);
     }
+    // handleAllModal()
     setCurrentDate(newDate);
   };
 
@@ -51,9 +52,16 @@ const MainCalendar = () => {
     setCurrentDate(newDate);
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
+      // handleAllModal()
       calendarApi.gotoDate(newDate);
     }
   };
+
+  // const handleAllModal = () => {
+  //   // setIsPlanInsertVisible(false);
+  //   setIsPlanInfoVisible(false);
+  //   setIsRsvInfoVisible(false);
+  // }
 
   const handleEvnetClick = (info) => {
 
@@ -84,16 +92,10 @@ const MainCalendar = () => {
   }
 
   const handleDateClick = (info) => {
-    setInsertDate(info.date);
-    setDateClicked(true); // 날짜 클릭 시 상태 업데이트
+    console.log("handleDateClick")
+    setCurrentDate(new Date(info.date));
+    setIsPlanInsertVisible(true);
   };
-
-  useEffect(() => {
-    if (dateClicked) {
-      setIsPlanInsertVisible(true);
-      setDateClicked(false); // 상태 초기화
-    }
-  }, [insertDate]);
 
   return (
     <div className="card flex-grow-1 flex-shrink-1">

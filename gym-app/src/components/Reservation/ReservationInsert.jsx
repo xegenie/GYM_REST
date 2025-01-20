@@ -1,40 +1,106 @@
-import React from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import './Reservation.css'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import * as reservation from '../../apis/reservation'
+import * as format from '../../utils/format';
+import * as Swal from '../../apis/alert'
+import './Reservation.css';
+import { useNavigate } from 'react-router-dom';
 
-const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
+const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
+  const [selectedDate, setSelectedDate] = useState('');
+  const [timeButtons, setTimeButtons] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const formattedEvents = reservationByTrainer.map((event) => ({
-    title: event.title,
-    start: event.start,
-    end: event.end,
-    description: event.description,
-    color: event.color,
-    textColor: event.textColor,
-    type: event.type,
-    user_no: event.user_no,
-    display: "block"
-  }))
+  useEffect(() => {
+    if (selectedDate) {
+      generateTimeButtons(selectedDate);
+    }
+  }, [selectedDate]);
 
+  const generateTimeButtons = (date) => {
+    const buttons = [];
+    for (let hour = 10; hour <= 21; hour++) {
+      const selectedDateTime = new Date(`${date}T${hour}:00`);
+      const isReserved = reservationByTrainer.some((reservation) => {
+        const reservationDate = new Date(reservation.rvDate);
+        return reservationDate.getTime() === selectedDateTime.getTime();
+      });
+      const isPast = selectedDateTime.getTime() <= new Date().getTime();
+
+      buttons.push({
+        time: `${hour}:00`,
+        disabled: isReserved || isPast,
+        isReserved,
+      });
+    }
+    setTimeButtons(buttons);
+  };
+
+  const handleDateClick = (info) => {
+    setSelectedDate(info.dateStr);
+    setModalVisible(true);
+  };
+
+  const handleTimeClick = (time) => {
+    if (confirm(`${selectedDate} ${time} 예약하시겠습니까?`)) {
+      submitReservation(selectedDate, time);
+    }
+  };
+
+  const submitReservation = async (date, time) => {
+    const data = {
+      trainerNo: no,
+      rvDate: new Date(`${date}T${time}`).toISOString(),
+    };
+
+    try {
+      const response = await reservation.insert(data);
+      setData(response);
+
+      console.log("예약 시간 : " + data.rvDate);
+
+      // 버튼 상태 즉시 업데이트
+      setTimeButtons((prevButtons) =>
+        prevButtons.map((button) =>
+          button.time === time ? { ...button, disabled: true, isReserved: true } : button
+        )
+      );
+
+      Swal.alert("예약이 완료되었습니다.");
+      setModalVisible(false);
+    } catch (error) {
+      Swal.alert("예약 중 오류가 발생했습니다. 다시 시도해주세요.");
+      console.error(error);
+    }
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   return (
-    <div className='ReservationInsert'>
+    <div className="ReservationInsert">
       <div className="ReservationInsert-container">
         <div className="hr">
           <span>PT 예약</span>
         </div>
         <div className="trainer-info">
           <div className="info-container">
-            <img src="/images/sample.jpg" alt="트레이너이미지" className='card-img-top' style={{
-              width: '500px',
-              height: '450px'
-            }} />
+            <img
+              src="/images/sample.jpg"
+              alt="트레이너이미지"
+              className="card-img-top"
+              style={{
+                width: '500px',
+                height: '450px',
+              }}
+            />
             <div className="info">
               <h1>{trainerProfile.name}</h1>
             </div>
@@ -45,49 +111,52 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            events={formattedEvents}
-            displayEventTime={false}
-            dayMaxEventRows={3}
-            eventDidMount={(info) => {
-              const eventEl = info.el;
-              eventEl.style.cursor = 'pointer';
-  
-              const originalColor = info.event.backgroundColor;
-              const hoverColor =
-                info.event.extendedProps.type === 'completed'
-                  ? 'green'
-                  : 'royalblue';
-  
-              eventEl.addEventListener('mouseover', () => {
-                eventEl.style.backgroundColor = hoverColor;
-              });
-  
-              eventEl.addEventListener('mouseout', () => {
-                eventEl.style.backgroundColor = originalColor;
-              });
-  
-              const date = info.event.startStr.slice(0, 10);
-            }}
-            eventClick={(info) => {
-              const userNo = info.event.extendedProps.user_no;
-              navigate(`/plan/plan?userNo=${userNo}`);
-            }}
+            dateClick={handleDateClick}
           />
         </div>
-        <div id="timeSelectionModal">
-          <div className="modal-container">
-            <div className="modal-info">
-              <h3>예약 시간 선택</h3>
-              <p id="selecteddate">선택한 날짜</p>
+        {modalVisible && (
+          <div id="timeSelectionModal" className={modalVisible ? 'show' : ''}>
+            <div className="modal-container">
+              <div className="modal-info">
+                <p className="modal-info-timeSelect">예약 시간 선택</p>
+                <p id="selectedDate"> {selectedDate}</p>
+              </div>
+              <div id="timeButtons">
+                {timeButtons.map((button, index) => (
+                  <button
+                    key={index}
+                    disabled={button.disabled}
+                    onClick={() => handleTimeClick(button.time)}
+                    style={{
+                      cursor: button.disabled ? 'not-allowed' : 'pointer',
+                      backgroundColor: button.disabled ? 'gray' : 'royalblue',
+                    }}
+                  >
+                    {button.time}
+                  </button>
+                ))}
+              </div>
+              <button
+                className="modalCloseButton"
+                onClick={closeModal}
+                style={{
+                  width: '50px',
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  color: '#333',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  transition: 'color 0.3s ease',
+                }}
+              >
+                Close
+              </button>
             </div>
-            <div id="timeButtons"></div>
-            <button>Close</button>
           </div>
-        </div>
-
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ReservationInsert
+export default ReservationInsert;

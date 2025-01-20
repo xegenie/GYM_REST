@@ -7,8 +7,8 @@ import UpdateContainer from '../../../containers/Ticket/UpdateContainer'
 const TicketUpdate = () => {
   return (
     <>
-      <Header />,
-      <UpdateContainer />,
+      <Header />
+      <UpdateContainer />
       <Footer />
     </>
   )

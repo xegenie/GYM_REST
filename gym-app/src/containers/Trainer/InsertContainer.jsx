@@ -1,10 +1,12 @@
-import React from 'react'
-import * as trainerApi from '../../apis/tarinerPorfile'
+import React, { useEffect, useState } from 'react'
+import * as trainerApi from '../../apis/trainerProfile'
 import { useNavigate } from 'react-router-dom'
 import TrainerInsertForm from '../../components/admin/Trainer/TrainerInsertForm';
 
 const InsertContainer = () => {
   const navigate = useNavigate();
+  const [trainerUsers, setTrainerUsers] = useState([])
+
 
   const onInsert = async (formData, headers) => {
     try {
@@ -22,8 +24,21 @@ const InsertContainer = () => {
     }
   };
 
+  const getTrainerUser = async () => {
+    try {
+      const response = await trainerApi.trainerUser();
+      setTrainerUsers(response.data);
+    } catch (error) {
+      console.error('트레이너 목록 조회 실패:', error);
+    }
+  }
+
+  useEffect(() => {
+    getTrainerUser(); // keyword가 변경될 때마다 getList 호출
+    }, []);
+
   return (
-    <TrainerInsertForm onInsert={onInsert} />
+    <TrainerInsertForm onInsert={onInsert} trainerUsers={trainerUsers} />
   );
 };
 

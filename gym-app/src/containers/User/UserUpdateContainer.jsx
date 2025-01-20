@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import UserUpdateForm from '../../components/user/UserUpdateForm'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import * as auth from '../../apis/auth'
+import * as Swal from '../../apis/alert'
 
 const UserUpdateContainer = () => {
 
+
+  const navigate = useNavigate()
   const {no} = useParams()
 
   const[user, setUser] = useState({})
@@ -24,7 +27,7 @@ const UserUpdateContainer = () => {
               
                     if (status === 200) {
                       Swal.alert('회원정보 수정 성공', '회원정보 수정에 성공하였습니다.', 'success', () => {
-                        navigate('/admin/update/:no');
+                        navigate('/admin/userList');
                       });
                     } else {
                       Swal.alert('회원정보 수정 실패', '회원정보 수정에 실패했습니다.', 'error');

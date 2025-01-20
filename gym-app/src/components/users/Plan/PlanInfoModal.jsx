@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import { useDate } from '../../../contexts/DateContextProvider';
+import * as plan from '../../../apis/plan'
+import { LoginContext } from '../../../contexts/LoginContextProvider';
 
 const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
+
+  const { roles } = useContext(LoginContext)
   
-  const { clickedPlan, formatPlanTime, isModalVisible, setIsModalVisible } = useDate();
+  const { currentDate, clickedPlan, formatPlanTime, isPlanInfoVisible, setIsPlanInfoVisible, getDataListByDate } = useDate();
 
   const [id, setId] = useState('');
   const [title, setTitle] = useState('')
@@ -93,19 +97,53 @@ const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
     isStartEdit ? setStartEdit(baseDate) : setEndEdit(baseDate);
   };
 
+  const handlePlanUpdate = async () => {
+    const data = {
+      planName: title,
+      planContent: description,
+      planTime: startEdit,
+      planEnd: endEdit,
+      no: id
+    };
+    try {
+      const response = await plan.update(data);
+      console.log('planUpdate 응답:', response.data);
+    } catch (error) {
+      console.error('오류 발생:', error.response ? error.response.data : error.message);
+    }
+    getDataListByDate(currentDate)
+    setIsPlanInfoVisible(false)
+  }
+
+  const handlePlanDelete = async () => {
+    if (!window.confirm("정말 삭제하시겠습니까?"))
+      return;
+    try {
+      const response = await plan.remove(id);
+      console.log('planDelete 응답:', response.data);
+    } catch (error) {
+      console.error('오류 발생:', error.response ? error.response.data : error.message);
+    }
+    getDataListByDate(currentDate)
+    setIsPlanInfoVisible(false)
+  }
+
   return (
     <div className="pop-up exercise-bymyself">
-      <form id="deleteForm" >
-        <input type="hidden" name="no" id="eventIdInput" className="hiddenNo" />
+      <div id="deleteForm" >
         <div className="popup-type">
           <p>자율 운동</p>
           <div className="icons">
-            <a id="editIcon" onClick={handleEditClick} ><EditIcon /></a>
-            <a data-event-id="" id="deleteIcon"><DeleteIcon /></a>
+            {roles.isUser && (
+              <>
+                <a id="editIcon" onClick={handleEditClick} ><EditIcon /></a>
+                <a id="deleteIcon" onClick={handlePlanDelete}><DeleteIcon /></a>
+              </>
+            )}
             <a className="exercise-bymyself-close" onClick={onClose}><CloseRoundedIcon /></a>
           </div>
         </div>
-      </form>
+      </div>
       <div className={`popup-content ${isEditMode ? 'hidden' : 'edit-before'}`} >
         <div className="popup-title">{title}</div>
         <div className="time-info">
@@ -124,8 +162,7 @@ const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
         </div>
       </div>
       <div className={`popup-edit ${isEditMode ? '' : 'hidden'}`}>
-        <form id="updateForm">
-          {/* <input type="hidden" name="no" className="hiddenNo" /> */}
+        <div id="updateForm">
           <div className="popup-title-input">
             <input
              type="text" 
@@ -181,9 +218,9 @@ const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
             ></textarea>
           <div className="button-container">
             <button type="button" id="cancelButton" onClick={handleCancelClick} >취소</button>
-            <button type="submit" id="updateButton">수정</button>
+            <button type="submit" id="updateButton" onClick={handlePlanUpdate}>수정</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )

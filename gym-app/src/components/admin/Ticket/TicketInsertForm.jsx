@@ -72,7 +72,7 @@ const TicketInsertForm = ({ onInsert }) => {
                   <tbody>
                     <tr className="tr">
                       <th>상품명</th>
-                      <td>
+                      <td className='td'>
                         <input
                           type="text"
                           name="name"
@@ -85,7 +85,7 @@ const TicketInsertForm = ({ onInsert }) => {
                     </tr>
                     <tr className="tr">
                       <th>가격</th>
-                      <td>
+                      <td className='td'>
                         <input
                           type="number"
                           name="price"
@@ -98,7 +98,7 @@ const TicketInsertForm = ({ onInsert }) => {
                     </tr>
                     <tr className="tr">
                       <th>상세 소개</th>
-                      <td>
+                      <td className='td'>
                         <textarea
                           name="info"
                           rows="5"
