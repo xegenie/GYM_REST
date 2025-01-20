@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@CrossOrigin("*")
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequestMapping()
 public class UserController {
@@ -314,28 +316,36 @@ public class UserController {
    }
    
 
-@GetMapping("/user/myPage/myBoardList")
-public String boardList(Model model,
-    @ModelAttribute Option option, 
-    @ModelAttribute Page page, @AuthenticationPrincipal CustomUser user) throws Exception {
-        Long no = user.getNo();
-        List<Board> boardList = boardService.myBoardlist(option, page, no);
-        // model.addAttribute("boardList", boardList);
-        // model.addAttribute("option", option);
-        // model.addAttribute("rows", page.getRows());
-        // model.addAttribute("page", page);
-        String pageUrl = UriComponentsBuilder.fromPath("user/board/boardList")
-                .queryParam("keyword", option.getKeyword())
-                .queryParam("code", option.getCode())
-                .queryParam("rows", page.getRows())
-                .queryParam("orderCode", option.getOrderCode())
-                .build()
-                .toUriString();
+   @GetMapping("/user/myBoardList")
+   public ResponseEntity<?> boardList(
+     Option option, Page page, @AuthenticationPrincipal CustomUser user) {
 
-        // model.addAttribute("pageUrl", pageUrl);
+        if (user == null) {
+           log.info("왜안나옴? 뭐함?");
+        }
+         Long no = user.getNo();
+         List<Board> boardList;
+        try {
+            boardList = boardService.myBoardlist(option, page, no);
+      
+         
+         String pageUrl = String.format("/api/myPage/boardList?keyword=%s&code=%s&rows=%d&orderCode=%s",
+         option.getKeyword(), option.getCode(), page.getRows(), option.getOrderCode());
+         
+         Map<String, Object> response = new HashMap<String, Object>();
+         response.put("boardList", boardList);
+         response.put("pageUrl", pageUrl);
+         response.put("option",option);
+         response.put("page",page);
 
-        return "user/myPage/myBoardList";
-
+         log.info("보드나옴??" + response);
+       
+         return new ResponseEntity<> (response, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error while fetching board list: " + e.getMessage());
+            return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
 
 }
 }

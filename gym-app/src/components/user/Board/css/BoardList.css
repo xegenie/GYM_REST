@@ -1,0 +1,195 @@
+.boardList {
+    background-color: #252222;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 40px;
+}
+
+.boardList .container {
+    display: flex;
+    flex-direction: column;
+    width: 1300px;
+}
+
+.boardList .form-box {
+    margin-bottom: 40px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boardList .forms {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.boardList select {
+    padding: 5px;
+    font-size: 15px; 
+    cursor: pointer;
+}
+
+.boardList button {
+    padding: 5px 10px;
+    border-radius: 5px; cursor: pointer;
+}
+
+.boardList #keyword {
+    padding: 5px;
+    width: 200px;
+}
+
+.boardList .insert-button {
+    width: 100%;
+    margin-right: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.boardList .table{
+    margin-bottom: 30px; border-collapse: collapse;  box-shadow: 1px 2px 2px rgba(0, 0.5, 0.5, 0.5);
+}
+
+.boardList .tabletr {
+    border-bottom: 1px solid #ddd;
+    text-align: center; border-bottom: 1px solid white;
+    
+}
+
+.boardList .tabletr:last-child {
+    border-bottom: none;
+}
+
+.boardList .btn-primary {
+    margin-top: 10px;
+    text-decoration-line: none;
+    font-weight: bold;
+    font-size: 15px;
+    color: black;
+    background-color: rgba(215, 228, 224, 0.856);
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+}
+
+.boardList .pages {
+    color: #ddd;
+}
+
+.boardList th, 
+.boardList td {
+    padding: 18px;
+}
+
+.boardList th {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    background-color: rgba(245, 222, 179, 0.774);
+}
+
+.boardList td {
+    font-size: 15px;
+}
+
+.boardList select:hover {
+    background-color: rgb(221, 214, 214);
+}
+
+.boardList select {
+    border-radius: 5px;
+}
+
+.boardList input {
+    border-radius: 5px;
+}
+
+.boardList .titlebt:hover {
+    font-size: 18px;
+}
+
+.boardList a {
+    color: inherit; /* 기존의 색상을 유지 */
+    text-decoration: none; /* 링크에 밑줄을 없앱니다. */
+    font-size: 18px;
+
+}
+
+.boardList .wlskrkdy:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.boardList .scButton:hover {
+    background-color: #252222;
+    color: white;
+}
+
+.boardList tr {
+}
+
+.boardList .pagetag {
+    padding: 8px 18px 4px 18px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: inherit; /* 기존의 색상을 유지 */
+    text-decoration: none; /* 링크에 밑줄을 없앱니다. */
+    border: 1px solid #3b3b3b;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.boardList .pagetag:hover {
+    background-color: #e6e2e2;
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+}
+
+.boardList .pagination {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    gap: 10px; /* 버튼 간 간격 */
+    margin-top: 20px; /* 상단 여백 */
+}
+
+.boardList .pagetag {
+    padding: 8px 18px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid #3b3b3b;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+.pagination .pagetag.active {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .pagination .pagetag.disabled {
+    color: #ccc;
+    pointer-events: none;
+  }
+  
+  .pagination .pagetag {
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+.boardList .pagetag:hover {
+    background-color: #e6e2e2;
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+}
