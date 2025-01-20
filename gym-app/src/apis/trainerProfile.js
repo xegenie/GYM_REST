@@ -10,7 +10,7 @@ export const select = (no) => api.get(`/admin/trainer/select?${no}`)
 export const trainerUser = () => api.get(`/admin/trainer/trainerUsers`)
 
 // 트레이너 번호로 유저 조회
-export const getTrainerNo = (trainerNo) => api.put(`/admin/trainer/getTrainerNo?${trainerNo}`)
+export const getTrainerNo = (trainerNo) => api.get(`/admin/trainer/getTrainerNo?trainerNo=${trainerNo}`)
 
 //트레이너 등록
 export const insert = (formData, headers) => api.post(`/admin/trainer/insert`, formData, headers)
