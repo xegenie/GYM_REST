@@ -5,25 +5,34 @@
 }
 
 .oswUser {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
-.oswUser .container1 {
-    margin-left: 100px;
+.oswUser .container1 h1{
+    color: #9FD0D5;
+   
 }
 
-.osw footer {
+
+
+
+.oswUser .btnAll {
     margin: 0;
-    padding: 0;
+}
+
+.oswUser .content {
+    flex: 1;
 }
 
 .oswUser .button-group {
     display: flex;
-    margin-left: 470px;
-    gap: 20px; /* 버튼 간의 간격 조정 */
-    margin-bottom: 30px;
+    flex-wrap: wrap; 
+    justify-content: center;
+    /* gap: 20px; 버튼 간의 간격 조정 */
+    margin-top: 50px;
+    margin-bottom: 0px;
 }
 
 .oswUser .button-group button {
@@ -46,8 +55,6 @@
     background-color: #aac5b0; /* 활성화된 버튼 색상 */
     color: #fff; /* 활성화된 버튼 글자 색상 */
 }
-
-
 
 .oswUser {
     background-color: #333;
@@ -130,7 +137,7 @@
 .oswUser .wrapper {
     width: 900px;
     max-width: 900px;
-    margin: 50px auto;
+    margin: 0 auto;
     background-color: #333;
     padding: 30px;
     border-radius: 10px;
@@ -154,7 +161,6 @@
     font-size: 16px;
 }
 
-
 .oswUser .button-group button:hover {
     background-color: #81d4fa;
 }
@@ -163,8 +169,6 @@
     background-color: #9FD0D5;
     color: rgb(0, 0, 0);
 }
-
-
 
 .oswUser .info-table {
     border-radius: 3px;
@@ -289,6 +293,10 @@
     padding: 5px;
 }
 
+
+.oswUser .footer {
+margin-top: auto;
+}
 .oswUser .styled-input:focus {
     border-bottom: 2px solid #7e57c2;
 }
@@ -315,3 +323,17 @@
     font-size: 16px;
     margin: 0;
 }
+
+/* 미디어 쿼리 - 작은 화면 (태블릿과 모바일) */
+@media (max-width: 768px) {
+    .oswUser .button-group {
+        margin-left: 0; /* 작은 화면에서는 왼쪽 여백 제거 */
+        flex-direction: column; /* 버튼을 세로로 배열 */
+    }
+
+    .oswUser .button-group button { 
+        width: 100%; 
+        /* 버튼의 너비를 100%로 설정 */ 
+        margin-bottom: 10px; }
+    }
+    

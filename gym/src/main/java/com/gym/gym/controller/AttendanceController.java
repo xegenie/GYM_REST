@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ import com.gym.gym.domain.Page;
 import com.gym.gym.domain.QRcode;
 import com.gym.gym.service.AttendanceService;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -52,51 +55,85 @@ public class AttendanceController {
         return ResponseEntity.ok(new AttendanceListResponse(attendanceList, option, page, result, pageUrl));
     }
 
-
     // 실시간 이용자 수
     @GetMapping("/admin/attendance/userCount")
     public ResponseEntity<?> getUserCount() throws Exception {
         // 사용자 수 가져오기
         int userCount = attendanceService.listCount();
-    
+
         // 응답을 JSON 형태로 반환
         Map<String, Object> response = new HashMap<>();
         response.put("userCount", userCount);
-    
-        return ResponseEntity.ok(response);  // JSON 응답 반환
+
+        return ResponseEntity.ok(response); // JSON 응답 반환
     }
-    
-
-
-
-
-
-
 
     // 출석 체크 페이지를 이동
-    @GetMapping("user/attendance/check")
-    public ResponseEntity<?> showAttendancePage(@RequestParam("uuid") String uuid) {
-        return ResponseEntity.ok(new AttendanceCheckPageResponse(uuid));
-    }
+    @GetMapping("user/attendance/check/{uuid}")
+    public ResponseEntity<?> showAttendancePage(@PathVariable("uuid") String uuid, @AuthenticationPrincipal CustomUser customUser) throws Exception {
 
-    // 출석 체크 (등록)
-    @PostMapping("user/attendance/check")
-    public ResponseEntity<?> insertAttendance(@RequestParam("qrId") String qrId, @AuthenticationPrincipal CustomUser user) throws Exception {
-        Long no = user.getNo();
+        Long userNo = customUser.getNo();
+        log.info("sdfsdf"+ uuid);
+        log.info("fdsgfdg"+ customUser);
 
+        if (userNo == null) {
+            log.info("fdsgfdg"+ customUser);
+            return ResponseEntity.badRequest().body(new AttendanceResponse("사용자 번호가 제공되지 않았습니다."));
+        }
+        
+        // QR 코드가 제공되지 않았을 때 처리
+        if (uuid == null || uuid.isEmpty()) {
+            log.info("fdsgfdg"+ customUser);
+            return ResponseEntity.badRequest().body(new AttendanceResponse("QR 코드가 제공되지 않았습니다."));
+        }
         Attendance attendance = new Attendance();
-        attendance.setUserNo(no);
-        attendance.setQrId(qrId);
+        attendance.setQrId(uuid);
+        attendance.setUserNo(userNo);
         attendanceService.insertAttendance(attendance);
 
-        QRcode qRcode = attendanceService.selectQRcode(no);
+        QRcode qRcode = attendanceService.selectQRcode(null);
 
-        if (qRcode.getUuid().equals(qrId)) {
+        if (qRcode != null && qRcode.getUuid().equals(uuid)) {
             return ResponseEntity.ok(new AttendanceResponse("출석 체크가 완료되었습니다."));
         }
 
-        return ResponseEntity.badRequest().body(new AttendanceResponse("유효하지 않은 QR 코드입니다."));
+         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
+    
+    // 출석 체크 (등록)
+    // @PostMapping("user/attendance/check")
+    // public ResponseEntity<?> insertAttendance(@RequestBody QRcode qrcode)
+    // throws Exception {
+    
+
+    //     // 새로운 UUID 생성
+    //     log.info("zzzz" + qrcode);
+
+
+    //     // user_no가 null일 경우 처리
+    //     if (userNo == null) {
+    //         return ResponseEntity.badRequest().body(new AttendanceResponse("사용자 번호가 제공되지 않았습니다."));
+    //     }
+
+    //     QR 코드가 제공되지 않았을 때 처리
+    //     if (qrId == null || qrId.isEmpty()) {
+    //         return ResponseEntity.badRequest().body(new AttendanceResponse("QR 코드가 제공되지 않았습니다."));
+    //     }
+
+    //     Attendance attendance = new Attendance();
+    //     attendance.setQrId(qrId);
+    //     attendance.setUserNo(userNo);
+    //     attendanceService.insertAttendance(attendance);
+
+    //     QRcode qRcode = attendanceService.selectQRcode(null);
+
+    //     if (qRcode != null && qRcode.getUuid().equals(qrId)) {
+    //         return ResponseEntity.ok(new AttendanceResponse("출석 체크가 완료되었습니다."));
+    //     }
+
+    //     return ResponseEntity.badRequest().body(new AttendanceResponse("유효하지 않은 QR 코드입니다."));
+    // }
+
 
     // 출석 내역 조회 응답 클래스
     public static class AttendanceListResponse {
@@ -106,7 +143,8 @@ public class AttendanceController {
         private int result;
         private String pageUrl;
 
-        public AttendanceListResponse(List<Attendance> attendanceList, Option option, Page page, int result, String pageUrl) {
+        public AttendanceListResponse(List<Attendance> attendanceList, Option option, Page page, int result,
+                String pageUrl) {
             this.attendanceList = attendanceList;
             this.option = option;
             this.page = page;

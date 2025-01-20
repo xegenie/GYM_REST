@@ -31,72 +31,72 @@ function Header() {
         logout(true);
     };
 
-    // roles 기본값 처리 및 배열 여부 확인
-    const rolesArray = Array.isArray(roles) ? roles : [];
+    // 유저 권한을 userInfo.authList에서 가져오기
+    const userRole = userInfo?.authList?.[0]?.auth;
 
     return (
-        
         <div className="oswHeader">
-        <header className="header">
-            <div className="menu-btn" id="menu-btn">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div className="logo">
-                <Link to="/">
-                    <img src="/images/logo.png" alt="FITNEXUS Logo" />
-                </Link>
-            </div>
-            <nav className="nav-links">
-                {!isAuthenticated && (
-                    <>
-                        <Link to="/join">회원가입</Link>
-                        <Link to="/login">로그인</Link>
-                    </>
-                )}
-                {isAuthenticated && (
-                    <>
-                       <Link to="/generate-qr-code">
+            <header className="header">
+                <div className="menu-btn" id="menu-btn">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div className="logo">
+                    <Link to="/">
+                        <img src="/images/logo.png" alt="FITNEXUS Logo" />
+                    </Link>
+                </div>
+                <nav className="nav-links">
+                    {!isAuthenticated && (
+                        <>
+                            <Link to="/join">회원가입</Link>
+                            <Link to="/login">로그인</Link>
+                        </>
+                    )}
+                    {isAuthenticated && (
+                        <>
+                            <Link to="/generate-qr-code">
                                 <i className="fa-solid fa-bell" style={{ marginRight: '10px' }}></i>
                                 헬스장 입장
                             </Link>
-                            <Link to="/User">
-                                <i className="fa-solid fa-bell" style={{ marginRight: '10px' }}></i>
-                                마이페이지
-                            </Link>
-                        <a href="#" onClick={handleLogout}>로그아웃</a>
-                        {rolesArray.includes('ROLE_USER') && (
-                            <Link to="/User">마이페이지</Link>
-                        )}
-                        {(rolesArray.includes('ROLE_ADMIN') || rolesArray.includes('ROLE_TRAINER')) && (
-                            <Link to="/admin/user/list">관리자페이지</Link>
-                        )}
-                    </>
-                )}
-            </nav>
+                            
+                            {/* ROLE_ADMIN이면 마이페이지를 표시하지 않음 */}
+                            {userRole !== 'ROLE_ADMIN' && (
+                                <Link to="/User">
+                                    <i className="fa-solid fa-bell" style={{ marginRight: '10px' }}></i>
+                                    마이페이지
+                                </Link>
+                            )}
 
-            <div className="menu" id="menu">
-                {isAuthenticated && (
-                    <p style={{ textAlign: 'center' }}>{userInfo?.name} 님 환영합니다.</p>
-                )}
-                <ul>
-                    <li><Link to="/ranking">출석 랭킹</Link></li>
-                    <li><Link to="/user/ticket/choice">이용권 구매</Link></li>
-                    {rolesArray.includes('ROLE_TRAINER') && (
-                        <li>
-                            <Link to={`/user/reservation/reservation?trainerNo=${userInfo?.trainerNo}`}>PT 예약</Link>
-                        </li>
+                            <a href="#" onClick={handleLogout}>로그아웃</a>
+
+                            {(userRole === 'ROLE_ADMIN' || userRole === 'ROLE_TRAINER') && (
+                                <Link to="/admin/user/list">관리자페이지</Link>
+                            )}
+                        </>
                     )}
-                    {rolesArray.includes('ROLE_USER') && (
-                        <li><Link to="/user/schedule/plan">운동계획표</Link></li>
+                </nav>
+
+                <div className="menu" id="menu">
+                    {isAuthenticated && (
+                        <p style={{ textAlign: 'center' }}>{userInfo?.name} 님 환영합니다.</p>
                     )}
-                    <li><Link to="/user/board/boardList">문의게시판</Link></li>
-                </ul>
-            </div>
-        </header>
-    </div>
-    
+                    <ul>
+                        <li><Link to="/ranking">출석 랭킹</Link></li>
+                        <li><Link to="/user/ticket/choice">이용권 구매</Link></li>
+                        {userRole === 'ROLE_USER' && (
+                            <>
+                                <li><Link to="/user/schedule/plan">운동계획표</Link></li>
+                                <li><Link to={`/reservation/reservationInsert/${userInfo?.trainerNo}`}>PT 예약</Link></li>
+                            </>
+                        )}
+                        <li><Link to="/user/board/boardList">문의게시판</Link></li>
+                    </ul>
+                </div>
+
+            </header>
+        </div>
     );
 }
 

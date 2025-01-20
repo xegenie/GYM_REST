@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const UserUpdateForm = ({user, getUpdate }) => {
+const UserUpdateForm = ({ user, getUpdate }) => {
 
   const {no} = useParams()
 
@@ -23,17 +23,18 @@ const UserUpdateForm = ({user, getUpdate }) => {
 
 
 
-    getUpdate({name, email, phone, userAuth, no})
+    getUpdate({ name, email, phone, userAuth, no })
 
   }
 
   return (
     <div className="container">
       <div className="main">
-        <div className="inner" style={{ textAlign: 'center', height: '700px' }}>
-          <div className="title" style={{ marginBottom: '20px' }}>
+        <div className="inner" >
+          <div className="title" style={{ textAlign: 'center' }}>
             <h2>회원정보 수정</h2>
           </div>
+
 
           <div className="container-form">
             <form onSubmit={(e) => handleUpdate(e)} id="form">

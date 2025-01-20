@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.google.zxing.qrcode.encoder.QRCode;
 import com.gym.gym.domain.Attendance;
 import com.gym.gym.domain.Option;
 import com.gym.gym.domain.Page;
 import com.gym.gym.domain.QRcode;
 
+
+@Service
 public interface AttendanceService {
 
     // 출석 내역 조회

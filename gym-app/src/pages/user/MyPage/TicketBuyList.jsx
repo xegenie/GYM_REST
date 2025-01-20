@@ -38,7 +38,7 @@ const TicketBuyList = () => {
           setTicketBuyList(data.ticketBuyList || []); // 기본값 빈 배열로 처리
 
           // 구매 내역이 있을 때만 정상 상태인 티켓 필터링
-          const startedTicket = data.ticketBuyList?.length > 0 ?
+          const startedTicket = data.ticketBuyList?.length > 0 ? 
             data.ticketBuyList.filter(b => b.status === '정상')
               .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))[0] : null;
 
@@ -83,9 +83,9 @@ const TicketBuyList = () => {
 
   return (
     <div className='oswTicketBuyList'>
-      <div className="oswUser" style={{ height: "100%" }}>
+      <div className="oswUser" style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
         <Header />
-        <div className="container1">
+        <div className="container1" style={{ flex: 1 }}>
           <h1>마이페이지</h1>
           <hr />
           <h1>마이페이지</h1>
@@ -103,52 +103,71 @@ const TicketBuyList = () => {
             </div>
           </div>
           <div className="wrapper">
+            {/* 보유중인 이용권 */}
+            <div className="main-text" style={{ color: "#ffffff", float: "left" }}>보유중인 이용권</div>
+            <br />
+            <br />
+            <table className="info-table2" border="1" style={{ marginTop: '20px', width: '100%', textAlign: 'center', borderCollapse: 'collapse' }}>
+ 
 
-            {/* 내 티켓 구매 내역 렌더링 */}
-            <div className="main-text" style={{ color: "#ffffff" }}>보유중인 이용권</div>
-            <table className="info-table">
-              <tr>
-                <th style={{ color: 'rgb(255, 255, 255)' }}>이용권</th>
-                <td>{ticketBuyList.length > 0 ? ticketBuyList[ticketBuyList.length - 1].ticketName : '없음'}</td>
-              </tr>
-              <tr>
-                <th style={{ color: 'rgb(255, 255, 255)' }}>구매일시</th>
-                <td>{startedTicket ? new Date(startedTicket.startDate).toLocaleDateString() : '-'}</td>
-              </tr>
-              <tr>
-                <th style={{ color: 'rgb(255, 255, 255)' }}>만료일시</th>
-                <td>{startedTicket ? new Date(startedTicket.endDate).toLocaleDateString() : '-'}</td>
-              </tr>
-            </table>
+  <tbody>
+    {ticketBuyList.length > 0 && startedTicket ? (
+      <>
+        <tr>
+          <td style={{ color: '#ffffff' , borderBottom: '1px solid #ffffff',  borderTop: 'none', backgroundColor: '#444444'}}>이용권</td>
+          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{startedTicket.ticketName}</td>
+        </tr>
+        <tr>
+          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', backgroundColor: '#444444' }}>구매일시</td>
+          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{new Date(startedTicket.startDate).toLocaleDateString()}</td>
+        </tr>
+        <tr>
+          <td style={{ color: '#ffffff', borderBottom: '1px solid #ffffff', backgroundColor: '#444444'}}>만료일시</td>
+          <td style={{ color: '#ffffff' , borderBottom: '1px solid #ffffff'}}>{new Date(startedTicket.endDate).toLocaleDateString()}</td>
+        </tr>
+      </>
+    ) : (
+      <tr>
+        <td colSpan="2" style={{ textAlign: 'center', color: '#ffffff' }}>보유중인 이용권이 없습니다.</td>
+      </tr>
+    )}
+  </tbody>
+</table>
 
-            <div className="main-text" style={{ color: '#ffffff', marginTop: '100px' }}>이용권 내역</div>
-            <table className="info-table2" border="1">
-              <thead>
-                <tr>
-                  <th style={{ width: '25%', textAlign: 'center', color: '#ffffff' }}>번호</th>
-                  <th style={{ width: '25%', textAlign: 'center', color: '#ffffff' }}>이용권</th>
-                  <th style={{ width: '30%', textAlign: 'center', color: '#ffffff' }}>가격</th>
-                  <th style={{ width: '40%', textAlign: 'center', color: '#ffffff' }}>구매일시</th>
-                </tr>
-              </thead>
 
-              <tbody>
-                {ticketBuyList.length > 0 ? (
-                  ticketBuyList.map((buy, index) => (
-                    <tr key={index}>
-                      <td style={{ textAlign: 'center', color: '#ffffff' }}>{buy.no}</td>
-                      <td style={{ textAlign: 'center', color: '#ffffff' }}>{buy.ticketName}</td>
-                      <td style={{ textAlign: 'center', color: '#ffffff' }}>{new Intl.NumberFormat().format(buy.ticketPrice)} 원</td>
-                      <td style={{ textAlign: 'center', color: '#ffffff' }}>{new Date(buy.buyDate).toLocaleString()}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="4" style={{ textAlign: 'center', width: '600px', color: '#ffffff' }}>구매 내역이 없습니다.</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+<div className="main-text" style={{ color: '#ffffff', marginTop: '30px', float: "left" }}>이용권 내역</div>
+<br />
+<br />
+<br />
+<table className="info-table2" border="1" style={{ marginTop: '20px', width: '100%', textAlign: 'center', borderCollapse: 'collapse' }}>
+  <thead>
+    <tr>
+      <th style={{ width: '25%', textAlign: 'center', color: '#ffffff', backgroundColor: '#444444', borderBottom: '1px solid #ffffff', padding: '10px 0' }}>번호</th>
+      <th style={{ width: '25%', textAlign: 'center', color: '#ffffff', backgroundColor: '#444444', borderBottom: '1px solid #ffffff', padding: '10px 0' }}>이용권</th>
+      <th style={{ width: '30%', textAlign: 'center', color: '#ffffff', backgroundColor: '#444444', borderBottom: '1px solid #ffffff', padding: '10px 0' }}>가격</th>
+      <th style={{ width: '40%', textAlign: 'center', color: '#ffffff', backgroundColor: '#444444', borderBottom: '1px solid #ffffff', padding: '10px 0' }}>구매일시</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {ticketBuyList.length > 0 ? (
+      ticketBuyList.map((buy, index) => (
+        <tr key={index}>
+          <td style={{ textAlign: 'center', color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{buy.no}</td>
+          <td style={{ textAlign: 'center', color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{buy.ticketName}</td>
+          <td style={{ textAlign: 'center', color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{new Intl.NumberFormat().format(buy.ticketPrice)} 원</td>
+          <td style={{ textAlign: 'center', color: '#ffffff', borderBottom: '1px solid #ffffff' }}>{new Date(buy.buyDate).toLocaleString()}</td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="4" style={{ textAlign: 'center', width: '600px', color: '#ffffff' }}>구매 내역이 없습니다.</td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
+
 
           </div>
         </div>
