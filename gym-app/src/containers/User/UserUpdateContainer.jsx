@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import UserUpdateForm from '../../components/user/UserUpdateForm'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import * as auth from '../../apis/auth'
 import * as Swal from '../../apis/alert'
 
 const UserUpdateContainer = () => {
 
+
+  const navigate = useNavigate()
   const {no} = useParams()
 
   const[user, setUser] = useState({})
