@@ -32,7 +32,7 @@ const ReservationInsertContainer = () => {
 
   return (
     <>
-      <ReservationInsert trainerProfile={trainerProfile} reservationByTrainer={reservationByTrainer} />
+      <ReservationInsert trainerProfile={trainerProfile} reservationByTrainer={reservationByTrainer} no={no}/>
     </>
   )
 }

@@ -3,13 +3,19 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import * as reservation from '../../apis/reservation'
+import * as format from '../../utils/format';
+import * as Swal from '../../apis/alert'
 import './Reservation.css';
+import { useNavigate } from 'react-router-dom';
 
-
-const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
+const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [timeButtons, setTimeButtons] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedDate) {
@@ -47,9 +53,31 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
     }
   };
 
-  const submitReservation = (date, time) => {
-    console.log(`예약한 시간: ${date} ${time}`);
-    setModalVisible(false);
+  const submitReservation = async (date, time) => {
+    const data = {
+      trainerNo: no,
+      rvDate: new Date(`${date}T${time}`).toISOString(),
+    };
+
+    try {
+      const response = await reservation.insert(data);
+      setData(response);
+
+      console.log("예약 시간 : " + data.rvDate);
+
+      // 버튼 상태 즉시 업데이트
+      setTimeButtons((prevButtons) =>
+        prevButtons.map((button) =>
+          button.time === time ? { ...button, disabled: true, isReserved: true } : button
+        )
+      );
+
+      Swal.alert("예약이 완료되었습니다.");
+      setModalVisible(false);
+    } catch (error) {
+      Swal.alert("예약 중 오류가 발생했습니다. 다시 시도해주세요.");
+      console.error(error);
+    }
   };
 
   const closeModal = () => {
@@ -57,7 +85,7 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
   };
 
   return (
-    <div className='ReservationInsert'>
+    <div className="ReservationInsert">
       <div className="ReservationInsert-container">
         <div className="hr">
           <span>PT 예약</span>
@@ -67,7 +95,7 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
             <img
               src="/images/sample.jpg"
               alt="트레이너이미지"
-              className='card-img-top'
+              className="card-img-top"
               style={{
                 width: '500px',
                 height: '450px',
@@ -87,13 +115,10 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
           />
         </div>
         {modalVisible && (
-          <div
-            id="timeSelectionModal"
-            className={modalVisible ? 'show' : ''}
-          >
+          <div id="timeSelectionModal" className={modalVisible ? 'show' : ''}>
             <div className="modal-container">
               <div className="modal-info">
-                <p className='modal-info-timeSelect'>예약 시간 선택</p>
+                <p className="modal-info-timeSelect">예약 시간 선택</p>
                 <p id="selectedDate"> {selectedDate}</p>
               </div>
               <div id="timeButtons">
@@ -104,24 +129,28 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
                     onClick={() => handleTimeClick(button.time)}
                     style={{
                       cursor: button.disabled ? 'not-allowed' : 'pointer',
-                      backgroundColor: button.disabled ? 'gray' : 'royalblue'
+                      backgroundColor: button.disabled ? 'gray' : 'royalblue',
                     }}
                   >
                     {button.time}
                   </button>
                 ))}
               </div>
-              <button className='modalCloseButton' onClick={closeModal}
-              style={{
-                width: "50px",
-                border: "none",
-                backgroundColor: "transparent",
-                color: "#333",
-                cursor: "pointer",
-                fontWeight: "bold",
-                transition: "color 0.3s ease"
-              }}
-              >Close</button>
+              <button
+                className="modalCloseButton"
+                onClick={closeModal}
+                style={{
+                  width: '50px',
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  color: '#333',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  transition: 'color 0.3s ease',
+                }}
+              >
+                Close
+              </button>
             </div>
           </div>
         )}
