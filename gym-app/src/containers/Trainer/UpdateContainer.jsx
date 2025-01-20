@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as trainerApi from '../../apis/tarinerPorfile';
-import TicketUpdatetForm from '../../components/admin/Ticket/TickeUpdateForm';
+import * as trainerApi from '../../apis/trainerProfile';
+import TrainerUpdateForm from '../../components/admin/Trainer/TrainerUpdateForm';
 
 const UpdateContainer = () => {
 
@@ -26,7 +26,7 @@ const UpdateContainer = () => {
   
 
   return (
-    <TicketUpdatetForm onUpdate={onUpdate} />
+    <TrainerUpdateForm onUpdate={onUpdate} />
   );
 };
 

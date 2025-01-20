@@ -13,6 +13,16 @@
     display: flex;
 }
 
+.ticketForm .main {
+    width: 1160px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F7F8F9;
+    flex-shrink: 0;
+}
+
 .ticketForm .mainTitle {
     width: 100%;
     height: 100px;
@@ -93,7 +103,7 @@
     padding: 0 50px;
 }
 
-.ticketForm td input,
+.ticketForm .td .input,
 .ticketForm .textarea {
     width: 300px;
     padding: 5px 10px; /* 안쪽 여백 */

@@ -6,8 +6,8 @@ import Header from '../../../components/admin/Header/adminHeader'
 const TicketList = () => {
   return (
     <>
-      <Header />,
-      <ListContainer />,
+      <Header />
+      <ListContainer />
       <Footer />
     </>
   )

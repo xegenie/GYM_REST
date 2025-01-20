@@ -6,8 +6,8 @@ import InsertContainer from '../../../containers/Ticket/InsertContainer'
 const TicketInsert = () => {
   return (
     <>
-      <Header />,
-      <InsertContainer />,
+      <Header />
+      <InsertContainer />
       <Footer />
     </>
   )
