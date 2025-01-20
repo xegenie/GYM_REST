@@ -183,10 +183,11 @@ const LoginContextProvider = ({ children }) => {
     // 사용자 정보
     setUserInfo(data)
     // 권한 정보
-    const updatedRoles = { isUser: false, isAdmin: false }
+    const updatedRoles = { isUser: false, isAdmin: false, isTrainer: false }
     data.authList.forEach( (obj) => {
       if( obj.auth == 'ROLE_USER' ) updatedRoles.isUser = true
       if( obj.auth == 'ROLE_ADMIN' ) updatedRoles.isAdmin = true
+      if( obj.auth == 'ROLE_TRAINER' ) updatedRoles.isTrainer = true
     })
     setRoles(updatedRoles)
   }

@@ -3,13 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const UserUpdateForm = ({user, getUpdate }) => {
 
-  const no = useParams()
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // 데이터 제출 로직 구현 (예: API 호출)
-    console.log('Form submitted:', formData);
-  };
+  const {no} = useParams()
 
   const handleDelete = () => {
     if (window.confirm('정말로 삭제하시겠습니까?')) {
@@ -27,7 +21,7 @@ const UserUpdateForm = ({user, getUpdate }) => {
     const name = form.name.value
     const userAuth = form.auth.value
 
-k
+
 
     getUpdate({name, email, phone, userAuth, no})
 

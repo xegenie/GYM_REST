@@ -116,6 +116,7 @@ public class HomeController {
         List<String> roles = new ArrayList<String>();
         roles.add("ROLE_USER");
         roles.add("ROLE_ADMIN");
+        roles.add("ROLE_TRAINER");
 
         // 서명에 사용할 키 생성
         String secretKey = jwtProps.getSecretKey();

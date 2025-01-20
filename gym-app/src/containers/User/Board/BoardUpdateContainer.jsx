@@ -22,7 +22,7 @@ const BoardUpdateContainer = () => {
 
   }
   
-  useEffect( () => {k
+  useEffect( () => {
     getBoard()    // 게시글 정보(게시글 + 파일목록)
   }, [])
 
