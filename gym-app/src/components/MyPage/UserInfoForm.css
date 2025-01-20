@@ -1,0 +1,149 @@
+.oswUserInfoForm {
+    background-color: #333; /* 전체 배경 색상 */
+    font-family: 'Arial', sans-serif;
+    color: #000000;
+    padding: 20px;
+    min-height: 55vh;
+}
+
+.oswUserInfoForm .UserInfo {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.oswUserInfoForm #edit-form h2 {
+    color: #9FD0D5;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.oswUserInfoForm .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    text-align: center;
+    border: none;
+}
+
+.oswUserInfoForm .info-table th, .oswUserInfoForm .info-table td {
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+}
+
+.oswUserInfoForm .info-table th {
+    background-color: #9FD0D5;
+    color: #fff;
+    width: 30%;
+}
+
+.oswUserInfoForm .info-table td {
+    background-color: #f8f9fa;
+    width: 70%;
+    text-align: left !important;
+}
+
+.oswUserInfoForm .info-table tr:nth-child(even) td {
+    background-color: #e9ecef;
+}
+
+.oswUserInfoForm .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #f3f3f3;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.oswUserInfoForm .input-icon {
+    color: #7e57c2;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.oswUserInfoForm .styled-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    color: #333;
+    padding: 5px;
+}
+
+.oswUserInfoForm .styled-input:focus {
+    border-bottom: 2px solid #7e57c2;
+}
+
+.oswUserInfoForm .input-container:hover {
+    box-shadow: 0 0 8px rgba(126, 87, 194, 0.6);
+}
+
+.oswUserInfoForm .button-tr button {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.oswUserInfoForm button.delete {
+    background-color: #d32f2f;
+    color: white;
+}
+
+.oswUserInfoForm button.delete:hover {
+    background-color: #b71c1c;
+}
+
+.oswUserInfoForm button.change-password {
+    background-color: #9FD0D5;
+    color: white;
+}
+
+.oswUserInfoForm button {
+    background-color: #000000;
+    color: black;
+    margin-right: 10px;
+}
+
+.oswUserInfoForm button:hover {
+    background-color: #81d4fa;
+    color: #ffffff;
+}
+
+.oswUserInfoForm button[type="submit"] {
+    background-color: #7e57c2;
+    color: white;
+    float: right;
+}
+
+.oswUserInfoForm button[type="submit"]:hover {
+    background-color: #5e35b1;
+}
+
+.oswUserInfoForm .button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .oswUserInfoForm .button-group {
+        flex-direction: column;
+    }
+
+    .oswUserInfoForm .button-group button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+

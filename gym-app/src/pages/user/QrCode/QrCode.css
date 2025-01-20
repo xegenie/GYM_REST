@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: white;
 }
 
 .oswQrCode .qr-code {
@@ -26,6 +27,7 @@
 .oswQrCode .url-text {
     font-size: 16px;
     margin-top: 10px;
+    color: black;
 }
 
 .oswQrCode .url-text a {
@@ -35,4 +37,5 @@
 
 .oswQrCode .url-text a:hover {
     text-decoration: underline;
+    color: black;
 }

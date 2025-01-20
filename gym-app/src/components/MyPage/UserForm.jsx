@@ -12,8 +12,8 @@ const UserForm = ({}) => {
   return (
     
     <div className="user">
-   <div className="wrapper" style={{ marginTop: '80px' }}>
-        <h2 style={{ marginBottom: '15px', fontWeight: 800, color: 'white' }}>내 정보</h2>
+   <div className="wrapper" style={{ marginTop: '62px' }}>
+        <h2 style={{ marginBottom: '15px', fontWeight: 800, color: 'white', marginTop: '-40px' }}>내 정보</h2>
     
           <div id="user-info">
             <table className="info-table">
@@ -50,8 +50,9 @@ const UserForm = ({}) => {
     style={{
         backgroundColor: '#142230', 
         float: 'right', 
-        marginTop: '-20px', 
-        borderColor: '#333' // camelCase로 수정
+        marginTop: '-15px', 
+        borderColor: '#333',
+        margin : '30px'
     }}
 >
     정보 수정

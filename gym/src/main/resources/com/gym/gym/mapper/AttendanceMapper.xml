@@ -57,17 +57,18 @@
 
     
 
-    <!-- 출석 체크 (등록)  하루에 한번만 되게끔-->
-    <insert id="insertAttendance" parameterType="map">
-            INSERT INTO attendance (qr_id, user_no)
-            SELECT #{qrId}, #{userNo}
-            WHERE NOT EXISTS (
-            SELECT 1
-            FROM attendance
-            WHERE user_no = #{userNo}
-            AND DATE(check_time) = CURDATE()
+    <!-- 출석 체크 (등록) -->
+<insert id="insertAttendance" parameterType="map">
+    INSERT INTO attendance (qr_id, user_no)
+    SELECT #{qrId}, #{userNo}
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM attendance
+        WHERE user_no = #{userNo}
+        AND DATE(check_time) = CURDATE()
     )
-    </insert>
+</insert>
+
 
 
     <!-- 출석 체크 (등록) 여러번 가능 -->

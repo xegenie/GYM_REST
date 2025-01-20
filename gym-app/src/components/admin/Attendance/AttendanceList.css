@@ -148,3 +148,7 @@
     font-weight: bold;
     font-size: 1.2em;
 }
+.oswAttendanceList .attendance-table th:nth-child(3), 
+.oswAttendanceList .attendance-table td:nth-child(3) {
+    width: 100px; /* 원하는 크기로 조절 가능 */
+}

@@ -98,6 +98,7 @@ const AttendanceTable = () => {
               </table>
             </div>
 
+
             {/* 페이지네이션 */}
             <div className="pagination">
               <a onClick={() => handlePageChange(page.first)} className="first">[처음]</a>
