@@ -12,5 +12,8 @@ export const userByList = (userNo, option, page) => api.get(`/user/myPage/ptList
 // 예약 신청 트레이너 정보
 export const sortByTrainer = (no) => api.get(`/user/reservation/reservationInsert/${no}`)
 
+// 예약 신청
+export const insert = () => api.post(`/user/reservation/reservationInsert`)
+
 // 관리자 예약 취소/완료 처리
 export const updateReservationByAdmin = (reservationNo, action) => api.put(`/admin/reservation/list`, {reservationNo, action})

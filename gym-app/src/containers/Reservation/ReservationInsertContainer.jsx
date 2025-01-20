@@ -22,7 +22,7 @@ const ReservationInsertContainer = () => {
     setTrainerProfile(data.trainerProfile)
     setReservationByTrainer(data.reservationByTrainer)
 
-    console.log("트레이너 예약 데이터 : " + data);
+    console.dir(data);
     
   }
   

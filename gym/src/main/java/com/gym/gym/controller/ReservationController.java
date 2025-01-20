@@ -185,10 +185,12 @@ public class ReservationController {
 
             int code = 1;
 
+
             log.info("담당 트레이너 번호 : " + no);
             log.info("trainerProfile : " + trainerProfile);
 
-            List<Reservation> reservationByTrainer = reservationService.sortByTrainer(trainerProfile.getName(), code);
+            List<Reservation> reservationByTrainer = reservationService.sortByTrainer(String.valueOf(no), code);
+
                             // .stream()
                             // .filter(reservation -> reservation.getTrainerNo() == no)
                             // .toList();
