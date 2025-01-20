@@ -104,7 +104,7 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer }) => {
                     onClick={() => handleTimeClick(button.time)}
                     style={{
                       cursor: button.disabled ? 'not-allowed' : 'pointer',
-                      backgroundColor: button.disabled ? 'gray' : 'royalblue',
+                      backgroundColor: button.disabled ? 'gray' : 'royalblue'
                     }}
                   >
                     {button.time}
