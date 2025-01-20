@@ -76,7 +76,7 @@ const ReservationListContainer = () => {
     {location.pathname.includes('/myPage/ptList') ? (
       <ReservationPtList reservationList={reservationList} />
     ) : (
-      <ReservationList reservationList={reservationList} />
+      <ReservationList reservationList={reservationList} getReservationList={getReservationList} />
     )}
   </>
   )

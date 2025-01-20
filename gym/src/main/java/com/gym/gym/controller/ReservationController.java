@@ -108,33 +108,6 @@ public class ReservationController {
     }
 
     // 회원 내 예약 목록
-    // @GetMapping("/user/myPage/ptList")
-    // public ResponseEntity<?> getMyReservation(@AuthenticationPrincipal CustomUser
-    // userDetails, Option option, Page page) {
-    // try {
-    // List<Reservation> reservationCount =
-    // reservationService.userByList(userDetails.getNo(), option, new Page());
-    // long disabledCount = reservationService.disabledCount(userDetails.getNo());
-
-    // if (!reservationCount.isEmpty()) {
-    // Reservation lastReservation = reservationCount.get(reservationCount.size() -
-    // 1);
-    // int ptCount = lastReservation.getPtCount();
-    // ptCount -= disabledCount;
-
-    // ptCount = Math.max(ptCount, 0);
-    // }
-
-    // List<Reservation> reservationList =
-    // reservationService.userByList(userDetails.getNo(), option, page);
-    // return new ResponseEntity<>(reservationList, HttpStatus.OK);
-    // } catch (Exception e) {
-    // log.error("회원 예약 조회 오류");
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
-
-    // 회원 내 예약 목록
     @GetMapping("/user/myPage/ptList/{no}")
     public ResponseEntity<?> getMyReservation(@PathVariable("no") Long no,
             @AuthenticationPrincipal CustomUser userDetails) {
@@ -174,7 +147,6 @@ public class ReservationController {
             TrainerProfile trainerProfile = trainerProfileService.selectTrainer(no);
 
             int code = 1;
-
 
             log.info("담당 트레이너 번호 : " + no);
             log.info("trainerProfile : " + trainerProfile);
@@ -262,10 +234,12 @@ public class ReservationController {
 
     // 관리자 예약 취소/완료
     @PutMapping("/admin/reservation/list")
-    public ResponseEntity<?> updateReservationByAdmin(@RequestParam("action") String action,
-            @RequestParam("no") int no) {
+    public ResponseEntity<?> updateReservationByAdmin(
+            @RequestParam("reservationNo") int reservationNo,
+            @RequestParam("action") String action
+            ) {
         try {
-            Reservation reservation = reservationService.findByNo(no);
+            Reservation reservation = reservationService.findByNo(reservationNo);
             int result = 0;
 
             if ("complete".equals(action)) {

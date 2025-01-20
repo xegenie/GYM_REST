@@ -16,7 +16,4 @@ export const sortByTrainer = (no) => api.get(`/user/reservation/reservationInser
 export const insert = (data) => api.post(`/user/reservation/reservationInsert`, data)
 
 // 관리자 예약 취소/완료 처리
-export const updateReservationByAdmin = (reservationNo, action) => api.put(`/admin/reservation/list`, {
-    reservationNo,
-    action
-})
+export const updateReservationByAdmin = (reservationNo, action) => api.put(`/admin/reservation/list?reservationNo=${reservationNo}&action=${action}`)
