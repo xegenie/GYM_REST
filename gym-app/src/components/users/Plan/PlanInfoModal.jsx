@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import { useDate } from '../../../contexts/DateContextProvider';
 import * as plan from '../../../apis/plan'
+import { LoginContext } from '../../../contexts/LoginContextProvider';
 
 const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
+
+  const { roles } = useContext(LoginContext)
   
   const { currentDate, clickedPlan, formatPlanTime, isPlanInfoVisible, setIsPlanInfoVisible, getDataListByDate } = useDate();
 
@@ -131,8 +134,12 @@ const PlanInfoModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
         <div className="popup-type">
           <p>자율 운동</p>
           <div className="icons">
-            <a id="editIcon" onClick={handleEditClick} ><EditIcon /></a>
-            <a id="deleteIcon" onClick={handlePlanDelete}><DeleteIcon /></a>
+            {roles.isUser && (
+              <>
+                <a id="editIcon" onClick={handleEditClick} ><EditIcon /></a>
+                <a id="deleteIcon" onClick={handlePlanDelete}><DeleteIcon /></a>
+              </>
+            )}
             <a className="exercise-bymyself-close" onClick={onClose}><CloseRoundedIcon /></a>
           </div>
         </div>

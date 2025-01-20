@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import MiniCalendar from './MiniCalendar'
 import Comment from './Comment'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { useDate } from '../../../contexts/DateContextProvider';
+import { LoginContext } from '../../../contexts/LoginContextProvider';
 
 const SideContainer = ({comment}) => {
+
+  const { roles } = useContext(LoginContext)
 
   const {isPlanInsertVisible, setIsPlanInsertVisible} = useDate()
 
@@ -21,6 +24,7 @@ const SideContainer = ({comment}) => {
         <p className="text-center fw-semibold m-0" style={{fontSize: "32px"}}>운동 계획표</p>
         <hr />
         <div className="d-flex justify-content-end">
+          {roles.isUser && (
             <button 
               type="button" 
               className="p-3 border rounded-4 bg-white upd-schedule"
@@ -30,6 +34,7 @@ const SideContainer = ({comment}) => {
                 일정추가
                 <AddRoundedIcon /> 
             </button>
+          )}
         </div>
         <MiniCalendar />
         <Comment comment={comment} />

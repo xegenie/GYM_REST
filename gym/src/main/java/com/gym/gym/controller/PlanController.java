@@ -276,6 +276,7 @@ public class PlanController {
     @PostMapping("/comment")
     @PreAuthorize("hasRole('TRAINER')")
     public ResponseEntity<?> insertComment(@RequestBody Comment comment, @AuthenticationPrincipal CustomUser userDetails) {
+        System.out.println("insert comment: " + comment);
         try {
             comment.setTrainerNo(userDetails.getNo().intValue());
             int result = commentService.insert(comment);
@@ -306,7 +307,7 @@ public class PlanController {
     }
 
     @PutMapping("/comment")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('TRAINER')")
     public ResponseEntity<?> updateComment(@RequestBody Comment comment, @AuthenticationPrincipal CustomUser userDetails) {
         try {
             comment.setTrainerNo(userDetails.getNo().intValue());

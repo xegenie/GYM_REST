@@ -2,11 +2,15 @@ import api from './api'
 
 export const getPlans = () => api.get(`/user/schedule`)
 
-export const getPlansbyUserNo = (userNo) => api.get(`/user/schedule?userNo=${userNo}`)
+export const getPlansbyUserNo = (userNo) => {
+   return api.get(`/user/schedule`, { params: { userNo } });
+};
 
 export const getPlansbyDate = (year, month, day) => api.get(`/user/schedule/${year}/${month}/${day}`)
 
-export const getPlansbyDateUserNo = (year, month, day, userNo) => api.get(`/user/schedule/${year}/${month}/${day}&userNo=${userNo}`)
+export const getPlansbyDateUserNo = (year, month, day, userNo) => {
+    return api.get(`/user/schedule/${year}/${month}/${day}`, { params: { userNo } });
+};
 
 export const insert = (data) => api.post(`/user/schedule`, data)
 
