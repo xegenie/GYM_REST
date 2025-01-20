@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import { useDate } from "../../../contexts/DateContextProvider";
+import * as plan from '../../../apis/plan'
 
 const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => {
 
-  const { currentDate, formatDate, insertDate, setInsertDate } = useDate();
+  const { currentDate, formatDate, getDataListByDate, setIsPlanInsertVisible } = useDate();
+
+  const [planName, setPlanName] = useState('')
+  const [planContent, setPlanContent] = useState('')
+
+  const changePlanName = (e) => {setPlanName(e.target.value)}
+  const changePlanContent = (e) => {setPlanContent(e.target.value)}
 
   // ⚪❗ 초기값 세팅하기
   const [start, setStart] = useState(currentDate)
@@ -25,10 +32,6 @@ const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => 
   };
 
   useEffect(() => {
-    setInsertDate(currentDate)
-  }, [currentDate]);
-
-  useEffect(() => {
     // 드롭다운 세팅
     const cleanupStart = setupDropdown("dropdown-button-start", "options-start");
     const cleanupEnd = setupDropdown("dropdown-button-end", "options-end");
@@ -40,10 +43,28 @@ const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => 
   }, [setupDropdown]);
 
   useEffect(() => {
-    const formattedDate = `${insertDate.getMonth() + 1}/${insertDate.getDate()} (${insertDate.toLocaleDateString('ko-KR', { weekday: 'short' })})`;
+    const formattedDate = `${currentDate.getMonth() + 1}/${currentDate.getDate()} (${currentDate.toLocaleDateString('ko-KR', { weekday: 'short' })})`;
     setFormattedDate(formattedDate);
-    console.log("insertDate formattedDate: " + formattedDate);
-  }, [insertDate]);
+    console.log("currentDate formattedDate: " + formattedDate);
+  }, [currentDate]);
+
+  const handleInsertPlan = async () => {
+    const data = {
+      planName: planName,
+      planContent: planContent,
+      planTime: start,
+      planEnd: end
+    };
+
+    try {
+      const response = await plan.insert(data);
+      console.log('planInsert 응답:', response.data);
+    } catch (error) {
+      console.error('오류 발생:', error.response ? error.response.data : error.message);
+    }
+    getDataListByDate(currentDate)
+    setIsPlanInsertVisible(false)
+  }
   
   return (
     <div className='pop-up input-schedule'>
@@ -53,9 +74,9 @@ const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => 
         </div>
       </div>
       <div className="popup-content">
-        <form>
+        <div>
           <div className="popup-title-input">
-            <input type="text" name="planName" placeholder="일정 제목 추가" />
+            <input type="text" name="planName" placeholder="일정 제목 추가" onChange={changePlanName} />
           </div>
           <div className="set-time">
             <p><AccessTimeRoundedIcon /></p>
@@ -92,13 +113,11 @@ const PlanInsertModal = ({times24Hour, times12Hour, setupDropdown, onClose}) => 
               </div>
             </div>
           </div>
-          <textarea name="planContent" placeholder="내용 입력"></textarea>
-          <input type="hidden" name="planTime" id="planTime" />
-          <input type="hidden" name="planEnd" id="planEnd" />
+          <textarea name="planContent" placeholder="내용 입력" onChange={changePlanContent}></textarea>
           <div className="button-container">
-            <button type="submit" id="updPlanButton">저장</button>
+            <button onClick={handleInsertPlan} id="updPlanButton">저장</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )
