@@ -18,8 +18,6 @@ const DateContextProvider = ({children}) => {
   const [isPlanInfoVisible, setIsPlanInfoVisible] = useState(false);
   const [isRsvInfoVisible, setIsRsvInfoVisible] = useState(false);
 
-  const [insertDate, setInsertDate] = useState(currentDate);
-
   const getDataListByDate = async (date) => {
     console.log("getDataListByDate")
     const formDate = new Date(date)
@@ -81,7 +79,7 @@ const DateContextProvider = ({children}) => {
       clickedPlan, setClickedPlan, clickedRsv, setClickedRsv,
       isPlanInsertVisible, setIsPlanInsertVisible, isPlanInfoVisible, setIsPlanInfoVisible,
       isRsvInfoVisible, setIsRsvInfoVisible,
-      insertDate, setInsertDate
+      getDataListByDate
       }}>
       {children}
     </DateContext.Provider>
