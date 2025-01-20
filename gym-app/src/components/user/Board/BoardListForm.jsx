@@ -139,7 +139,7 @@ const BoardListForm = ({ boardList, page, rows, orderCode, keyword }) => {
             </Link>
           </div>
     
-          {/* <div
+          <div
             style={{
               marginBottom: "100px",
               width: "100%",
@@ -188,8 +188,8 @@ const BoardListForm = ({ boardList, page, rows, orderCode, keyword }) => {
             )}
             <Link className="pagetag" style={{ fontSize: "15px" }} to={`?page=${page.last}`}>
               {">>"}
-            </Link> */}
-          {/* </div> */}
+            </Link>
+          </div> 
         </div>
     </div>
       );
