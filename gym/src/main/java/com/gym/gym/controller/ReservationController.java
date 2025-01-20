@@ -172,24 +172,28 @@ public class ReservationController {
     // }
 
     // 예약 등록 페이지
-    @GetMapping("/user/reservation/reservationInsert")
+    @GetMapping("/user/reservation/reservationInsert/{no}")
     public ResponseEntity<?> getMyTrainer(
-            @RequestParam(value = "keyword", defaultValue = "") String keyword,
-            @RequestParam(value = "code", defaultValue = "1") int code,
+            @PathVariable("no") int no,
+            // @RequestParam(value = "keyword", defaultValue = "") String keyword,
+            // @RequestParam(value = "code", defaultValue = "1") int code,
             @AuthenticationPrincipal CustomUser userDetails
             ) {
 
         try {
-            int trainerNo = userDetails.getTrainerNo();
+            TrainerProfile trainerProfile = trainerProfileService.selectTrainer(no);
 
-            TrainerProfile trainerProfile = trainerProfileService.selectTrainer(trainerNo);
+            int code = 1;
 
-            log.info("담당 트레이너 번호 : " + trainerNo);
+            log.info("담당 트레이너 번호 : " + no);
             log.info("trainerProfile : " + trainerProfile);
 
-            List<Reservation> reservationByTrainer = reservationService.sortByTrainer(keyword, code);
+            List<Reservation> reservationByTrainer = reservationService.sortByTrainer(trainerProfile.getName(), code);
+                            // .stream()
+                            // .filter(reservation -> reservation.getTrainerNo() == no)
+                            // .toList();
 
-            log.info(("트레이너 예약 목록 : " + reservationByTrainer));
+            log.info(("트레이너 예약 데이터 : " + reservationByTrainer));
 
             List<Map<String, Object>> reservationResponse = new ArrayList<>();
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");

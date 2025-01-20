@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import * as reservation from '../../apis/reservation'
 import ReservationList from '../../components/Reservation/ReservationList'
 import ReservationPtList from '../../components/Reservation/ReservationPtList'
+import * as Swal from '../../apis/alert'
 import { LoginContext } from '../../contexts/LoginContextProvider'
 
 const ReservationListContainer = () => {
 
-  const {userInfo} = useContext(LoginContext)
+  const {userInfo, isLoading, isLogin} = useContext(LoginContext)
   const [reservationList, setReservationList] = useState([])
   const [keyword, setKeyword] = useState('')
   const [option, setOption] = useState('')
   const [page, setPage] = useState(1)
-  
+
+  const navigate = useNavigate()
 
   const location = useLocation()
 
@@ -48,6 +50,17 @@ const ReservationListContainer = () => {
     updatePage()
   }, [location.search])
 
+  useEffect(() => {
+  
+     
+     if(!isLogin){
+         Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login')})
+         return
+       }
+     
+     if(isLoading) return
+   
+   }, [isLoading])
  
   const handleComplete = (reservationNo) => {
     openModal(reservationNo, 'complete')

@@ -10,7 +10,7 @@ export const calendarList = (keyword, code) => api.get(`/admin/reservation/calen
 export const userByList = (userNo, option, page) => api.get(`/user/myPage/ptList?userNo=${userNo}&option=${option}&page=${page}`)
 
 // 예약 신청 트레이너 정보
-export const sortByTrainer = (keyword, code) => api.get(`/user/reservation/reservationInsert?keyword=${keyword}&code=${code}`)
+export const sortByTrainer = (no) => api.get(`/user/reservation/reservationInsert/${no}`)
 
 // 관리자 예약 취소/완료 처리
 export const updateReservationByAdmin = (reservationNo, action) => api.put(`/admin/reservation/list`, {reservationNo, action})
