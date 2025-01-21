@@ -1,87 +1,110 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import ReservationList from "../../components/Reservation/ReservationList";
+import { LoginContext } from "../../contexts/LoginContextProvider";
 import * as reservation from '../../apis/reservation'
-import ReservationList from '../../components/Reservation/ReservationList'
-import ReservationPtList from '../../components/Reservation/ReservationPtList'
-import * as Swal from '../../apis/alert'
-import { LoginContext } from '../../contexts/LoginContextProvider'
+import ReservationPtList from "../../components/Reservation/ReservationPtList";
 
 const ReservationListContainer = () => {
-  
-  const {no} = useParams()
+  const { userInfo } = useContext(LoginContext);
+  const [reservations, setReservations] = useState([]);
+  const [option, setOption] = useState({
+    keyword: "",
+    rows: 10,
+    orderCode: 0,
+    code: 0,
+  });
+  const [page, setPage] = useState({
+    page: 1,
+    rows: 10,
+    first: 1,
+    last: 1,
+    start: 1,
+    end: 1,
+  });
 
-  const {userInfo, isLoading, isLogin} = useContext(LoginContext)
-  const [reservationList, setReservationList] = useState([])
-  const [keyword, setKeyword] = useState('')
-  const [option, setOption] = useState('')
-  const [page, setPage] = useState(1)
+  const location = useLocation();
 
-  const navigate = useNavigate()
+  const fetchList = async (pageNumber = 1, currentOption = option) => { 
+    if (!userInfo || !userInfo.no) return;
 
-  const location = useLocation()
+    try {
+      let response;
+      if (location.pathname.includes("/myPage/ptList")) {
+        console.log(userInfo.no);  
 
-  const updatePage = () => {
-    const query = new URLSearchParams(location.search)
-    const newKeyword = query.get('keyword') || ''
-    const newOption = query.get('option') || ''
-    const newPage = query.get('page') || 1
-    setKeyword(newKeyword)
-    setOption(newOption)
-    setPage(newPage)
-  }
+        response = await reservation.userByList(userInfo.no, pageNumber, currentOption.rows);
 
-  const getReservationList = async () => {
-    let response 
-    
-    if (location.pathname.includes('/myPage/ptList')) {
-      response = await reservation.userByList(no)
-    } else {
-      response = await reservation.list(keyword, option, page)
+        const data = response.data
+        console.dir(data)
+        setReservations(data.page)
+        setPage
+      } else {
+        response = await fetch(
+          `http://localhost:8080/admin/reservation/list?page=${pageNumber}&rows=${currentOption.rows}&keyword=${currentOption.keyword}&orderCode=${currentOption.orderCode}&code=${currentOption.code}`
+        );
+        if (response.ok) {
+          const { reservationList, page: newPage } = await response.json();
+          setReservations(reservationList);
+          setPage(newPage);
+          console.log("응답 결과 : " + reservationList);
+        } else {
+          console.error("데이터 요청 실패");
+        }
+      }
+
+    } catch (error) {
+      console.error("API 요청 실패:", error);
     }
-
-    const data = await response.data
-    setReservationList(data)
-  }
+  };
 
   useEffect(() => {
-      getReservationList(); 
-  }, [userInfo, keyword, option, page]);
+    console.log("현재 경로:", location.pathname);
+  }, [location.pathname]);
 
   useEffect(() => {
-    updatePage()
-  }, [location.search])
+    if (userInfo && userInfo.no) {
+      fetchList();
+    }
+  }, [userInfo]);
 
-  // useEffect(() => {
-  
-     
-  //    if(!isLogin){
-  //        Swal.alert('잘못된 접근입니다.', '비정상적 경로 이동이 감지되었습니다.', 'warning', () => { navigate('/')})
-  //        return
-  //      }
-     
-  //    if(isLoading) return
-   
-  //  }, [isLoading])
- 
-  const handleComplete = (reservationNo) => {
-    openModal(reservationNo, 'complete')
+  const handleSearch = (updatedOption = option) => {
+    fetchList(1, updatedOption);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    fetchList(pageNumber);
+  };
+
+  if (!userInfo) {
+    return null;
   }
 
-  const handleCancel = (reservationNo) => {
-    openModal(reservationNo, 'cancel')
+  if (location.pathname.includes('/myPage/ptList')) {
+    return (
+      <ReservationPtList
+        reservations={reservations}
+        option={option}
+        page={page}
+        handlePageChange={handlePageChange}
+        setOption={setOption}
+        onSearch={handleSearch}
+        fetchList={fetchList}
+      />
+    );
+  } else {
+    return (
+      <ReservationList
+        reservations={reservations}
+        option={option}
+        page={page}
+        handlePageChange={handlePageChange}
+        setOption={setOption}
+        onSearch={handleSearch}
+        fetchList={fetchList}
+      />
+    );
   }
-  
-  return (
-    <>
-    {location.pathname.includes('/myPage/ptList') ? (
-      <ReservationPtList reservationList={reservationList} />
-    ) : (
-      <ReservationList reservationList={reservationList} getReservationList={getReservationList} />
-    )}
-  </>
-  )
-}
+};
 
-export default ReservationListContainer
-
-
+export default ReservationListContainer;

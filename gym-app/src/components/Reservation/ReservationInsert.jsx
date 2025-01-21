@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -8,14 +8,32 @@ import * as format from '../../utils/format';
 import * as Swal from '../../apis/alert'
 import './Reservation.css';
 import { useNavigate } from 'react-router-dom';
+import { LoginContext } from '../../contexts/LoginContextProvider';
 
 const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
+
+  const {userInfo} = useContext(LoginContext)
+  const [userNo, setUserNo] = useState(null);
+
+  useEffect(() => {
+      console.log('userInfo:', userInfo); 
+      
+      if (userInfo && userInfo.no) { 
+        setUserNo(userInfo.no);
+        console.log('userNo:', userInfo.no);
+      } else {
+        console.log('userInfo가 없거나 userNo가 없습니다.');
+      }
+    }, [userInfo]);
+  
   const [selectedDate, setSelectedDate] = useState('');
   const [timeButtons, setTimeButtons] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState([]);
 
   const navigate = useNavigate();
+
+
 
   useEffect(() => {
     if (selectedDate) {
@@ -73,6 +91,8 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
       );
 
       Swal.alert("예약이 완료되었습니다.");
+
+      navigate(`/myPage/ptList/${userInfo.no}`);
       setModalVisible(false);
     } catch (error) {
       Swal.alert("예약 중 오류가 발생했습니다. 다시 시도해주세요.");
@@ -158,5 +178,6 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
     </div>
   );
 };
+
 
 export default ReservationInsert;

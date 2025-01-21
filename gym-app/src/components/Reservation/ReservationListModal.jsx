@@ -6,7 +6,8 @@ const ReservationListModal = ({
   action,
   isModalOpen,
   closeModal,
-  getReservationList, // 서버에서 예약 리스트를 다시 받아오는 함수
+  reservations,
+  fetchList
 }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,7 +26,7 @@ const ReservationListModal = ({
       if (response.data === '예약 처리 성공') {
         alert(`${action === 'complete' ? '완료' : '취소'} 처리되었습니다.`);
 
-        getReservationList();
+        fetchList();
 
         closeModal();  
       } else {

@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       WHERE
         u.no = #{no}
       ORDER BY r.created_at DESC
-      <!-- LIMIT #{page.index}, #{page.rows} -->
+      LIMIT #{page.index}, #{page.rows}
     </select>
 
     <select id="disabledCount" resultType="int">
@@ -99,9 +99,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
               GROUP BY b.user_no
           ) ptSum ON ptSum.user_no = r.user_no
       where
-          (u.id LIKE CONCAT('%', #{keyword}, '%')
-          OR u.name LIKE CONCAT('%', #{keyword}, '%')
-          OR tp.name LIKE CONCAT('%', #{keyword}, '%'))
+          (u.id LIKE CONCAT('%', #{option.keyword}, '%')
+          OR u.name LIKE CONCAT('%', #{option.keyword}, '%')
+          OR tp.name LIKE CONCAT('%', #{option.keyword}, '%'))
           <if test="option.code == 1">
             AND r.enabled = 2
           </if>

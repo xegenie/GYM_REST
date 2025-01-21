@@ -44,16 +44,18 @@
 }
 
 .reservationList-container .search-container {
+    width: 1000px;
+    height: 35px;
+    margin-bottom: 20px;
+    margin-left: 50px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .reservationList-container .search {
-    width: 1000px;
-    height: 30px;
+    height: 35px;
     display: flex;
     justify-content: end;
-    margin-bottom: 30px;
 }
 
 .reservationList-container .search input[type="text"] {
@@ -81,6 +83,24 @@
     background-color: #005f73;
 }
 
+
+.reservationList-container #order-code {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.reservationList-container #code {
+    margin-left: 10px;  
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
 .ReservationList {
     width: 100%;
     display: flex;
@@ -99,7 +119,7 @@
 .reservationList-container .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .reservationList-container .pagination a {
@@ -188,25 +208,6 @@
 .ReservationList .ptComplete {
     font-weight: bold;
     color: #2a9c1b;
-}
-
-.ReservationList .left-align {
-    display: inline-block;
-    margin-right: auto;
-}
-
-.ReservationList #order-code {
-    padding: 5px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-.ReservationList #code {
-    padding: 5px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    background-color: #fff;
 }
 
 
@@ -575,7 +576,6 @@
     margin: 50px auto;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .ptList .button-group {
@@ -639,7 +639,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    height: 100%;
+    height: 550px;
 }
 
 .ptList table {
