@@ -1,11 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AttendanceList.css';
 import Sidebar from '../Header/adminSidebar';
+import { LoginContext } from '../../../contexts/LoginContextProvider';
+import * as Swal from '../../../apis/alert'
 
 const AttendanceTable = () => {
   const [attendanceList, setAttendanceList] = useState([]);
   const [option, setOption] = useState({ keyword: '', code: '', orderCode: '' });
   const [page, setPage] = useState({ page: 1, rows: 10, first: 1, last: 1, start: 1, end: 1 });
+  const { isLogin: isAuthenticated, userInfo } = useContext(LoginContext);
+  const navigate = useNavigate();
+
+  // 유저 권한 가져오기
+  const userRole = userInfo?.authList?.[0]?.auth;
+  console.log('현재 로그인한 사용자 권한:', userRole);
+
+  // 로딩 상태 처리
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (isLoading) return; // 로딩 중일 때는 처리하지 않음
+  
+  }, [isLoading]);
+
+
+  // 관리자가 아닐 경우 페이지 차단
+  useEffect(() => {
+
+    if (userRole !== 'ROLE_ADMIN') {
+        Swal.alert('페이지 접근권한이 없습니다.', 'error', navigate('/'));
+      
+    }
+  }, [userRole]);
 
   // 출석 리스트 가져오기
   const fetchAttendanceList = async (pageNumber = 1) => {
@@ -17,33 +44,39 @@ const AttendanceTable = () => {
         setOption(newOption);
         setPage(newPage);
       } else {
-        console.error('Failed to fetch attendance list');
+        console.error('출석 목록을 불러오는 데 실패했습니다.');
       }
     } catch (error) {
-      console.error('Error fetching attendance list:', error);
+      console.error('출석 목록을 불러오는 중 오류 발생:', error);
+    } finally {
+      setIsLoading(false); // 데이터 로딩 완료
     }
   };
 
   useEffect(() => {
-    fetchAttendanceList();
-  }, []);
+    if (userRole === 'ROLE_ADMIN') {
+      fetchAttendanceList();
+    }
 
-  // 페이지 변경
-  const handlePageChange = (pageNumber) => {
-    setPage((prev) => ({ ...prev, page: pageNumber }));
-    fetchAttendanceList(pageNumber);
-  };
+    if ( userRole === 'ROLE_TRAINER') {
+
+      fetchAttendanceList();
+
+    }
+  }, [userRole]);
+
+  if (isLoading && userRole !== 'ROLE_ADMIN' ) {
+    return navigate('/')
+  }
 
   return (
     <div className="oswAttendanceList">
       <div className="container">
-
         <Sidebar />
         <div className="main">
           <div className="inner">
-
             <div className="mainTitle">
-              <h2 style={{ fontSize: '22px', top: '40px' , font: 'inherit' }}>출석 내역</h2>
+              <h2 style={{ fontSize: '22px', top: '40px', font: 'inherit' }}>출석 내역</h2>
             </div>
 
             {/* 검색 폼 */}
@@ -61,7 +94,7 @@ const AttendanceTable = () => {
                 value={option.keyword}
                 onChange={(e) => setOption({ ...option, keyword: e.target.value })}
               />
-              <button type="submit" className="button" style={{zIndex: 10000}}>검색</button>
+              <button type="submit" className="button" style={{ zIndex: 10000 }}>검색</button>
             </form>
 
             {/* 출석 테이블 */}
@@ -97,7 +130,6 @@ const AttendanceTable = () => {
                 </tbody>
               </table>
             </div>
-
 
             {/* 페이지네이션 */}
             <div className="pagination">
