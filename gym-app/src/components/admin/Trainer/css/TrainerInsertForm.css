@@ -1,8 +1,6 @@
 @charset "UTF-8";
 
 .trainerForm * {
-    margin: 0;
-    padding: 0;
     border: none;
     box-sizing: border-box;
     font: inherit;
@@ -154,4 +152,9 @@
     border: 1px solid #000;
     border-radius: 5px;
     background-color: #eee;
+}
+
+.trainerForm .card {
+    max-width: 240px;
+    max-height: 370px;
 }

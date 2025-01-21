@@ -68,7 +68,9 @@
     background-color: #fff;
 }
 
-.adminTrainerList .search button {
+.adminTrainerList .button {
+    width: 82px;
+    height: 30px;
     padding: 0px 20px;
     background-color: #008CBA;
     color: white;
@@ -80,7 +82,7 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); 
 }
 
-.adminTrainerList .search button:hover {
+.adminTrainerList .button:hover {
     background-color: #005f73;
 }
 
@@ -168,4 +170,18 @@
     width: 1100px;
     height: 650px;
     overflow-y: auto;
+    margin: auto;
+}
+
+.adminTrainerList .cardBody {
+    font-weight: bold;
+}
+
+.adminTrainerList .card {
+    overflow: hidden;
+    border: 1px solid #979797;
+}
+
+.adminTrainerList .cardFooter {
+    background-color: #ebebeb;
 }

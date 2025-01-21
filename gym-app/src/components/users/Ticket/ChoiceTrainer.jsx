@@ -44,7 +44,7 @@ const ChoiceTrainer = () => {
                     </div>
                     <a
                       className={`rounded-3 ${trainer.userCount >= 20 ? 'disabled' : ''}`}
-                      href={`/user/ticket/trainerDetail?trainerNo=${trainer.no}`}
+                      href={`/ticket/ptTicket?trainerNo=${trainer.no}`}
                       disabled={trainer.userCount >= 20}
                     >
                       선택

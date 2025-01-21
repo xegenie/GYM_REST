@@ -8,7 +8,6 @@ const TrainerInsert = () => {
     <>
       <Header />
       <InsertContainer />
-      <Footer />
     </>
 
   )
