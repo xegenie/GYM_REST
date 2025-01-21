@@ -9,7 +9,6 @@ const TicketUpdate = () => {
     <>
       <Header />
       <UpdateContainer />
-      <Footer />
     </>
   )
 }

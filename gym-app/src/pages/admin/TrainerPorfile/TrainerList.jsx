@@ -8,7 +8,6 @@ const TrainerList = () => {
     <>
     <Header />
     <ListContainer />
-    <AdminFooter />
     </>
 
   )

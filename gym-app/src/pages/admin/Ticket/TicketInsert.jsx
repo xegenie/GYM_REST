@@ -8,7 +8,6 @@ const TicketInsert = () => {
     <>
       <Header />
       <InsertContainer />
-      <Footer />
     </>
   )
 }

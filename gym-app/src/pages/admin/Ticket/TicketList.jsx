@@ -8,7 +8,6 @@ const TicketList = () => {
     <>
       <Header />
       <ListContainer />
-      <Footer />
     </>
   )
 }

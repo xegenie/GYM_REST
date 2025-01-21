@@ -16,7 +16,7 @@ const InsertContainer = () => {
       console.log('등록 성공:', response);
 
       alert('트레이너가 성공적으로 등록되었습니다!');
-      navigate('/admin/ticket/ticketList');
+      navigate('/admin/trainer/list');
 
     } catch (error) {
       console.error('등록 실패:', error);

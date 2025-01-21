@@ -37,7 +37,7 @@ const ChoiceTicket = () => {
           <a className="normal rounded-4" href="/ticket/normalTicket">
             일반 이용권 구매
           </a>
-          <a className="pt rounded-4" href="/user/ticket/trainerList">
+          <a className="pt rounded-4" href="/ticket/choiceTrainer">
             PT + 이용권 구매
           </a>
         </div>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import './css/TrainerInsertForm.css';
 import Sidebar from '../Header/adminSidebar';
-import * as trainerApi from '../../../apis/trainerProfile';
+import './css/TrainerInsertForm.css';
 
 const TrainerInsertForm = ({ onInsert, trainerUsers }) => {
   const [previewSrc, setPreviewSrc] = useState('');
@@ -42,6 +41,8 @@ const TrainerInsertForm = ({ onInsert, trainerUsers }) => {
     Object.entries(formData).forEach(([key, value]) => {
       submitData.append(key, value);
     });
+    
+    submitData.append('trainerNo', trainerUserNo);
 
     if (onInsert) {
       onInsert(submitData, headers);
@@ -77,7 +78,7 @@ const TrainerInsertForm = ({ onInsert, trainerUsers }) => {
                   <tbody>
                     <tr className='tr'>
                       <th>이름(ID)</th>
-                      <td className='td' style={{ width: '300px' }}>
+                      <td className='td' style={{ width: '315px' }}>
                         <select className='select' name="trainerId" id="trainerId" onChange={handleTrainerChange}>
                           <option value="">선택하세요</option>
                           {/* 트레이너 목록을 동적으로 출력 */}

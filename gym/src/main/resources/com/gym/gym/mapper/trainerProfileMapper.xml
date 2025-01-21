@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             f.no AS fileNo,
             u.id AS userId,
             u.name AS userName,
-            (SELECT COUNT(*) FROM users u_sub WHERE u_sub.trainer_no = tp.trainer_no) AS userCount
+            (SELECT COUNT(*) FROM users u_sub WHERE u_sub.trainer_no = tp.no) AS userCount
         FROM 
             trainer_profile tp
         JOIN 
@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 수정 -->
     <update id="update">
         UPDATE trainer_profile 
-           SET trainer_no = #{trainerNo} 
+           SET trainer_no = #{trainerNo}
               ,name = #{name}
               ,simple_info = #{simpleInfo}
               ,detail_info = #{detailInfo}

@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+.ptTicket body {
+    background-color: #000000dc;
+}
+
+.ptTicket .ticket-container {
+    width: 900px;
+    height: auto;
+    margin: auto;
+}
+
+.ptTicket a { text-decoration: none; }
+
+.ptTicket .card {
+    overflow: hidden;
+}
+
+.ptTicket .hr {
+    height: 28px;
+    line-height: 28px;
+    background-color: #959595;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.ptTicket .img {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.ptTicket .img img {
+    min-width: 350px;
+    min-height: 300px;
+    max-width: 350px;
+    max-height: 300px;
+}
+
+.ptTicket .info {
+    text-align: center;
+    width: 600px;
+    line-height: 30px;
+    font-weight: bold;
+    white-space: pre-line; /* 줄바꿈과 연속 공백을 인식 */
+}
+
+.ptTicket .ticket {
+    width: 100%;
+    height: 100%;
+}
+
+.ptTicket .ticket-content {
+    width: 500px;
+    line-height: 35px;
+}
+
+.ptTicket .checkbox {
+    width: 150px;
+    text-align: center;
+}
+
+.ptTicket .ticket .item {
+    width: 100%;
+}
+
+.ptTicket .ticket-name,
+.ptTicket .ticket-price {
+    font-weight: bolder;
+    font-size: 21px;
+}
+
+.ptTicket .ticket-info {
+    font-size: 15px;
+    color: #5a5a5afb;
+}
+
+.ptTicket input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #06ac00;
+}
+
+.ptTicket .button {
+    height: 200px;
+    text-align: center;
+    line-height: 200px;
+}
