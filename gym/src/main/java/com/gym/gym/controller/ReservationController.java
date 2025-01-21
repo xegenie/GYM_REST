@@ -49,11 +49,20 @@ public class ReservationController {
 
     // 관리자 예약 목록
     @GetMapping("/admin/reservation/list")
-    public ResponseEntity<?> getAllReservation(@RequestParam(name = "keyword", defaultValue = "") String keyword,
-            Option option, Page page) {
+    public ResponseEntity<?> getAllReservation(Option option, Page page) {
         try {
-            List<Reservation> reservationList = reservationService.list(keyword, option, page);
-            return new ResponseEntity<>(reservationList, HttpStatus.OK);
+            List<Reservation> reservationList = reservationService.list(option, page);
+
+            String pageUrl = String.format("/api/admin/reservation/list?keyword=%s&code=%s&rows=%d&orderCode=%s",
+                    option.getKeyword(), option.getCode(), page.getRows(), option.getOrderCode());
+
+            Map<String, Object> response = new HashMap<String, Object>();
+            response.put("reservationList", reservationList);
+            response.put("pageUrl", pageUrl);
+            response.put("option", option);
+            response.put("page", page);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("예약 목록 전체 조회 오류");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -83,11 +92,15 @@ public class ReservationController {
                 response.put("textColor", "white");
                 response.put("user_no", rv.getUserNo());
 
+                if (rv.getEnabled() == 0) {
+                    continue;
+                }
+
                 if (rv.getEnabled() == 2) {
                     response.put("title", formattedTime + " " + rv.getUserName() + "님 완료");
                     response.put("color", "#2a9c1b");
                     response.put("type", "completed");
-                } else {
+                } else if (rv.getEnabled() == 1) {
                     response.put("title", formattedTime + " " + rv.getUserName() + "님 예약");
                     response.put("color", "cornflowerblue");
                     response.put("type", "reservation");
@@ -109,25 +122,31 @@ public class ReservationController {
 
     // 회원 내 예약 목록
     @GetMapping("/user/myPage/ptList/{no}")
-    public ResponseEntity<?> getMyReservation(@PathVariable("no") Long no,
-            @AuthenticationPrincipal CustomUser userDetails) {
+    public ResponseEntity<?> getMyReservation(
+            @PathVariable("no") Long no,
+            Page page) {
         try {
-            if (no != userDetails.getNo()) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
+                log.info("경로 유저 번호 : " + no);
 
             List<Reservation> reservationCount = reservationService.userByList(no);
-            long disabledCount = reservationService.disabledCount(userDetails.getNo());
+            long disabledCount = reservationService.disabledCount(no);
 
+            log.info("예약 데이터 카운트 : " , reservationCount);
+            log.info("디스에이블 카운트 : ", disabledCount);
+            
             if (!reservationCount.isEmpty()) {
                 Reservation lastReservation = reservationCount.get(reservationCount.size() - 1);
                 int ptCount = lastReservation.getPtCount();
                 ptCount -= disabledCount;
-
+                
                 ptCount = Math.max(ptCount, 0);
             }
-
+            
             List<Reservation> reservationList = reservationService.userByList(no);
+            
+            log.info("예약 데이터 리스트 : " , reservationList);
+            
+
             return new ResponseEntity<>(reservationList, HttpStatus.OK);
         } catch (Exception e) {
             log.error("회원 예약 조회 오류");
@@ -135,13 +154,11 @@ public class ReservationController {
         }
     }
 
-
     // 예약 등록 페이지
     @GetMapping("/user/reservation/reservationInsert/{no}")
     public ResponseEntity<?> getMyTrainer(
             @PathVariable("no") int no,
-            @AuthenticationPrincipal CustomUser userDetails
-            ) {
+            @AuthenticationPrincipal CustomUser userDetails) {
 
         try {
             TrainerProfile trainerProfile = trainerProfileService.selectTrainer(no);
@@ -236,8 +253,7 @@ public class ReservationController {
     @PutMapping("/admin/reservation/list")
     public ResponseEntity<?> updateReservationByAdmin(
             @RequestParam("reservationNo") int reservationNo,
-            @RequestParam("action") String action
-            ) {
+            @RequestParam("action") String action) {
         try {
             Reservation reservation = reservationService.findByNo(reservationNo);
             int result = 0;

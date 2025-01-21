@@ -19,7 +19,7 @@ public interface ReservationMapper {
     public int insert(Reservation reservation) throws Exception;
 
     // 예약 목록
-    public List<Reservation> list(@Param("keyword") String keyword, @Param("option") Option option, @Param("page") Page page) throws Exception;
+    public List<Reservation> list(@Param("option") Option option, @Param("page") Page page) throws Exception;
 
     // 유저 예약 목록
     public List<Reservation> userByList(Long no) throws Exception;

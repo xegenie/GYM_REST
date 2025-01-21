@@ -68,21 +68,9 @@ const ReservationCalendar = ({ reservationList, trainerUserList, keyword, code, 
             eventEl.addEventListener('mouseout', () => {
               eventEl.style.backgroundColor = originalColor;
             });
-
-            // const count = info.event.title.split(' ')[0];
             const date = info.event.startStr.slice(0, 10);
-            // const dateCell = document.querySelector(`.fc-day[data-date="${date}"]`);
 
-            // if (dateCell) {
-            //   const countByDateDiv = document.createElement('div');
-            //   countByDateDiv.classList.add('reservation-count');
-            //   countByDateDiv.textContent = count;
-            //   dateCell.appendChild(countByDateDiv);
-            // }
           }}
-          // dateClick={(info) => {
-          //   showTimeSelectionModal(info.dateStr);
-          // }}
           eventClick={(info) => {
             const userNo = info.event.extendedProps.user_no;
             navigate(`/plan/plan?userNo=${userNo}`);

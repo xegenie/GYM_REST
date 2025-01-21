@@ -17,7 +17,7 @@ public interface ReservationService {
     public int insert(Reservation reservation) throws Exception;
 
     // 예약 목록
-    public List<Reservation> list(String keyword, Option option, Page page) throws Exception;
+    public List<Reservation> list(Option option, Page page) throws Exception;
 
     // 유저 예약 목록
     public List<Reservation> userByList(Long no) throws Exception;

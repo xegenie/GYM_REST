@@ -28,13 +28,12 @@ public class ReservationServiceImpl implements ReservationService {
 
     // 예약 목록
     @Override
-    public List<Reservation> list(String keyword, Option option, Page page) throws Exception {
-        int total = count(option, keyword);
+    public List<Reservation> list(Option option, Page page) throws Exception {
+        int total = count(option, option.getKeyword());
         page.setTotal(total);
 
-        
         // reservationMapper.ptComplete();
-        List<Reservation> reservationList = reservationMapper.list(keyword, option, page);
+        List<Reservation> reservationList = reservationMapper.list(option, page);
         return reservationList;
     }
     

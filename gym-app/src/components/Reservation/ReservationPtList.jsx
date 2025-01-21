@@ -5,7 +5,7 @@ import * as Swal from '../../apis/alert';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 
-const ReservationPtList = ({ reservationList }) => {
+const ReservationPtList = ({ reservations, handlePageChange, page }) => {
 
   const { userInfo, isLogin } = useContext(LoginContext)
   const [disabledCount, setDisabledCount] = useState(0)
@@ -15,28 +15,27 @@ const ReservationPtList = ({ reservationList }) => {
 
   const [userNo, setUserNo] = useState(null);
 
-  useEffect(() => {
-    console.log('userInfo:', userInfo);
+  // useEffect(() => {
+  //   console.log('userInfo:', userInfo);
 
-    if (!isLogin) {
-      Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login') })
-      return
-    }
+  //   if (!isLogin) {
+  //     Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login') })
+  //     return
+  //   }
 
-    if (userInfo && userInfo.no) {
-      setUserNo(userInfo.no);
-      console.log('userNo:', userInfo.no);
-    } else {
-      console.log('userInfo가 없거나 userNo가 없습니다.');
-    }
-  }, [userInfo]);
-
+  //   if (userInfo && userInfo.no) {
+  //     setUserNo(userInfo.no);
+  //     console.log('userNo:', userInfo.no);
+  //   } else {
+  //     console.log('userInfo가 없거나 userNo가 없습니다.');
+  //   }
+  // }, [userInfo]);
 
 
   return (
     <>
       <body className="fullBody ptList" style={{ color: "rgb(3, 3, 3)", backgroundColor: "#333" }}>
-        <div className="wrapper" style={{ marginTop: '80px' }}>
+        <div className="wrapper" style={{ marginTop: '80px', marginBottom: "0" }}>
           <main>
             <div className="main-text1" style={{ color: '#9FD0D5' }}>마이페이지</div>
 
@@ -73,13 +72,13 @@ const ReservationPtList = ({ reservationList }) => {
             </thead>
             <tbody>
               {
-                reservationList.length == 0
+                reservations.length == 0
                   ?
                   <tr>
                     <td colSpan={7} align='center'>조회된 데이터가 없습니다.</td>
                   </tr>
                   :
-                  reservationList.map((reservation) => {
+                  reservations.map((reservation) => {
                     return (
                       <tr key={reservation.no}>
                         <td>{reservation.trainerName}</td>
@@ -119,6 +118,45 @@ const ReservationPtList = ({ reservationList }) => {
               }
             </tbody>
           </table>
+        </div>
+        <div className="pagination">
+          <a
+            onClick={() => handlePageChange(page.first)}
+            className={`pagetag first ${page.page === page.first}`}
+          >
+            [처음]
+          </a>
+          {page.page !== page.first && (
+            <a
+              onClick={() => handlePageChange(page.page - 1)}
+              className={`pagetag prev ${page.page === page.first ? "disabled" : ""}`}
+            >
+              [이전]
+            </a>
+          )}
+          {Array.from({ length: page.end - page.start + 1 }, (_, idx) => page.start + idx).map((no) => (
+            <a
+              key={no}
+              onClick={() => handlePageChange(no)}
+              className={`pagetag ${page.page === no ? "active" : ""}`}
+            >
+              {no}
+            </a>
+          ))}
+          {page.page !== page.last && (
+            <a
+              onClick={() => handlePageChange(page.page + 1)}
+              className={`pagetag next ${page.page === page.last ? "disabled" : ""}`}
+            >
+              [다음]
+            </a>
+          )}
+          <a
+            onClick={() => handlePageChange(page.last)}
+            className={`pagetag last ${page.page === page.last}`}
+          >
+            [마지막]
+          </a>
         </div>
       </body>
     </>
