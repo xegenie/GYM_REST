@@ -6,7 +6,7 @@ import { LoginContext } from '../../contexts/LoginContextProvider'
 
 const ChangePwContainer = () => {
 
-  const {logout} = useContext(LoginContext)
+  const {pwLogout} = useContext(LoginContext)
 
 const changePw = async (form) => {
   try {
@@ -15,7 +15,7 @@ const changePw = async (form) => {
     const status = response.status;
 
     if (status === 200) {
-      Swal.alert('비밀번호 변경 성공', '로그인 화면으로 이동합니다', 'success',  () => logout(true));
+      Swal.alert('비밀번호 변경 성공', '로그인 화면으로 이동합니다', 'success',  () => pwLogout());
     } else {
       Swal.alert('비밀번호 변경 실패', '비밀번호 변경에 실패했습니다.', 'error');
     }
