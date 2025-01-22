@@ -97,14 +97,14 @@ const LoginContextProvider = ({ children }) => {
         if (result.isConfirmed) {
             if (force) {
           
-                setIsLoading(true)
-                // 로그아웃 세팅
-                logoutSetting()
-      
-                setIsLoading(false)
+              setIsLoading(false)
+              // 로그아웃 세팅
+              Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success",  () => navigate("/login"))
+              logoutSetting()
+              
+              setIsLoading(true)
       
                 
-                Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success")
             }
               // 로그아웃 세팅
               logoutSetting()

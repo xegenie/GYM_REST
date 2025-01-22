@@ -21,6 +21,8 @@ const UserInfoForm = ({ updateUser, userInfo, removeUser }) => {
         updateUser({ phone, email, no, name })
     }
 
+    
+
     return (
         <div className='oswUserInfoForm'>
             <div className='UserInfo'>
