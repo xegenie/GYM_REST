@@ -116,59 +116,70 @@ const LoginContextProvider = ({ children }) => {
       }
       )
 
+   
 
 
 
   }
+  const pwLogout = () => {
+    Swal.alert("로그아웃 페이지로 이동합니다.", "다시 로그인 해주세요.", "warning",  logoutSetting())
+        
+              setIsLoading(true)
+              // 로그아웃 세팅
+              logoutSetting()
+    
+              setIsLoading(false)
+    
+              
+              Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success")
+              navigate("/")
+              
+              // 페이지 이동 > "/" (메인)
+
+
+  }
+
   // 자동 로그인
   // 🍪쿠키에 저장된 💍JWT 를 읽어와서 로그인 처리
   const autoLogin = async () => {
+    // 로딩 시작
+    setIsLoading(true);
+  
     // 쿠키에서 jwt 가져오기
-    const jwt = Cookies.get("jwt")
-
-    // 💍 in 🍪 ❌
-    if( !jwt ) {
-      // TODO: 로그아웃 세팅
-      return
+    const jwt = Cookies.get("jwt");
+  
+    if (!jwt) {
+      // JWT가 없는 경우 바로 로딩 종료
+      setIsLoading(false);
+      return;
     }
-
-    // 💍 in 🍪 ⭕
-    console.log(`jwt : ${jwt}`);
-    const authorization = `Bearer ${jwt}`
-
-    // 💍 JWT 를 Authorizaion 헤더에 등록
-    api.defaults.headers.common.Authorization = authorization
-
-    // 👩‍💼 사용자 정보 요청
-    let response
-    let data
-
+  
+    const authorization = `Bearer ${jwt}`;
+    api.defaults.headers.common.Authorization = authorization;
+  
     try {
-      response = await auth.info()
+      // 사용자 정보 요청
+      const response = await auth.info();
+  
+      if (response.data === 'UNAUTHORIZED' || response.status === 401) {
+        console.error('jwt가 만료되었거나 인증에 실패하였습니다.');
+        logoutSetting(); // 인증 실패 시 로그아웃 처리
+        setIsLoading(false); // 로딩 종료
+        return;
+      }
+  
+      // 인증 성공: 로그인 세팅
+      loginSetting(authorization, response.data);
+  
     } catch (error) {
-      console.error(`erro : ${error}`);
-      console.log(`status : ${response.status}`);
-      return
+      console.error(`autoLogin 에러: ${error}`);
+      logoutSetting(); // 에러 발생 시 로그아웃 처리
+    } finally {
+      // 로딩 종료
+      setIsLoading(false);
     }
-
-    // 인증 실패 ❌
-    if( response.data == 'UNAUTHORIZED' || response.status == 401 ) {
-      console.error(`jwt 가 만료되었거나 인증에 실패하였습니다.`);
-      return
-    }
-
-    // 인증 성공
-    console.log(`jwt 로 자동 로그인 성공`);
-
-    
-    data = response.data
-
-    // 로그인 세팅 -  loginSetting(🎫💍, 👩‍💼)
-    loginSetting(authorization, data)
-
-
-  }
-
+  };
+  
   /**
    * 로그인 세팅
    * @param {*} authorization : Bearre {jwt}
@@ -203,7 +214,7 @@ const LoginContextProvider = ({ children }) => {
 
   return (
     // 컨텍스트 값 지정 ➡ value={ ?, ? }
-    <LoginContext.Provider value={ { isLogin, logout, login, userInfo, roles, isLoading, setUserInfo  } }>
+    <LoginContext.Provider value={ { pwLogout, isLogin, logout, login, userInfo, roles, isLoading, setUserInfo  } }>
       {children}
     </LoginContext.Provider>
   )
