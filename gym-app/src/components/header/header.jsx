@@ -72,7 +72,7 @@ function Header() {
 
         {/* 관리자 또는 트레이너일 때 관리자 페이지 표시 */}
         {(userRole === 'ROLE_ADMIN' || userRole === 'ROLE_TRAINER') && (
-            <Link to="/admin/user/list">관리자페이지</Link>
+            <Link to="/admin/userList">관리자페이지</Link>
         )}
         <a href="#" onClick={handleLogout}>로그아웃</a>
     </>

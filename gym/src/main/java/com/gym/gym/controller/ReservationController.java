@@ -128,7 +128,7 @@ public class ReservationController {
         try {
                 log.info("경로 유저 번호 : " + no);
 
-            List<Reservation> reservationCount = reservationService.userByList(no);
+            List<Reservation> reservationCount = reservationService.userByList(no, page);
             long disabledCount = reservationService.disabledCount(no);
 
             log.info("예약 데이터 카운트 : " , reservationCount);
@@ -142,12 +142,16 @@ public class ReservationController {
                 ptCount = Math.max(ptCount, 0);
             }
             
-            List<Reservation> reservationList = reservationService.userByList(no);
+            List<Reservation> reservationList = reservationService.userByList(no, page);
+
+            Map<String, Object> response = new HashMap<String, Object>();
+            response.put("reservationList", reservationList);
+            response.put("page", page);
             
             log.info("예약 데이터 리스트 : " , reservationList);
             
 
-            return new ResponseEntity<>(reservationList, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("회원 예약 조회 오류");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -228,20 +232,22 @@ public class ReservationController {
     }
 
     // 회원 예약 취소
-    @PutMapping("/user/myPage/ptList")
-    public ResponseEntity<?> updateReservation(@RequestParam("no") int no, RedirectAttributes redirectAttributes) {
+    @PutMapping("/user/myPage/ptList/{no}")
+    public ResponseEntity<?> updateReservation(
+        @PathVariable("no") Long no,
+        @RequestParam("reservationNo") int reservationNo,
+        @RequestParam("action") String action
+     ) {
         try {
-            Reservation reservation = reservationService.findByNo(no);
+            Reservation reservation = reservationService.findByNo(reservationNo);
 
             reservation.setCanceledAt(new Date());
             reservation.setEnabled(0);
             int result = reservationService.cancel(reservation);
 
             if (result > 0) {
-                redirectAttributes.addFlashAttribute("message", "예약이 취소되었습니다.");
                 return new ResponseEntity<>("예약 취소 성공", HttpStatus.OK);
             } else {
-                redirectAttributes.addFlashAttribute("message", "예약 취소에 실패했습니다.");
                 return new ResponseEntity<>("예약 취소 실패", HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
@@ -253,7 +259,8 @@ public class ReservationController {
     @PutMapping("/admin/reservation/list")
     public ResponseEntity<?> updateReservationByAdmin(
             @RequestParam("reservationNo") int reservationNo,
-            @RequestParam("action") String action) {
+            @RequestParam("action") String action,
+            Page page) {
         try {
             Reservation reservation = reservationService.findByNo(reservationNo);
             int result = 0;
@@ -263,7 +270,7 @@ public class ReservationController {
                 reservation.setEnabled(2);
                 result = reservationService.complete(reservation);
 
-                List<Reservation> reservationCount = reservationService.userByList(reservation.getUserNo());
+                List<Reservation> reservationCount = reservationService.userByList(reservation.getUserNo(), page);
                 long disabledCount = reservationService.disabledCount(reservation.getUserNo());
                 if (!reservationCount.isEmpty()) {
                     Reservation lastReservation = reservationCount.get(reservationCount.size() - 1);

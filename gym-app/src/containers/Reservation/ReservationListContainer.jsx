@@ -31,14 +31,15 @@ const ReservationListContainer = () => {
     try {
       let response;
       if (location.pathname.includes("/myPage/ptList")) {
-        console.log(userInfo.no);  
+        console.log("로그인 유저 번호 : " +  userInfo.no);  
 
         response = await reservation.userByList(userInfo.no, pageNumber, currentOption.rows);
 
         const data = response.data
-        console.dir(data)
-        setReservations(data.page)
-        setPage
+        console.dir("예약 데이터 : " + data.reservationList)
+        console.dir("페이지 데이터 : " + data.page)
+        setReservations(data.reservationList)
+        setPage(data.page)
       } else {
         response = await fetch(
           `http://localhost:8080/admin/reservation/list?page=${pageNumber}&rows=${currentOption.rows}&keyword=${currentOption.keyword}&orderCode=${currentOption.orderCode}&code=${currentOption.code}`
@@ -73,7 +74,7 @@ const ReservationListContainer = () => {
   };
 
   const handlePageChange = (pageNumber) => {
-    fetchList(pageNumber);
+    fetchList(pageNumber, option);
   };
 
   if (!userInfo) {

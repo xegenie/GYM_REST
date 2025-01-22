@@ -4,32 +4,45 @@ import './Reservation.css'
 import * as Swal from '../../apis/alert';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
+import ReservationListModal from './ReservationListModal';
 
-const ReservationPtList = ({ reservations, handlePageChange, page }) => {
+const ReservationPtList = ({ reservations, handlePageChange, page, fetchList }) => {
 
   const { userInfo, isLogin } = useContext(LoginContext)
   const [disabledCount, setDisabledCount] = useState(0)
   const [ptCount, setPtCount] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedReservationNo, setSelectedReservationNo] = useState(null);
 
   const navigate = useNavigate()
 
   const [userNo, setUserNo] = useState(null);
 
-  // useEffect(() => {
-  //   console.log('userInfo:', userInfo);
+  const showCancelModal = (reservationNo) => {
+    setSelectedReservationNo(reservationNo);
+    setIsModalOpen(true);
+  };
 
-  //   if (!isLogin) {
-  //     Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login') })
-  //     return
-  //   }
+  const closeModal = () => {
+    setSelectedReservationNo(null);
+    setIsModalOpen(false);
+  };
 
-  //   if (userInfo && userInfo.no) {
-  //     setUserNo(userInfo.no);
-  //     console.log('userNo:', userInfo.no);
-  //   } else {
-  //     console.log('userInfo가 없거나 userNo가 없습니다.');
-  //   }
-  // }, [userInfo]);
+  useEffect(() => {
+    console.log('userInfo:', userInfo);
+
+    // if (!isLogin) {
+    //   Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login') })
+    //   return
+    // }
+
+    if (userInfo && userInfo.no) {
+      setUserNo(userInfo.no);
+      console.log('userNo:', userNo);
+    } else {
+      console.log('userInfo가 없거나 userNo가 없습니다.');
+    }
+  }, [userInfo]);
 
 
   return (
@@ -67,7 +80,7 @@ const ReservationPtList = ({ reservations, handlePageChange, page }) => {
                 <th>예약 날짜</th>
                 <th>신청 일시</th>
                 <th>완료/취소 일시</th>
-                <th>상태</th>
+                <th style={{width: "140px"}}>상태</th>
               </tr>
             </thead>
             <tbody>
@@ -103,7 +116,7 @@ const ReservationPtList = ({ reservations, handlePageChange, page }) => {
                                 type="button"
                                 className="cancel"
                                 data-no={reservation.no}
-                                onClick={() => showCancelModal(reservation.no)}
+                                onClick={() => showCancelModal(reservation.no, "cancel")}
                               >
                                 취소하기
                               </button>
@@ -158,6 +171,19 @@ const ReservationPtList = ({ reservations, handlePageChange, page }) => {
             [마지막]
           </a>
         </div>
+      {isModalOpen && (
+        <ReservationListModal
+          reservationNo={selectedReservationNo}
+          action="cancel"
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          reservations={reservations}
+          fetchList={fetchList}
+          role="user"
+          no={userNo}
+          page={page}
+          />
+      )}
       </body>
     </>
   )
