@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import logo from '../../assets/imges/logo2.png';
 
 
 const FindPwForm = ({findPw}) => {
@@ -37,98 +38,56 @@ const FindPwForm = ({findPw}) => {
   
 
     return (
-      <div className="container1 col-12 col-lg-4" style={{ marginTop: '50px', marginBottom: '50px' }} id="contain-box">
-        <div className="px-4 py-5 mt-5 text-center">
-          <img className="FITlogo" src="/img/logo2.png" alt="logo" />
-          <h1>비밀번호 찾기</h1>
-        </div>
-  
-        <main className="form-signin login-box w-100 m-auto">
-          <form id="form" onSubmit={(e) => validateForm(e)} className="needs-validation">
-            <div className="centerdhkwnj">
-              <div className="input-group my-2">
-                <label htmlFor="name">이름</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  name="name"
-                  placeholder="이름을 입력해주세요."
-                />
-              </div>
-  
-              <div className="input-group my-2">
-                <label htmlFor="id">아이디</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="id"
-                  name="id"
-                  placeholder="아이디를 입력해주세요."
-                />
-              </div>
-  
-              <div className="input-group my-2 phone-group">
-                <label htmlFor="phone">연락처</label>
-                <div className="phone-row">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="phone1"
-                    name="phone1"
-                    placeholder="010"
-                  />
-                  <span>-</span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="phone2"
-                    name="phone2"
-                    placeholder="1234"
-                  />
-                  <span>-</span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="phone3"
-                    name="phone3"
-                    placeholder="5678"
-                  />
-                </div>
-              </div>
-  
-              <div className="input-group my-2">
-                <label htmlFor="question">질문</label>
-                <select
-                  className="form-control"
-                  name="question"
-                  id="question"
-                >
-                  <option value="">질문을 선택하세요</option>
-                  <option value="강아지 이름은?">강아지 이름은?</option>
-                  <option value="졸업한 초등학교는?">졸업한 초등학교는?</option>
-                  <option value="내 보물 1호는?">내 보물 1호는?</option>
-                  <option value="내 별명은?">내 별명은?</option>
-                </select>
-              </div>
-  
-              <div className="input-group my-2" style={{ marginBottom: '20px' }}>
-                <label htmlFor="answer">답변</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="answer"
-                  name="answer"
-                  placeholder="답변"
-                />
-              </div>
-            </div>
-            <button className="btn-join" type="submit">
-              찾기
-            </button>
-          </form>
-        </main>
-      </div>
+    <body className='find-id'>
+         
+       
+       <div className="find-id-container">
+         <div className="custom-container">
+           <div className="header-section">
+              <img className="FITlogo" src={logo} alt="Logo" />
+             <h1 className="title">비밀번호 찾기</h1>
+           </div>
+           <form id="find-id-form" onSubmit={validateForm}>
+             <div className="input-group">
+               <label htmlFor="name">이름</label>
+               <input type="text" id="name" name="name" className="custom-input" placeholder="이름" />
+             </div>
+             <div className="input-group">
+               <label htmlFor="name">아이디</label>
+               <input type="text" id="id" name="id" className="custom-input" placeholder="아이디" />
+             </div>
+             <div className="input-group">
+               <label htmlFor="phone">연락처</label>
+               <div className="phone-row">
+                 <input type="text" id="phone1" name="phone1" className="custom-input phone-input" placeholder="010" />
+                 <span>-</span>
+                 <input type="text" id="phone2" name="phone2" className="custom-input phone-input" placeholder="1234" />
+                 <span>-</span>
+                 <input type="text" id="phone3" name="phone3" className="custom-input phone-input" placeholder="5678" />
+               </div>
+             </div>
+             <div className="input-group">
+               <label htmlFor="question">질문</label>
+               <select id="question" name="question" className="custom-select">
+                 <option value="강아지 이름은?">강아지 이름은?</option>
+                 <option value="졸업한 초등학교는?">졸업한 초등학교는?</option>
+                 <option value="내 보물 1호는?">내 보물 1호는?</option>
+                 <option value="내 별명은?">내 별명은?</option>
+               </select>
+             </div>
+             <div className="input-group">
+               <label htmlFor="answer">답변</label>
+               <input type="text" id="answer" name="answer" className="custom-input" placeholder="답변" />
+             </div>
+             <div className='btn-div'>
+             <button type="submit" className="submit-btn">
+               찾기
+             </button>
+             </div>
+           </form>
+         </div>
+       </div>
+       </body>
     );
   };
   

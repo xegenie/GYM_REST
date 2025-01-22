@@ -4,11 +4,11 @@ import * as Swal from '../../apis/alert.js';
 import logo from '../../assets/imges/logo2.png';
 
 
-const JoinForm = ({ join,checkId }) => {
-
+const JoinForm = ({ join, checkId }) => {
   const onJoin = (e) => {
     e.preventDefault();
     const form = e.target;
+
     const id = form.id.value;
     const password = form.password.value;
     const passwordCheck = form.passwordCheck.value;
@@ -23,32 +23,56 @@ const JoinForm = ({ join,checkId }) => {
     const phone2 = form.phone2.value;
     const phone3 = form.phone3.value;
 
-    if (password !== passwordCheck) {
-      Swal.alert('비밀번호가 일치하지 않습니다.', '비밀번호를 확인해주세요', 'error');
-      
-      const passwordField = document.getElementById("password");
-      passwordField.focus();
-      
 
-      
+    if (!id || !password || !passwordCheck || !name || !gender || !birth || !question || !answer || !email1 || !email2 || !phone1 || !phone2 || !phone3) {
+      Swal.alert('필수 항목이 누락되었습니다', '모든 필수 항목을 입력해주세요.', 'error');
       return;
     }
     
-    checkId();
+    // 비밀번호 일치 검사
+    if (password.length < 6) {
+      Swal.alert('비밀번호 오류', '비밀번호는 6자 이상이어야 합니다.', 'error');
+      return;
+    }
 
+    if (password !== passwordCheck) {
+      Swal.alert('비밀번호 오류', '비밀번호가 일치하지 않습니다.', 'error');
+      form.password.focus();
+      return;
+    }
+
+    // 생일 유효성 검사: 1 또는 2로 시작하며 8자리 숫자
+    const birthRegex = /^[12]\d{7}$/;
+    if (!birthRegex.test(birth)) {
+      Swal.alert('생일 오류', '생일은 1 또는 2로 시작하며 8자리 숫자여야 합니다.', 'error');
+      return;
+    }
+
+    // 연락처 유효성 검사: 010으로 시작하며 3자리, 4자리, 4자리
+    const phoneRegex = /^010$/;
+    const phoneMidRegex = /^\d{4}$/;
+    const phoneEndRegex = /^\d{4}$/;
+
+    if (!phoneRegex.test(phone1) || !phoneMidRegex.test(phone2) || !phoneEndRegex.test(phone3)) {
+      Swal.alert(
+        '연락처 오류',
+        '연락처는 010으로 시작하며, 중간 4자리, 마지막 4자리 숫자여야 합니다.',
+        'error'
+      );
+      return;
+    }
+
+    // 이메일 조합
     const email = `${email1}@${email2}`;
     const phone = `${phone1}${phone2}${phone3}`;
 
+    // 회원가입 정보 전달
     join({ id, password, name, email, phone, gender, birth, question, answer });
   };
 
-  
-
   return (
-
     <div className="join">
       <body className="fullBody">
-        {/* Header Fragment */}
         <div className="topspace"></div>
         <div className="container1" id="contain-box" style={{ margin: '25px 0' }}>
           <div className="wlskrkdy">
@@ -60,54 +84,62 @@ const JoinForm = ({ join,checkId }) => {
             <form id="form" onSubmit={onJoin} className="needsvalidation">
               <div className="centerdhkwnj">
                 {/* 아이디 */}
-                    <label className="widd" htmlFor="id">아이디</label>
+                <label className="widd" htmlFor="id">
+                  아이디
+                </label>
                 <div className="inputid123" id="box-id">
-                    <input
-                      type="text"
-                      className="formCo"
-                      id="id"
-                      name="id"
-                      autoComplete="id"
-                      placeholder="아이디"
-                      autoFocus
-                      required
-                    />
-                    <button type="button" className="btn btn-outline-secondary" onClick={checkId}>
-                      중복확인
-                    </button>
-                  </div>
+                  <input
+                    type="text"
+                    className="formCo"
+                    id="id"
+                    name="id"
+                    autoComplete="id"
+                    placeholder="아이디"
+                    autoFocus
+                    required
+                  />
+                  <button type="button" className="btn btn-outline-secondary" onClick={checkId}>
+                    중복확인
+                  </button>
+                </div>
 
                 {/* 비밀번호 */}
-                  <label  className="widd" htmlFor="password">비밀번호</label>
+                <label className="widd" htmlFor="password">
+                  비밀번호
+                </label>
                 <div className="inputid">
                   <input
                     type="password"
                     className="formCo"
                     id="password"
                     name="password"
-                     autoComplete='password'
+                    autoComplete="password"
                     placeholder="6자 이상 비밀번호"
+                    minLength="6" // HTML5 기본 유효성 검사
                     required
-                    
                   />
                 </div>
 
                 {/* 비밀번호 확인 */}
-                  <label  className="widd" htmlFor="passwordCheck">비밀번호 확인</label>
+                <label className="widd" htmlFor="passwordCheck">
+                  비밀번호 확인
+                </label>
                 <div className="inputid">
                   <input
                     type="password"
                     className="formCo"
                     id="passwordCheck"
                     name="passwordCheck"
-                     autoComplete='passwordCheck'
+                    autoComplete="passwordCheck"
                     placeholder="6자 이상 비밀번호 확인"
                     required
                   />
                 </div>
 
                 {/* 이름 */}
-                  <label  className="widd" htmlFor="name">이름</label>
+                <label className="widd" htmlFor="name">
+                  이름
+                </label>
                 <div className="inputid">
                   <input
                     type="text"
@@ -115,14 +147,13 @@ const JoinForm = ({ join,checkId }) => {
                     id="name"
                     name="name"
                     placeholder="이름"
-                  autoComplete='name'
+                    autoComplete="name"
                     pattern="[가-힣]+"
                     title="이름은 한글로 입력해주세요."
                     required
                   />
                 </div>
 
-                {/* 성별 */}
                 <div className="inputid5" > 
                     <label  className='genderlabel'  htmlFor="gender">성별</label>
                   
@@ -149,7 +180,9 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 생일 */}
-                  <label  className="widd" htmlFor="birth">생일</label>
+                <label className="widd" htmlFor="birth">
+                  생일
+                </label>
                 <div className="inputid">
                   <input
                     type="text"
@@ -157,15 +190,14 @@ const JoinForm = ({ join,checkId }) => {
                     id="birth"
                     name="birth"
                     placeholder="주민번호 앞번호 8자를 입력해주세요."
-                     autoComplete='birth'
-                    pattern="\d{8}"
-                    title="생년월일은 8자리 숫자여야 합니다."
+                    autoComplete="birth"
+                    pattern="[12]\d{7}"
+                    title="생년월일은 1 또는 2로 시작하며 8자리 숫자여야 합니다."
                     required
                   />
                 </div>
 
-                {/* 이메일 */}
-                  <label  className="widd" htmlFor="email">이메일</label>
+                <label  className="widd" htmlFor="email">이메일</label>
                 <div className="inputid emailgroup">
               
                     <input
@@ -195,7 +227,9 @@ const JoinForm = ({ join,checkId }) => {
                 </div>
 
                 {/* 전화번호 */}
-                  <label  className="widd" htmlFor="phone">연락처</label>
+                <label className="widd" htmlFor="phone">
+                  연락처
+                </label>
                 <div className="inputid phonegroup">
                   <div className="phoner">
                     <input
@@ -204,10 +238,9 @@ const JoinForm = ({ join,checkId }) => {
                       id="phone1"
                       name="phone1"
                       placeholder="010"
-                      pattern="\d{3}"
-                      title="전화번호 첫 3자리는 숫자이어야 합니다."
-                       autoComplete='phone1'
-                       required
+                      pattern="010" 
+                      title="전화번호는 010으로 시작해야 합니다."
+                      required
                     />
                     <span>-</span>
                     <input
@@ -215,11 +248,10 @@ const JoinForm = ({ join,checkId }) => {
                       className="formCo"
                       id="phone2"
                       name="phone2"
-                      placeholder="1234"
+                      placeholder="123"
                       pattern="\d{4}"
-                      title="전화번호 다음 4자리는 숫자이어야 합니다."
-                       autoComplete='phone2'
-                       required
+                      title="전화번호는 4자리 숫자여야 합니다."
+                      required
                     />
                     <span>-</span>
                     <input
@@ -229,13 +261,11 @@ const JoinForm = ({ join,checkId }) => {
                       name="phone3"
                       placeholder="5678"
                       pattern="\d{4}"
-                      title="전화번호 마지막 4자리는 숫자이어야 합니다."
-                       autoComplete='phone3'
-                       required
+                      title="전화번호는 4자리 숫자여야 합니다."
+                      required
                     />
                   </div>
                 </div>
-
                 {/* 질문 */}
                   <label className="widd" htmlFor="question">질문</label>
                 <div className="inputid">
@@ -266,18 +296,22 @@ const JoinForm = ({ join,checkId }) => {
                      required
                   />
                 </div>
-              </div>
 
-              <div className="dgridgap">
-                <button className="btnjoin" type="submit">가입하기</button>
-              </div>
-            </form>
-          </main>
-        </div>
 
-      </body>
-    </div>
-  );
-}
 
-export default JoinForm;
+                </div>
+
+<div className="dgridgap">
+  <button className="btnjoin" type="submit">
+    가입하기
+  </button>
+</div>
+</form>
+</main>
+</div>
+</body>
+</div>
+);
+};
+
+export default JoinForm

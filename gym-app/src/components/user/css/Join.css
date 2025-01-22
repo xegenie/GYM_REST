@@ -15,6 +15,7 @@
     align-items: center; /* 수직 중앙 정렬 */
     margin: 0;
     padding: 0;
+    padding-top: 100px;
     background-color: #000000dc; /* 배경색 */
 }
 
@@ -53,6 +54,7 @@
     align-items: center;         /* 수직 중앙 정렬 */
     height: 100%;               /* 화면 전체 높이로 설정 */
     flex-direction: column;      /* 자식 요소들을 세로로 정렬 */
+    margin-right: 40px;
     gap: 20px;
 }
 
@@ -73,7 +75,9 @@
 
 
 .widd{
-    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 540px;
 }
 
 .join .formCo {
@@ -152,7 +156,7 @@
     display: flex;
     justify-content: center;  /* Center horizontally */
     align-items: center;      /* Center vertically */
-    width: 550px;
+    width: 690px;
     margin-bottom: 15px;
     
 
@@ -168,7 +172,8 @@
     align-items: center;      /* Center vertically */
     width: 680px;
     margin: 15px;
-    margin-left:195px;
+    margin-left: 155px;
+    gap: 50px;
 }
 
 .join .inputid123 input{
@@ -264,7 +269,7 @@
 .join .phoner input {
     flex: 1; /* 입력 필드 크기 균등 배분 */
     height: 40px;
-    width: 115px;
+    width: 161px;
     margin-left: 5px;
     border-radius: 8px;
     padding: 0 15px;

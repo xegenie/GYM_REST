@@ -1,9 +1,15 @@
 import React from 'react'
 import MyBoardListContainer from '../../../containers/User/Board/MyBoardListContainer'
+import Header from '../../../components/header/header'
+import Footer from '../../../components/Footer/footer'
 
 const MyBoardList = () => {
   return (
-    <MyBoardListContainer/>
+    <>
+      <Header />
+      <MyBoardListContainer/>
+      <Footer />
+    </>
   )
 }
 

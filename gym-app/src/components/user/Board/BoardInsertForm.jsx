@@ -1,11 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import styles from '../Board/css/BoardInsert.module.css'
 
 const BoardInsertForm = ({insertBoard}) => {
 
  const navigate = useNavigate()
 
-const onInsert = (e) => {
+ const onInsert = (e) => {
   e.preventDefault()
   const form = e.target
   const title = form.title.value
@@ -14,17 +15,17 @@ const onInsert = (e) => {
   console.log(title, content);
 
   insertBoard({title, content})
-
 }
 
-
   return (
-    <div className="boardInsert">
+
+    <div className={styles.body}>
+    <div className={styles.boardInsert}>
       <form onSubmit={(e) => onInsert(e)}>
         <h1>고객문의 게시판</h1>
 
-        <div className="border" style={{ marginTop: '40px' }}>
-          <div className="inputbox1">
+        <div className={styles.border} style={{ marginTop: '40px' }}>
+          <div className={styles.inputbox1}>
             <label htmlFor="title" style={{ color: 'black', fontSize: '30px' }}>
               Q.{' '}
             </label>
@@ -32,15 +33,15 @@ const onInsert = (e) => {
               type="text"
               id="title"
               name="title"
-              className="titleinput"
+              className={styles.titleinput}
               placeholder="문의사항을 알려주세요."
               required
             />
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '10px' }}>
+          <div className={styles.texbottom} style={{ textAlign: 'center'}}>
             <textarea
-              className="textareaInput"
+              className={styles.textareaInput}
               name="content"
               rows="5"
               cols="40"
@@ -49,10 +50,10 @@ const onInsert = (e) => {
           </div>
         </div>
 
-        <div className="btn-box" style={{ marginTop: '10px' }}>
+        <div className={styles.btnBox}>
           <button
             type="button"
-            className="btnInput"
+            className={styles.btnInput}
             onClick={() => navigate('/boardList')}
           >
             목록
@@ -60,11 +61,12 @@ const onInsert = (e) => {
           <input
             type="submit"
             style={{ backgroundColor: 'rgb(172, 235, 77)' }}
-            className="btnInput"
+            className={styles.btnInput}
             value="등록"
           />
         </div>
       </form>
+    </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import styles from '../Board/css/BoardInsert.module.css' 
 
 const BoardUpdateForm = ({ updateBoard,onDelete,board }) => {
 
@@ -26,41 +27,43 @@ const BoardUpdateForm = ({ updateBoard,onDelete,board }) => {
   }
 
   return (
-    <div className="container">
-      <form onSubmit={(e) => onUpdate(e)}>
+  <div className={styles.body}>
+    <div className={styles.boardInsert}>
+       <form onSubmit={(e) => onUpdate(e)}>
         <h1>고객문의 게시판</h1>
 
-        <div className="border" style={{ marginTop: "40px" }}>
-          <div className="inputbox1">
-            <label htmlFor="title" style={{ color: "black", fontSize: "30px" }}>
-              Q.
+        <div className={styles.border} style={{ marginTop: '40px' }}>
+          <div className={styles.inputbox1}>
+            <label htmlFor="title" style={{ color: 'black', fontSize: '30px' }}>
+              Q.{' '}
             </label>
             <input
               type="text"
               id="title"
               name="title"
               defaultValue={board.title}
-              className="titleinput"
-       
+              className={styles.titleinput}
+              placeholder="문의사항을 알려주세요."
               required
             />
           </div>
 
-          <div style={{ textAlign: "center", marginTop: "10px" }}>
+          <div className={styles.texbottom} style={{ textAlign: 'center'}}>
             <textarea
-              className="textareaInput"
+              className={styles.textareaInput}
+              defaultValue={board.content}
               name="content"
               rows="5"
               cols="40"
-              defaultValue={board.content}
+              required
             />
           </div>
         </div>
 
-        <div className="btn-box" style={{ marginTop: "10px" }}>
+        <div className={styles.btnBox} >
           <button
             type="button"
-            className="btnInput"
+                   className={styles.btnInput}
             onClick={() => navigate("/boardList")}
           >
             목록
@@ -68,19 +71,20 @@ const BoardUpdateForm = ({ updateBoard,onDelete,board }) => {
           <input
             type="submit"
             style={{ backgroundColor: "rgb(172, 235, 77)" }}
-            className="btnInput"
+                  className={styles.btnInput}
             value="수정"
           />
           <button
             type="button"
             onClick={onRemove}
             style={{ backgroundColor: "rgb(238, 106, 83)" }}
-            className="btnInput"
+                  className={styles.btnInput}
           >
             삭제
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 };
