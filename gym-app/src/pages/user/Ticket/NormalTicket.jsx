@@ -3,12 +3,16 @@ import Normal from '../../../components/users/Ticket/NormalTicket'
 import TicketContextProvider from '../../../contexts/TicketContextProvider'
 import LoginContextProvider from '../../../contexts/LoginContextProvider'
 import PayContextProvider from '../../../contexts/PayContextProvider'
+import Header from '../../../components/header/header'
+import Footer from '../../../components/Footer/footer'
 const NormalTicket = () => {
   return (
     <PayContextProvider>
       <LoginContextProvider>
         <TicketContextProvider>
-          <Normal />
+          <Header />
+            <Normal />
+          <Footer />
         </TicketContextProvider>
       </LoginContextProvider>
     </PayContextProvider>

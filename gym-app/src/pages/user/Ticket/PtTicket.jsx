@@ -3,13 +3,17 @@ import TrainerDetail from '../../../components/users/Ticket/TrainerDetail'
 import PayContextProvider from '../../../contexts/PayContextProvider'
 import LoginContextProvider from '../../../contexts/LoginContextProvider'
 import TicketContextProvider from '../../../contexts/TicketContextProvider'
+import Header from '../../../components/header/header'
+import Footer from '../../../components/Footer/footer'
 
 const PtTicket = () => {
   return (
     <PayContextProvider>
       <LoginContextProvider>
         <TicketContextProvider>
-          <TrainerDetail />
+          <Header />
+            <TrainerDetail />
+          <Footer />
         </TicketContextProvider>
       </LoginContextProvider>
     </PayContextProvider>

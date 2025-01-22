@@ -1,7 +1,9 @@
 @charset "UTF-8";
 
-.ticketDetail body {
+.ticketDetail {
     background-color: #000000dc;
+    height: 100vh;
+    padding: 1px 0 2000px 0;
 }
 
 .ticketDetail .ticket-container {
