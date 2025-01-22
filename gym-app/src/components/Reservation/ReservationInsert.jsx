@@ -10,37 +10,39 @@ import './Reservation.css';
 import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 
-const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
+const ReservationInsert = ({ trainerProfile, reservationByTrainer, no, ptCount }) => {
 
+  
+  
   const {userInfo} = useContext(LoginContext)
   const [userNo, setUserNo] = useState(null);
-
+  
   useEffect(() => {
-      console.log('userInfo:', userInfo); 
-      
-      if (userInfo && userInfo.no) { 
-        setUserNo(userInfo.no);
-        console.log('userNo:', userInfo.no);
-      } else {
-        console.log('userInfo가 없거나 userNo가 없습니다.');
-      }
-    }, [userInfo]);
+    console.log('userInfo:', userInfo); 
+    
+    if (userInfo && userInfo.no) { 
+      setUserNo(userInfo.no);
+      console.log('userNo:', userInfo.no);
+    } else {
+      console.log('userInfo가 없거나 userNo가 없습니다.');
+    }
+  }, [userInfo]);
   
   const [selectedDate, setSelectedDate] = useState('');
   const [timeButtons, setTimeButtons] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState([]);
-
+  
   const navigate = useNavigate();
-
-
-
+  
+  
+  
   useEffect(() => {
     if (selectedDate) {
       generateTimeButtons(selectedDate);
     }
   }, [selectedDate]);
-
+  
   const generateTimeButtons = (date) => {
     const buttons = [];
     for (let hour = 10; hour <= 21; hour++) {
@@ -50,7 +52,7 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
         return reservationDate.getTime() === selectedDateTime.getTime();
       });
       const isPast = selectedDateTime.getTime() <= new Date().getTime();
-
+      
       buttons.push({
         time: `${hour}:00`,
         disabled: isReserved || isPast,
@@ -59,13 +61,22 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
     }
     setTimeButtons(buttons);
   };
-
+  
   const handleDateClick = (info) => {
+    console.log("피티카운트 : " + ptCount);
+    if (ptCount <= 0) {
+      Swal.alert('이용 가능한 PT가 없습니다.', '이용권을 추가로 구매해주세요.', 'warning', () => {
+          navigate('/ticket/ChoiceTicket');
+        }
+      );
+      return;
+    }
     setSelectedDate(info.dateStr);
     setModalVisible(true);
   };
-
+  
   const handleTimeClick = (time) => {
+
     if (confirm(`${selectedDate} ${time} 예약하시겠습니까?`)) {
       submitReservation(selectedDate, time);
     }

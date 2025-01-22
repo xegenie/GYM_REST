@@ -7,8 +7,7 @@ const ReservationInsertContainer = () => {
 
   const [trainerProfile, setTrainerProfile] = useState([])
   const [reservationByTrainer, setReservationByTrainer] = useState([])
-  // const [keyword, setKeyword] = useState('')
-  // const [code, setCode] = useState(1)
+  const [ptCount, setPtCount] = useState(0)
 
   const {no} = useParams()
 
@@ -21,6 +20,7 @@ const ReservationInsertContainer = () => {
 
     setTrainerProfile(data.trainerProfile)
     setReservationByTrainer(data.reservationByTrainer)
+    setPtCount(data.ptCount)
 
     console.dir(data);
     
@@ -32,7 +32,7 @@ const ReservationInsertContainer = () => {
 
   return (
     <>
-      <ReservationInsert trainerProfile={trainerProfile} reservationByTrainer={reservationByTrainer} no={no}/>
+      <ReservationInsert trainerProfile={trainerProfile} reservationByTrainer={reservationByTrainer} no={no} ptCount={ptCount}/>
     </>
   )
 }

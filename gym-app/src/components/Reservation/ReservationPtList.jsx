@@ -3,12 +3,12 @@ import * as format from '../../utils/format';
 import './Reservation.css'
 import * as Swal from '../../apis/alert';
 import { useNavigate } from 'react-router-dom';
-import { LoginContext } from '../../contexts/LoginContextProvider';
 import ReservationListModal from './ReservationListModal';
+import { LoginContext } from '../../contexts/LoginContextProvider';
 
 const ReservationPtList = ({ reservations, handlePageChange, page, fetchList, ptCount, disabledCount }) => {
 
-  const { userInfo, isLogin } = useContext(LoginContext)
+  const {isLoading, userInfo, isLogin } = useContext(LoginContext)
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedReservationNo, setSelectedReservationNo] = useState(null);
@@ -28,20 +28,27 @@ const ReservationPtList = ({ reservations, handlePageChange, page, fetchList, pt
   };
 
   useEffect(() => {
-    console.log('userInfo:', userInfo);
-
-    // if (!isLogin) {
-    //   Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login') })
-    //   return
-    // }
-
-    if (userInfo && userInfo.no) {
-      setUserNo(userInfo.no);
-      console.log('userNo:', userNo);
-    } else {
-      console.log('userInfo가 없거나 userNo가 없습니다.');
-    }
-  }, [userInfo]);
+     if (isLoading) {
+       // 로딩 중일 때는 아무 동작도 하지 않음
+       return;
+     }
+   
+     // 로딩 완료 후 로그인 여부 확인
+     if (!isLogin) {
+       Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => {
+         navigate('/login');
+       });
+       return;
+     }
+   
+     // 로그인되어 있다면 userInfo를 확인
+     if (userInfo && userInfo.no) {
+       setUserNo(userInfo.no);
+       console.log('userNo:', userInfo.no);
+     } else {
+       console.log('userInfo가 없거나 userNo가 없습니다.');
+     }
+   }, [isLoading, userInfo, navigate]);
 
 
   return (

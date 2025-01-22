@@ -131,7 +131,6 @@ public class ReservationController {
             List<Reservation> reservationCount = reservationService.userByList(no, page);
             long disabledCount = reservationService.disabledCount(no);
 
-            log.info("예약 데이터 카운트 : " + no);
             log.info("디스에이블 카운트 : " + disabledCount);
             
             List<Reservation> reservationList = reservationService.userByList(no, page);
@@ -170,9 +169,27 @@ public class ReservationController {
     @GetMapping("/user/reservation/reservationInsert/{no}")
     public ResponseEntity<?> getMyTrainer(
             @PathVariable("no") int no,
-            @AuthenticationPrincipal CustomUser userDetails) {
+            @AuthenticationPrincipal CustomUser userDetails,
+            Page page) {
 
         try {
+            List<Reservation> reservationCount = reservationService.userByList(userDetails.getNo(), page);
+            long disabledCount = reservationService.disabledCount(userDetails.getNo());
+            
+            Map<String, Object> result = new HashMap<>();
+
+            if (!reservationCount.isEmpty()) {
+                Reservation lastReservation = reservationCount.get(reservationCount.size() - 1);
+                int ptCount = lastReservation.getPtCount();
+                ptCount -= disabledCount;
+                
+                ptCount = Math.max(ptCount, 0);
+                
+                log.info("피티 카운트 : " + ptCount);
+                log.info("완료피티 카운트 : " + disabledCount);
+                result.put("ptCount", ptCount);
+            }
+            
             TrainerProfile trainerProfile = trainerProfileService.selectTrainer(no);
 
             int code = 1;
@@ -184,33 +201,6 @@ public class ReservationController {
 
             log.info(("트레이너 예약 데이터 : " + reservationByTrainer));
 
-            List<Map<String, Object>> reservationResponse = new ArrayList<>();
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
-            for (Reservation rv : reservationByTrainer) {
-                Map<String, Object> response = new HashMap<>();
-                String formattedTime = timeFormat.format(rv.getRvDate());
-
-                response.put("start", rv.getRvDate());
-                response.put("end", "");
-                response.put("description", "");
-                response.put("textColor", "white");
-                response.put("user_no", rv.getUserNo());
-
-                if (rv.getEnabled() == 2) {
-                    response.put("title", formattedTime + " " + rv.getUserName() + "님 완료");
-                    response.put("color", "#2a9c1b");
-                    response.put("type", "completed");
-                } else {
-                    response.put("title", formattedTime + " " + rv.getUserName() + "님 예약");
-                    response.put("color", "cornflowerblue");
-                    response.put("type", "reservation");
-                }
-
-                reservationResponse.add(response);
-            }
-
-            Map<String, Object> result = new HashMap<>();
             result.put("trainerProfile", trainerProfile);
             result.put("reservationByTrainer", reservationByTrainer);
 
