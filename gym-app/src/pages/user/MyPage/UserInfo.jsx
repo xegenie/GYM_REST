@@ -66,16 +66,28 @@ const UserInfo = () => {
       Swal.alert("회원탈퇴 실패", "들어올 땐 마음대로 들어왔지만 나갈 때 그럴 수 없습니다..🎁", "error",
         () => logout(true))
   }
-
+ // userInfo가 변경될 때마다 userNo 상태를 업데이트
   useEffect(() => {
-    if (!isLogin) {
-      Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => { navigate('/login') })
-      return
+    if (isLoading) {
+      // 로딩 중일 때는 아무 동작도 하지 않음
+      return;
     }
-
-    if (isLoading) return
-  }, [isLoading])
-
+  
+    // 로딩 완료 후 로그인 여부 확인
+    if (!isLogin) {
+      Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => {
+        navigate('/login');
+      });
+      return;
+    }
+  
+    // 로그인되어 있다면 userInfo를 확인
+    if (userInfo && userInfo.no) {
+      console.log('userNo:', userInfo.no);
+    } else {
+      console.log('userInfo가 없거나 userNo가 없습니다.');
+    }
+  }, [isLoading, isLogin, userInfo, navigate]);
   return (
     <>
       <Header />

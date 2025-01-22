@@ -37,7 +37,7 @@ const User = () => {
     } else {
       console.log('userInfo가 없거나 userNo가 없습니다.');
     }
-  }, [isLoading, isLogin, userInfo, navigate]);
+  }, [isLoading, userInfo, navigate]);
 
   const updateUser = async (form) => {
     try {
