@@ -1,73 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { getSalesList } from '../../apis/buyList';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as trainerApi from '../../apis/trainerProfile';
-import Sales from '../../components/admin/Sales/Sales';
+import TrainerList from '../../components/admin/Trainer/TrainerList.jsx';
 
-const SalesContainer = () => {
+const ListContainer = () => {
+  const [trainerList, setTrainerList] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate(); // useNavigate 훅을 사용하여 리다이렉트 처리
 
-    const [salesList, setSalesList] = useState([]); // salesList 상태 관리
-    const [trainerUsers, setTrainerUsers] = useState([]); // 트레이너 데이터 상태 관리
+  const updatePage = () => {
+    const query = new URLSearchParams(location.search);
+    const newKeyword = query.get("keyword") ?? "";
+    setKeyword(newKeyword); // URL에서 keyword를 추출하여 상태 업데이트
+  };
 
-    // URLSearchParams 사용하여 쿼리 파라미터 가져오기
-    const searchParams = new URLSearchParams(window.location.search);
-    const startYear = searchParams.get('startYear') || new Date().getFullYear();
-    const startMonth = searchParams.get('startMonth') || new Date().getMonth() + 1;
-    const startDay = searchParams.get('startDay') || new Date().getDate();
-    const endYear = searchParams.get('endYear') || new Date().getFullYear();
-    const endMonth = searchParams.get('endMonth') || new Date().getMonth() + 1;
-    const endDay = searchParams.get('endDay') || new Date().getDate();
-    const trainerNo = searchParams.get('trainerNo') || "";
+  // getList 함수, 검색어가 빈 값일 경우 전체 리스트를 반환
+  const getList = async (searchKeyword) => {
+    console.log("검색어:", searchKeyword);
 
-    // 판매 데이터 fetch 함수
-    const fetchSalesData = async () => {
-        const params = {
-            trainerNo: trainerNo,
-            startYear: startYear,
-            startMonth: startMonth,
-            startDay: startDay,
-            endYear: endYear,
-            endMonth: endMonth,
-            endDay: endDay
-        };
+    // 검색어가 비어있을 때 전체 목록을 불러옴
+    if (searchKeyword === "") {
+      const response = await trainerApi.list(""); // 빈 문자열로 전체 목록을 가져옴
+      setTrainerList(response.data);
+    } else {
+      const response = await trainerApi.list(searchKeyword); // 검색어로 필터링된 목록을 가져옴
+      setTrainerList(response.data);
+    }
+  };
 
-        console.log('Sales data params:', params); // 확인용 로그
+  // 삭제
+  const onDelete = async (trainerNo) => {
+    // 배열로 받은 trainerNo를 쿼리스트링으로 변환
+  
+    // ticket.remove 호출시 올바르게 URL을 넘김
+    const response = await trainerApi.remove(trainerNo);
+    if (response.status === 200) {
+      alert("삭제되었습니다.");
+      getList(keyword); // 삭제 후 목록을 갱신
+    } else {
+      alert("삭제에 실패했습니다.");
+    }
+  };
 
-        try {
-            const response = await getSalesList(params);
-            setSalesList(response.data);
-        } catch (error) {
-            console.error("Error fetching sales data:", error);
-        }
-    };
+  // 선택
+  const selectTicket = async (trainer) => {
+    navigate(`/admin/trainer/trainerUpdate?trainerNo=${trainer.no}`);
+    
+  }
+  
+  // URL 파라미터 변경 시 검색어 업데이트
+  useEffect(() => {
+    updatePage(); // URL이 변경될 때마다 검색어 업데이트
+  }, [location.search]);
 
-    const getTrainer = async () => {
-        try {
-            const response = await trainerApi.trainerUser();
-            setTrainerUsers(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+  // 검색어 변경 시, API 호출
+  useEffect(() => {
+    getList(keyword); // keyword가 변경될 때마다 getList 호출
+  }, [keyword]);
 
-    useEffect(() => {
-        fetchSalesData(); // 컴포넌트 마운트 시 데이터 fetch
-        getTrainer(); // 트레이너 데이터 가져오기
-    }, [startYear, startMonth, startDay, endYear, endMonth, endDay, trainerNo]); // 파라미터가 변경될 때마다 재호출
+  const handleSearch = (newKeyword) => {
+    setKeyword(newKeyword);  // 검색어 상태 업데이트
+    navigate(`?keyword=${newKeyword}`);  // URL에 검색어를 쿼리 파라미터로 추가
+  };
 
-    return (
-        <Sales
-            salesList={salesList}
-            trainerUsers={trainerUsers}
-            selectedTrainer={trainerNo} // URL에서 가져온 trainerNo
-            selectedStartYear={startYear}
-            selectedStartMonth={startMonth}
-            selectedStartDay={startDay}
-            selectedEndYear={endYear}
-            selectedEndMonth={endMonth}
-            selectedEndDay={endDay}
-            fetchSalesData={fetchSalesData}
-        />
-    );
+  return (
+    <TrainerList trainerList={trainerList} onSearch={handleSearch} keyword={keyword} onDelete={onDelete} selectTicket={selectTicket} />
+  );
 };
 
-export default SalesContainer;
+export default ListContainer;

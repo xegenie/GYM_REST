@@ -82,7 +82,7 @@ const Sidebar = () => {
           <li onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
             <h3>매출</h3>
             <ul className="sub-menu">
-              <li><Link to="/admin/sales/salesList">매출 조회</Link></li>
+              <li><Link to="/admin/sales/saleList">매출 조회</Link></li>
               <li><Link to="/admin/sales/buyList">구매내역 조회</Link></li>
             </ul>
           </li>
