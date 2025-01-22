@@ -17,3 +17,6 @@ export const insert = (data) => api.post(`/user/reservation/reservationInsert`, 
 
 // 관리자 예약 취소/완료 처리
 export const updateReservationByAdmin = (reservationNo, action) => api.put(`/admin/reservation/list?reservationNo=${reservationNo}&action=${action}`)
+
+// 회원 예약 취소
+export const cancelReservationByUser = (no, reservationNo, action) => api.put(`/user/myPage/ptList/${no}?reservationNo=${reservationNo}&action=${action}`)

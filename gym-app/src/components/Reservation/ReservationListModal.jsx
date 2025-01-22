@@ -7,28 +7,38 @@ const ReservationListModal = ({
   isModalOpen,
   closeModal,
   reservations,
-  fetchList
+  fetchList,
+  page,
+  role,
+  no,
+  option
 }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
     setLoading(true);
-    setError('');
+    setError('');  
 
     console.log('예약번호 : ' + reservationNo);
     console.log('완료/취소 구분 : ' + action);
 
     try {
-      const response = await reservation.updateReservationByAdmin(reservationNo, action);
+      let response;
 
-      console.log('응답 결과 : ' + response);
-      if (response.data === '예약 처리 성공') {
+      if (role === "admin") {
+        response = await reservation.updateReservationByAdmin(reservationNo, action)
+      } else {
+        response = await reservation.cancelReservationByUser(no, reservationNo, action)
+      }
+
+      console.log('응답 결과 : ', response);
+
+      if (response.data === '예약 처리 성공' || response.data === '예약 취소 성공') {
         alert(`${action === 'complete' ? '완료' : '취소'} 처리되었습니다.`);
-
-        fetchList();
-
-        closeModal();  
+        
+        fetchList(page.page, option);
+        closeModal(); 
       } else {
         setError(response.data || '예약 처리에 실패했습니다.');
       }

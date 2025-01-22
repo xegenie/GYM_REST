@@ -179,6 +179,9 @@ const ReservationList = ({ reservations, option, page, handlePageChange, setOpti
           closeModal={closeModal}
           reservations={reservations}
           fetchList={fetchList}
+          page={page}
+          role="admin"
+          option={option}
           />
       )}
     </>

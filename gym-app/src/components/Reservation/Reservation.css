@@ -5,6 +5,7 @@
     border: none;
     box-sizing: border-box;
     font: inherit;
+    font-family: 'Arial', sans-serif;
     flex-shrink: 0;
 }
 
@@ -279,6 +280,7 @@
 
 /* ---------- 캘린더 예약 리스트 css ---------- */
 .Reservation-calendar {
+    font-family: 'Arial', sans-serif;
     width: 1000px;
     height: 700px;
     margin-left: 50px;
@@ -376,6 +378,7 @@
     background-color: #252222;
   } */
 .ReservationInsert {
+    font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -563,6 +566,10 @@
 }
 
 .ptList {
+
+    border: none;
+    box-sizing: border-box;
+    font: inherit;
     font-family: 'Arial', sans-serif;
     height: 100vh;
     color: #333;
@@ -639,7 +646,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    height: 550px;
+    /* height: 550px; */
 }
 
 .ptList table {
@@ -680,6 +687,22 @@
     background-color: #FF4500;
 }
 
+.ptList button.cancel {
+    background-color: orange;
+    font-size: 15px;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ptList button.cancel:hover {
+    background-color: #FF4500;
+}
+
 .ptList .cancel-text {
     font-weight: bold;
     color: #dc3545;
@@ -705,11 +728,38 @@
     z-index: 1000;
 }
 
+.ptList #completeModal {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    z-index: 1000;
+}
+
+
 .ptList .modal-container {
     padding: 20px;
 }
 
+.ptList .modal-container h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
 .ptList .modal-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
     margin-top: 20px;
 }
 
@@ -739,7 +789,7 @@
 .ptList .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .ptList a {
