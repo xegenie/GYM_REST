@@ -120,7 +120,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
       endDay
     }).toString();
 
-    const searchUrl = `salelist?${queryParams}`;
+    const searchUrl = `saleList?${queryParams}`;
     window.location.href = searchUrl;
     fetchSalesData();
   };
