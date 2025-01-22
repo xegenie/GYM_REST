@@ -49,7 +49,7 @@ const NewPwForm = ({ newPws }) => {
             </div>
             <div className={styles.formCenter}>
             <input
-              type="newPassword"
+              type="password"
               className={styles.formControl}
               id="newPassword"
               name="newPassword"

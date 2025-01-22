@@ -213,7 +213,7 @@ public class UserController {
     @PostMapping("/findId")
     public ResponseEntity<?> findId(@RequestBody Users user) throws Exception {
 
-
+        
         String name = user.getName();
         String phone = user.getPhone();
         String question = user.getQuestion();
@@ -225,7 +225,7 @@ public class UserController {
             return new ResponseEntity<>(foundUser.getId(), HttpStatus.OK);
         } else {
        log.info("사용자를 찾을 수 없습니다.");
-            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("FAIL", HttpStatus.CREATED);
         }
     }
 

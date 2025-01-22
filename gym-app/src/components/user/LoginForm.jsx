@@ -57,26 +57,7 @@ const LoginForm = () => {
   return (
 
   <div className="login">
-    <div className="util">
-            <ul>
-                {/* 로그인 여부(isLogin)에 따라서 조건부 렌더링 */}
-                {
-                    isLogin
-                    ?
-                    <>
-                        <li>마이페이지 </li>
-                        <li><button className='link' onClick={ () => {   logout(); setAutoLogin(false);}}> 로그아웃 </button></li>
-                    </>
-                :
-                <>
-                
-                    <li>회원가입</li>
-            
-                </>
-            }
-            </ul>
-        </div>
-
+  
       <body>
       <div className="fullBody">
         <div className="container12">

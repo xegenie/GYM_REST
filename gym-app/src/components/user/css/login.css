@@ -33,12 +33,11 @@
     color: #9FD0D5;
     letter-spacing: 15px;
     margin-left: 10px;
+    margin-bottom: 50px;
 }
 
 .login .container1 img {
-    width: 80%;
     /* 부모 요소의 가로 크기에 맞춤 */
-    height: 100%;
     /* 부모 요소의 세로 크기에 맞춤 */
     object-fit: contain;
     /* 이미지 왜곡 방지 및 비율 유지 */
@@ -59,7 +58,7 @@
 .login .formsignin{
     display: flex;
     justify-content: space-around;
-    margin-bottom: 30px;
+    width: 100%;
 }
 
 .login .form-check-input:checked+.form-check-label {
@@ -138,12 +137,15 @@
     text-align: center;
 
 }
+form{
+    width: 100%;
+}
 
 .login .form-floating input {
     background-color: #ddd;
     width: 80%;
     /* 입력 필드 너비 */
-    padding: 18px 15px;
+    padding: 25px 15px;
     /* 내부 여백 */
     margin-bottom: 10px;
     height: 25px;
