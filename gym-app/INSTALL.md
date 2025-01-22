@@ -23,5 +23,8 @@ npm install @fullcalendar/react @fullcalendar/core @fullcalendar/daygrid @‌ful
 ### qrcode
 npm install qrcode.react uuid qrcode.react@latest qrcode
 
+### chart.js
+npm install chart.js
+
 ### 통합
-npm install react-router-dom axios js-cookie sweetalert2 sweetalert2-react-content bootstrap@5 @mui/icons-material @mui/material @emotion/react @emotion/styled @fullcalendar/react @fullcalendar/core @fullcalendar/daygrid @‌fullcalendar/timegrid @fullcalendar/interaction qrcode.react uuid qrcode.react@latest qrcode
+npm install react-router-dom axios js-cookie sweetalert2 sweetalert2-react-content bootstrap@5 @mui/icons-material @mui/material @emotion/react @emotion/styled @fullcalendar/react @fullcalendar/core @fullcalendar/daygrid @‌fullcalendar/timegrid @fullcalendar/interaction qrcode.react uuid qrcode.react@latest qrcode chart.js

@@ -9,7 +9,7 @@ export const useDate = () => useContext(DateContext);
 
 const DateContextProvider = ({children}) => {
 
-  const { roles } = useContext(LoginContext)
+  const { roles, autoLogin } = useContext(LoginContext)
   const location = useLocation();
 
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -25,7 +25,7 @@ const DateContextProvider = ({children}) => {
   const [isRsvInfoVisible, setIsRsvInfoVisible] = useState(false);
 
   const getDataListByDate = async (date) => {
-    console.log("getDataListByDate")
+    // console.log("getDataListByDate")
     const formDate = new Date(date)
     const year = formDate.getFullYear();
     const month = (formDate.getMonth() + 1);
@@ -34,10 +34,10 @@ const DateContextProvider = ({children}) => {
     const response = await plan.getPlansbyDate(year, month, day)
     const data = await response.data
 
-    console.dir(data)
-    console.dir(data.comment)
-    console.dir(data.planEvents)
-    console.dir(data.reservationEvents)
+    // console.dir(data)
+    // console.dir(data.comment)
+    // console.dir(data.planEvents)
+    // console.dir(data.reservationEvents)
 
     setComment(data.comment)
     setPlanList(data.planEvents)
@@ -45,7 +45,7 @@ const DateContextProvider = ({children}) => {
 
   };
   const getPlansbyDateUserNo = async (date) => {
-    console.log("getPlansbyDateUserNo")
+    // console.log("getPlansbyDateUserNo")
     const params = new URLSearchParams(location.search);
     const userNo = params.get('userNo');
     const formDate = new Date(date)
@@ -56,10 +56,10 @@ const DateContextProvider = ({children}) => {
     const response = await plan.getPlansbyDateUserNo(year, month, day, userNo)
     const data = await response.data
 
-    console.dir(data)
-    console.dir(data.comment)
-    console.dir(data.planEvents)
-    console.dir(data.reservationEvents)
+    // console.dir(data)
+    // console.dir(data.comment)
+    // console.dir(data.planEvents)
+    // console.dir(data.reservationEvents)
 
     setComment(data.comment)
     setPlanList(data.planEvents)
@@ -70,11 +70,11 @@ const DateContextProvider = ({children}) => {
   const getDataList = async () => {
     const response = await plan.getPlans()
     const data = await response.data
-    console.dir(response)
-    console.dir(data)
-    console.dir(data.comment)
-    console.dir(data.planEvents)
-    console.dir(data.reservationEvents)
+    // console.dir(response)
+    // console.dir(data)
+    // console.dir(data.comment)
+    // console.dir(data.planEvents)
+    // console.dir(data.reservationEvents)
     
     setComment(data.comment)  
     setPlanList(data.planEvents)
@@ -85,7 +85,7 @@ const DateContextProvider = ({children}) => {
   const getPlansbyUserNo = async () => {
     const params = new URLSearchParams(location.search);
     const userNo = params.get('userNo');
-    console.log("getPlansbyUserNo : " + userNo)
+    // console.log("getPlansbyUserNo : " + userNo)
     const response = await plan.getPlansbyUserNo(userNo)
     const data = await response.data
 
@@ -108,16 +108,19 @@ const DateContextProvider = ({children}) => {
   }
 
   useEffect(() => {
-    console.log("DateContext currentDate : " + currentDate);
-    if (roles.isUser) {
-      getDataListByDate(currentDate);
-    } else {
-      getPlansbyDateUserNo(currentDate);
-    }
-    setIsPlanInfoVisible(false)
-    setIsRsvInfoVisible(false)
+    const fetchData = async () => {
+      await autoLogin();
+      if (roles.isUser) {
+        await getDataListByDate(currentDate);
+      } else {
+        await getPlansbyDateUserNo(currentDate);
+      }
+      setIsPlanInfoVisible(false);
+      setIsRsvInfoVisible(false);
+    };
 
-  }, [currentDate])
+    fetchData();
+  }, [currentDate]);
 
   useEffect(() => {
     if (isPlanInfoVisible) {
