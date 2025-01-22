@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             f.no AS fileNo,
             u.id AS userId,
             u.name AS userName,
-            (SELECT COUNT(*) FROM users u_sub WHERE u_sub.trainer_no = tp.no) AS userCount
+            (SELECT COUNT(*) FROM users u_sub WHERE u_sub.trainer_no = tp.trainer_no) AS userCount
         FROM 
             trainer_profile tp
         JOIN 

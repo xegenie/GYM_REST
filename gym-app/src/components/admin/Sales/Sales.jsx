@@ -146,7 +146,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
 
             <form onSubmit={handleSubmit} action="salesList" method="GET" id="searchForm" style={{ display: 'flex', justifyContent: 'space-between', margin: '0 50px', marginBottom: '100px' }}>
               <div>
-                <select className='select' name="trainerNo" value={selectedTrainer} onChange={e => setSelectedTrainer(e.target.value)}>
+                <select className='select' name="trainerNo" style={{height: 30}} value={selectedTrainer} onChange={e => setSelectedTrainer(e.target.value)}>
                   <option value="">트레이너 이름</option>
                   {trainerUsers.map((trainerUser) => (
                     <option value={trainerUser.no} key={trainerUser.no}>
@@ -156,7 +156,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
                 </select>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <select name="startYear" value={selectedStart.year} onChange={e => setSelectedStart({ ...selectedStart, year: e.target.value })}>
+                <select className='select' name="startYear" value={selectedStart.year} onChange={e => setSelectedStart({ ...selectedStart, year: e.target.value })}>
                   <option value="">시작 연도</option>
                   {[...Array(2025 - 2010 + 1)].map((_, idx) => {
                     const year = 2010 + idx;
@@ -164,7 +164,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
                   })}
                 </select>
 
-                <select name="startMonth" value={selectedStart.month} onChange={e => setSelectedStart({ ...selectedStart, month: e.target.value })}>
+                <select className='select' name="startMonth" value={selectedStart.month} onChange={e => setSelectedStart({ ...selectedStart, month: e.target.value })}>
                   <option value="">시작 월</option>
                   {[...Array(12)].map((_, idx) => {
                     const month = idx + 1;
@@ -172,7 +172,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
                   })}
                 </select>
 
-                <select name="startDay" value={selectedStart.day} onChange={e => setSelectedStart({ ...selectedStart, day: e.target.value })}>
+                <select className='select' name="startDay" value={selectedStart.day} onChange={e => setSelectedStart({ ...selectedStart, day: e.target.value })}>
                   <option value="">시작 일</option>
                   {[...Array(getDaysInMonth(selectedStart.year, selectedStart.month))].map((_, idx) => {
                     const day = idx + 1;
@@ -180,7 +180,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
                   })}
                 </select>
                 ~
-                <select name="endYear" value={selectedEnd.year} onChange={e => setSelectedEnd({ ...selectedEnd, year: e.target.value })}>
+                <select className='select' name="endYear" value={selectedEnd.year} onChange={e => setSelectedEnd({ ...selectedEnd, year: e.target.value })}>
                   <option value="">종료 연도</option>
                   {[...Array(2025 - 2010 + 1)].map((_, idx) => {
                     const year = 2010 + idx;
@@ -188,7 +188,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
                   })}
                 </select>
 
-                <select name="endMonth" value={selectedEnd.month} onChange={e => setSelectedEnd({ ...selectedEnd, month: e.target.value })}>
+                <select className='select' name="endMonth" value={selectedEnd.month} onChange={e => setSelectedEnd({ ...selectedEnd, month: e.target.value })}>
                   <option value="">종료 월</option>
                   {[...Array(12)].map((_, idx) => {
                     const month = idx + 1;
@@ -196,7 +196,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
                   })}
                 </select>
 
-                <select name="endDay" value={selectedEnd.day} onChange={e => setSelectedEnd({ ...selectedEnd, day: e.target.value })}>
+                <select className='select' name="endDay" value={selectedEnd.day} onChange={e => setSelectedEnd({ ...selectedEnd, day: e.target.value })}>
                   <option value="">종료 일</option>
                   {[...Array(getDaysInMonth(selectedEnd.year, selectedEnd.month))].map((_, idx) => {
                     const day = idx + 1;
