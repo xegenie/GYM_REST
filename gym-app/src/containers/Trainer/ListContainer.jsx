@@ -44,8 +44,8 @@ const ListContainer = () => {
   };
 
   // 선택
-  const selectTicket = async (trainer) => {
-    navigate(`/admin/trainer/trainerUpdate?trainerNo=${trainer.no}`);
+  const selectTrainer = async (no) => {
+    navigate(`/admin/trainer/update?no=${no}`);
     
   }
   
@@ -65,7 +65,7 @@ const ListContainer = () => {
   };
 
   return (
-    <TrainerList trainerList={trainerList} onSearch={handleSearch} keyword={keyword} onDelete={onDelete} selectTicket={selectTicket} />
+    <TrainerList trainerList={trainerList} onSearch={handleSearch} keyword={keyword} onDelete={onDelete} selectTrainer={selectTrainer} />
   );
 };
 
