@@ -6,11 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import ReservationListModal from './ReservationListModal';
 
-const ReservationPtList = ({ reservations, handlePageChange, page, fetchList }) => {
+const ReservationPtList = ({ reservations, handlePageChange, page, fetchList, ptCount, disabledCount }) => {
 
   const { userInfo, isLogin } = useContext(LoginContext)
-  const [disabledCount, setDisabledCount] = useState(0)
-  const [ptCount, setPtCount] = useState(0)
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedReservationNo, setSelectedReservationNo] = useState(null);
 

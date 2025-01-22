@@ -131,24 +131,32 @@ public class ReservationController {
             List<Reservation> reservationCount = reservationService.userByList(no, page);
             long disabledCount = reservationService.disabledCount(no);
 
-            log.info("예약 데이터 카운트 : " , reservationCount);
-            log.info("디스에이블 카운트 : ", disabledCount);
-            
-            if (!reservationCount.isEmpty()) {
-                Reservation lastReservation = reservationCount.get(reservationCount.size() - 1);
-                int ptCount = lastReservation.getPtCount();
-                ptCount -= disabledCount;
-                
-                ptCount = Math.max(ptCount, 0);
-            }
+            log.info("예약 데이터 카운트 : " + no);
+            log.info("디스에이블 카운트 : " + disabledCount);
             
             List<Reservation> reservationList = reservationService.userByList(no, page);
 
             Map<String, Object> response = new HashMap<String, Object>();
             response.put("reservationList", reservationList);
             response.put("page", page);
+            if (!reservationCount.isEmpty()) {
+                Reservation lastReservation = reservationCount.get(reservationCount.size() - 1);
+                int ptCount = lastReservation.getPtCount();
+                ptCount -= disabledCount;
+                
+                ptCount = Math.max(ptCount, 0);
+                
+                log.info("피티 카운트 : " + ptCount);
+                log.info("완료피티 카운트 : " + disabledCount);
+
+                response.put("ptCount", ptCount);
+                response.put("disabledCount", disabledCount);
+            }
             
-            log.info("예약 데이터 리스트 : " , reservationList);
+            
+            log.info("예약 데이터 리스트 : " + reservationList);
+
+
             
 
             return new ResponseEntity<>(response, HttpStatus.OK);

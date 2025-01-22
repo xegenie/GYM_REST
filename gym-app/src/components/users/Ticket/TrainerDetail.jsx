@@ -25,7 +25,7 @@ const TrainerDetail = () => {
 
       // 파일 번호가 있는 경우 파일 API로 이미지 경로를 가져옵니다.
       if (trainerData.fileNo) {
-        setPreviewSrc(`/api/files/${trainerData.no}/thumbnail`);
+        setPreviewSrc(`/api/files/${trainerData.trainerNo}/thumbnail`);
       }
 
     } catch (error) {
