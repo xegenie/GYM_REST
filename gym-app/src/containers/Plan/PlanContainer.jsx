@@ -9,7 +9,7 @@ import { LoginContext } from '../../contexts/LoginContextProvider'
 
 const PlanContainer = () => {
 
-  const { roles } = useContext(LoginContext)
+  const { roles, autoLogin } = useContext(LoginContext)
   
   const { currentDate, setCurrentDate, comment, planList, rsvList, getDataList, getPlansbyUserNo,
     isPlanInsertVisible, setIsPlanInsertVisible,
@@ -26,16 +26,21 @@ const PlanContainer = () => {
   
 
   useEffect(() => {
-    if (roles.isUser) {
-      console.log("PlanContainer roles isUser: " + roles.isUser)
-      getDataList()
-    } else {
-      console.log("PlanContainer roles isUser: " + roles.isUser)
-      getPlansbyUserNo()
-    }
-    const { times24Hour, times12Hour } = generateTimeLists();
-    setTimes24Hour(times24Hour);
-    setTimes12Hour(times12Hour);
+    const fetchData = async () => {
+      await autoLogin();
+      if (roles.isUser) {
+        // console.log("PlanContainer roles isUser: " + roles.isUser);
+        await getDataList();
+      } else {
+        // console.log("PlanContainer roles isUser: " + roles.isUser);
+        await getPlansbyUserNo();
+      }
+      const { times24Hour, times12Hour } = generateTimeLists();
+      setTimes24Hour(times24Hour);
+      setTimes12Hour(times12Hour);
+    };
+
+    fetchData();
   }, [])
   
   const generateTimeLists = () => {

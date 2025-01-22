@@ -18,7 +18,7 @@ const Comment = () => {
   const [no, setNo] = useState(0);
 
   useEffect(() => {
-    console.dir(comment)
+    // console.dir(comment)
     if (comment){
       setCcontent(comment.ccontent);
       setFcontent(comment.fcontent);
@@ -62,7 +62,7 @@ const Comment = () => {
   const handleInsertComment = async () => {
     const params = new URLSearchParams(location.search);
     const userNo = params.get('userNo');
-    console.log("comment userNo: " + userNo);
+    // console.log("comment userNo: " + userNo);
     
     const commentDate = new Date(currentDate).setHours(0,0,0,0);
     try {
@@ -72,7 +72,7 @@ const Comment = () => {
         userNo: userNo,
         commentDate: commentDate
       }
-      console.log("comment Insert : ", data);
+      // console.log("comment Insert : ", data);
       plan.insertComment(data)
     } catch (error) {
       console.error('오류 발생:', error.response ? error.response.data : error.message);
