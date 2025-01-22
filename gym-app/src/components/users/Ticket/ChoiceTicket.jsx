@@ -4,7 +4,7 @@ import * as pay from '../../../apis/pay';
 import './css/ChoiceTicket.css';
 
 const ChoiceTicket = () => {
-  const { buyList, setBuyList, startDate, setStartDate } = useContext(TicketContext);
+  const { buyList, setBuyList, startDate, setStartDate, oldTicket } = useContext(TicketContext);
   const [error, setError] = useState(null);
 
   return (
@@ -21,7 +21,7 @@ const ChoiceTicket = () => {
             <span>{buyList.length > 0 ? buyList[buyList.length - 1].ticketName : '없음'}</span>
             &ensp;(&ensp;
             {/* 시작 날짜 */}
-            <span>{startDate ? new Date(startDate.startDate).toLocaleDateString() + ' ~ ' : '-'}</span>
+            <span>{oldTicket ? new Date(oldTicket.startDate).toLocaleDateString() + ' ~ ' : '-'}</span>
             &nbsp;
             {/* 만료 날짜 */}
             <span>{buyList.length > 0 ? new Date(buyList[buyList.length - 1].endDate).toLocaleDateString() : ''}</span>

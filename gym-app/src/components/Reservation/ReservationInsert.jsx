@@ -105,7 +105,7 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
   };
 
   return (
-    <div className="ReservationInsert">
+    <div className="ReservationInsert"> 
       <div className="ReservationInsert-container">
         <div className="hr">
           <span>PT 예약</span>
@@ -113,7 +113,7 @@ const ReservationInsert = ({ trainerProfile, reservationByTrainer, no }) => {
         <div className="trainer-info">
           <div className="info-container">
             <img
-              src="/images/sample.jpg"
+              src={`/api/files/${trainerProfile.no}/thumbnail`}
               alt="트레이너이미지"
               className="card-img-top"
               style={{

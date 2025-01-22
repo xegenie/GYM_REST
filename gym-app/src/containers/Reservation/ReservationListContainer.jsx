@@ -8,6 +8,8 @@ import ReservationPtList from "../../components/Reservation/ReservationPtList";
 const ReservationListContainer = () => {
   const { userInfo } = useContext(LoginContext);
   const [reservations, setReservations] = useState([]);
+  const [disabledCount, setDisabledCount] = useState(0)
+  const [ptCount, setPtCount] = useState(0)
   const [option, setOption] = useState({
     keyword: "",
     rows: 10,
@@ -39,6 +41,8 @@ const ReservationListContainer = () => {
         console.dir("예약 데이터 : " + data.reservationList)
         console.dir("페이지 데이터 : " + data.page)
         setReservations(data.reservationList)
+        setPtCount(data.ptCount)
+        setDisabledCount(data.disabledCount)
         setPage(data.page)
       } else {
         response = await fetch(
@@ -91,6 +95,8 @@ const ReservationListContainer = () => {
         setOption={setOption}
         onSearch={handleSearch}
         fetchList={fetchList}
+        ptCount={ptCount}
+        disabledCount={disabledCount}
       />
     );
   } else {

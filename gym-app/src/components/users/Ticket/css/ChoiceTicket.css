@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
-.ChoiceTicket body {
+.ChoiceTicket  {
     background-color: #000000dc;
+    height: 100vh;
 }
 
 .ChoiceTicket a { text-decoration: none; }
