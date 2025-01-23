@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import './UserUpdateForm.css';
+
 
 const UserUpdateForm = ({ user, getUpdate }) => {
 
@@ -28,6 +30,7 @@ const UserUpdateForm = ({ user, getUpdate }) => {
   }
 
   return (
+   <div className='godDo'>
     <div className="container">
       <div className="main">
         <div className="inner" >
@@ -108,6 +111,7 @@ const UserUpdateForm = ({ user, getUpdate }) => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

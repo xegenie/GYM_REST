@@ -3,36 +3,56 @@ import { useNavigate } from 'react-router-dom';
 import './AttendanceList.css';
 import Sidebar from '../Header/adminSidebar';
 import { LoginContext } from '../../../contexts/LoginContextProvider';
-import * as Swal from '../../../apis/alert'
+import * as Swal from '../../../apis/alert';
 
 const AttendanceTable = () => {
   const [attendanceList, setAttendanceList] = useState([]);
   const [option, setOption] = useState({ keyword: '', code: '', orderCode: '' });
   const [page, setPage] = useState({ page: 1, rows: 10, first: 1, last: 1, start: 1, end: 1 });
-  const { isLogin: isAuthenticated, userInfo } = useContext(LoginContext);
+  const { isLogin, userInfo, roles, isLoading } = useContext(LoginContext);
   const navigate = useNavigate();
 
-  // 유저 권한 가져오기
-  const userRole = userInfo?.authList?.[0]?.auth;
-  console.log('현재 로그인한 사용자 권한:', userRole);
 
   // 로딩 상태 처리
-  const [isLoading, setIsLoading] = useState(true);
+  const [isTableLoading, setIsTableLoading] = useState(true);
 
+  console.dir("권한 뭥미" + roles)
+  console.log("roles:", JSON.stringify(roles, null, 2));  // roles 객체 전체 출력
+
+  // 권한 체크 및 로그인 상태 확인
   useEffect(() => {
-    if (isLoading) return; // 로딩 중일 때는 처리하지 않음
-  
-  }, [isLoading]);
-
-
-  // 관리자가 아닐 경우 페이지 차단
-  useEffect(() => {
-
-    if (userRole !== 'ROLE_ADMIN') {
-        Swal.alert('페이지 접근권한이 없습니다.', 'error', navigate('/'));
-      
+    if (isLoading) {
+      return; // 로딩 중이면 아무것도 하지 않음
     }
-  }, [userRole]);
+  
+    if (!isLogin) {
+      Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => {
+        navigate('/login');
+      });
+      return;
+    }
+  
+    if (!userInfo) {
+      Swal.alert('잘못된 접근입니다.', '메인 화면으로 이동합니다.', 'warning', () => {
+        navigate('/');
+      });
+      return;
+    }
+  
+    if (roles.isUser) {
+      Swal.alert('권한이 없습니다.', '메인 화면으로 이동합니다.', 'warning', () => {
+        navigate('/');
+      });
+    } else {
+      fetchAttendanceList(); // 관리자가 아닌 사용자는 접근할 수 없도록
+    }
+  }, [isLoading, isLogin, userInfo, roles, navigate]);
+  
+
+
+
+
+
 
   // 출석 리스트 가져오기
   const fetchAttendanceList = async (pageNumber = 1) => {
@@ -42,31 +62,29 @@ const AttendanceTable = () => {
         const { attendanceList, option: newOption, page: newPage } = await response.json();
         setAttendanceList(attendanceList);
         setOption(newOption);
-        setPage(newPage);
+        setPage(newPage); // 새로운 페이지 정보로 상태 업데이트
       } else {
         console.error('출석 목록을 불러오는 데 실패했습니다.');
       }
     } catch (error) {
       console.error('출석 목록을 불러오는 중 오류 발생:', error);
     } finally {
-      setIsLoading(false); // 데이터 로딩 완료
+      setIsTableLoading(false); // 데이터 로딩 완료
     }
   };
 
-  useEffect(() => {
-    if (userRole === 'ROLE_ADMIN') {
-      fetchAttendanceList();
-    }
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setPage((prevPage) => ({
+      ...prevPage,
+      page: pageNumber
+    }));
+    fetchAttendanceList(pageNumber); // 새로운 페이지 데이터 불러오기
+  };
 
-    if ( userRole === 'ROLE_TRAINER') {
-
-      fetchAttendanceList();
-
-    }
-  }, [userRole]);
-
-  if (isLoading && userRole !== 'ROLE_ADMIN' ) {
-    return navigate('/')
+  // 로딩 중이면 아무것도 렌더링하지 않음
+  if (isLoading || !isLogin || !userInfo || roles.isUser) {
+    return null;
   }
 
   return (
@@ -84,7 +102,7 @@ const AttendanceTable = () => {
               className="search"
               onSubmit={(e) => {
                 e.preventDefault();
-                fetchAttendanceList(1);
+                fetchAttendanceList(1); // 검색어로 출석 리스트를 다시 불러옴
               }}
             >
               <input
