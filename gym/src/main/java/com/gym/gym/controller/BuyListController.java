@@ -2,6 +2,7 @@ package com.gym.gym.controller;
 
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +64,24 @@ public class BuyListController {
 
     // 전체 구매 리스트 조회
     @GetMapping("/admin")
-    public ResponseEntity<?> list(@RequestParam(name = "keyword", defaultValue = "") String keyword, Page page)
-            throws Exception {
+    public ResponseEntity<?> list(
+            @RequestParam(name = "keyword", defaultValue = "") String keyword,
+            @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber,
+            Page page) throws Exception {
+
+        // page 객체에 pageNumber 값을 수동으로 설정
+        page.setPage(pageNumber);
+        log.info("keyword, pageNumber : " + keyword, pageNumber);
+
+        // 필요한 비즈니스 로직 수행
         List<BuyList> buyList = buyListService.list(keyword, page);
-        return ResponseEntity.ok(buyList);
+
+        // 응답 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("buyList", buyList); // 구매 리스트
+        response.put("page", page); // 페이지 정보
+
+        return ResponseEntity.ok(response);
     }
 
     // 매출 조회

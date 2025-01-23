@@ -1,0 +1,183 @@
+@charset "UTF-8";
+
+.buyList * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+.buyList .container {
+    margin: auto;
+    width: 1440px;
+    height: 935px;
+    display: flex;
+}
+
+.buyList .inner {
+    width: 1100px;
+    height: 900px;
+    background-color: #E7ECEF;
+    border-radius: 5%;
+}
+
+.buyList .main {
+    width: 1160px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F7F8F9;
+    flex-shrink: 0;
+}
+
+.buyList .inner .title {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.buyList .mainTitle {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.buyList .search-container {
+    display: flex;
+    justify-content: center;
+}
+.buyList .search {
+    width: 1000px;
+    height: 30px;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 30px;
+}
+.buyList .search input[type="text"] {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.buyList .searchBtn {
+    padding: 0px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); 
+}
+.buyList .searchBtn:hover {
+    background-color: #005f73;
+}
+
+.buyList .list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-height: 550px; 
+}
+.buyList .paging {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.buyList .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.buyList .pagination a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #008CBA;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.buyList .pagination a:hover {
+    background-color: #005f73;
+    color: white;
+}
+
+.buyList .pagination a.active {
+    background-color: #008CBA;
+    color: white;
+    border: 1px solid #008CBA;
+    pointer-events: none;
+}
+
+.buyList table { 
+    width: 100%; 
+    height: 100%;
+    max-height: 550px;
+    max-width: 1011px; 
+    border-collapse: collapse; 
+    background-color: #fff; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); 
+    margin-bottom: 30px; 
+}
+
+.buyList thead { 
+    background-color: #F7F8F9; 
+} 
+
+.buyList th, 
+.buyList td { 
+    height: 50px;
+    padding: 5px; 
+    text-align: center; 
+    border: 1px solid #ddd; 
+}
+
+.buyList .updateBtn,
+.buyList .deleteBtn {
+    display: inline-block;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buyList .updateBtn {
+    background-color: #7c92c0;
+}
+.buyList .deleteBtn {
+    background-color: #e46262;
+}
+
+.buyList .updateBtn:hover,
+.buyList .deleteBtn:hover {
+    filter: brightness(90%);
+}
+
+/* ------------------------구매내역 css------------------------ */
+
+.buyList select {
+    padding: 5px 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #eee;
+    float: right;
+}

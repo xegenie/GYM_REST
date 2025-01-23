@@ -7,7 +7,7 @@ export const insert = (buyList) => api.post(`/buyList/admin`, buyList)
 export const cancel = (no) => api.put(`/buyList/admin/${no}/cancel`)
 
 // 전체 구매 리스트 조회
-export const getBuyList = (keyword) => api.get(`/buyList/admin?${keyword}`)
+export const getBuyList = (keyword, pageNumber) => api.get(`/buyList/admin?keyword=${keyword}&pageNumber=${pageNumber}`)
 
 // 매출 조회
 export const getSalesList = ({ trainerNo, startYear, startMonth, startDay, endYear, endMonth, endDay }) => {

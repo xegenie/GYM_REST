@@ -9,7 +9,7 @@ const TrainerUpdateForm = ({ onUpdate, trainerUsers, onDelete }) => {
   const [previewSrc, setPreviewSrc] = useState(''); // 이미지 미리보기 상태
   const [formData, setFormData] = useState({}); // 폼 데이터 상태
   const [trainerUserNo, setTrainerUserNo] = useState(''); // 트레이너 번호 상태
-  const trainerNo = new URLSearchParams(location.search).get('no'); // 쿼리 파라미터에서 trainerNo 가져오기
+  const trainerNo = new URLSearchParams(location.search).get('trainerNo'); // 쿼리 파라미터에서 trainerNo 가져오기
 
   // trainerNo로 데이터를 로드하는 함수
   const fetchTrainerData = async (no) => {
@@ -92,7 +92,7 @@ const TrainerUpdateForm = ({ onUpdate, trainerUsers, onDelete }) => {
   const handleDelete = (event) => {
     event.preventDefault();
     if (onDelete) {
-      onDelete(trainerNo);
+      onDelete(formData.no);
     }
   }
 
