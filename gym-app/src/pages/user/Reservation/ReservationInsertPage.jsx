@@ -24,7 +24,7 @@ const ReservationInsertPage = () => {
       return;
     }
 
-    if (!userInfo || userInfo.trainerNo != no) {
+    if (!userInfo || userInfo.trainerNo != no || userInfo.trainerNo == 0) {
       Swal.alert('잘못된 접근입니다.', '메인 화면으로 이동합니다.', 'warning', () => {
         navigate('/');
       });
@@ -32,7 +32,7 @@ const ReservationInsertPage = () => {
     }
   }, [isLoading, isLogin, userInfo, no, navigate]);
 
-  if (isLoading || !isLogin || !userInfo || userInfo.trainerNo != no) {
+  if (isLoading || !isLogin || !userInfo || userInfo.trainerNo != no || userInfo.trainerNo == 0) {
     return null;
   }
 
