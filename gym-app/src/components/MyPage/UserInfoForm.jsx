@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './UserInfoForm.css'
+import * as Swal from '../../apis/alert'
 
 const UserInfoForm = ({ updateUser, userInfo, removeUser }) => {
 
@@ -22,6 +23,20 @@ const UserInfoForm = ({ updateUser, userInfo, removeUser }) => {
     }
 
     
+
+        const onRemove = () => {
+                Swal.confirm("계정탈퇴", "정말로 탈퇴하시겠습니까?", "warning", (result) => {
+                    if (result.isConfirmed) {
+        
+                            removeUser(userInfo.no)
+                          // 로그아웃 세팅
+                         
+                          return
+                      }
+                  }
+        
+                );
+              }
 
     return (
         <div className='oswUserInfoForm'>
@@ -82,7 +97,7 @@ const UserInfoForm = ({ updateUser, userInfo, removeUser }) => {
 
                                 <tr className="button-tr">
                                     <td className="buttons" colSpan="2">
-                                        <button type="button" className="delete" onClick={() => removeUser(userInfo.no)}>
+                                        <button type="button" className="delete" onClick={() => onRemove() }>
                                             탈퇴하기
                                         </button>
                                         <Link to='/ChangePw'>

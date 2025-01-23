@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../contexts/LoginContextProvider";
+import '../Board/css/BoardRead.css';
+import * as Swal from '../../../apis/alert'
 
 const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate }) => {
   const navigate = useNavigate();
@@ -8,7 +10,7 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
 
   const [editingAnswerNo, setEditingAnswerNo] = useState(null); // 수정할 답변의 ID
   const [editedContent, setEditedContent] = useState(""); // 수정된 내용
-  const [content, setContent] = useState(''); // 답변 입력 상태
+  const [content, setContent] = useState(""); // 답변 입력 상태
 
   const answerInsert = (e) => {
     e.preventDefault();
@@ -19,9 +21,26 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
     insertA({ boardNo, content });
   };
 
-  const onRemove = () => {
-    const check = window.confirm('정말로 삭제하시겠습니까?');
-    if (check) AnswerDelete(board.no);
+  const onRemove = (force = false) => {
+        Swal.confirm("답변 삭제", "정말로 삭제하시겠습니까?", "warning", (result) => {
+            if (result.isConfirmed) {
+                if (force) {
+
+                  AnswerDelete(board.no)
+                  // 로그아웃 세팅
+                  Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success")
+                }
+                 
+                  return
+              }
+          }
+
+        );
+      }
+
+  const cancle = () => {
+    setEditingAnswerNo(null); // 편집 상태 해제
+    location.reload();
   };
 
   // 답변 수정 시작
@@ -33,31 +52,32 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
   // 답변 수정 제출
   const onSubmit = (e) => {
     e.preventDefault();
-  
+
     const data = {
-      content: editedContent,  // 직접 값을 담아서 전송
+      content: editedContent, // 직접 값을 담아서 전송
       no: editingAnswerNo,
     };
-  
+
     // 서버에 POST 요청 (예시: axios 사용)
     answerUpdate(data);
   };
+
   return (
-    <div className="board-read">
-      <div className="container">
+    <div className="board-read body">
+      <div className="board-container">
         <div style={{ textAlign: "left", width: "100%" }}>
-          <h1 style={{ textAlign: "left", fontSize: "35px", marginLeft: "220px" }}>
+          <h1 className="board-header" style={{ fontSize: "35px", marginLeft: "220px" }}>
             고객문의 게시판
           </h1>
         </div>
 
-        <div className="border" style={{ marginTop: "20px", marginBottom: "20px" }}>
-          <div className="inputbox1">
+        <div className="board-border" style={{ marginTop: "20px", marginBottom: "20px" }}>
+          <div className="board-input-box">
             <label style={{ color: "black", fontSize: "30px" }}>Q.</label>
             <input
               type="text"
-              className="titleinput"
-              defaultValue={board.title ?? ''}
+              className="board-title-input"
+              defaultValue={board.title ?? ""}
               readOnly
               disabled
               style={{
@@ -70,13 +90,13 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <h3 style={{ color: "black", marginRight: "70px", marginBottom: "10px" }}>
-              {board.name ?? ''} 회원님
+              {board.name ?? ""} 회원님
             </h3>
           </div>
           <div style={{ textAlign: "center", marginTop: "10px" }}>
             <textarea
-              className="textareaInput"
-              defaultValue={board.content ?? ''}
+              className="board-textarea-input"
+              defaultValue={board.content ?? ""}
               readOnly
               disabled
               style={{
@@ -101,13 +121,13 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
           </div>
         </div>
 
-        <div className="btn-box" style={{ width: "880px" }}>
-          <button type="button" className="btnInput" onClick={() => navigate("/boardList")}>
+        <div className="board-btn-box" style={{ width: "880px" }}>
+          <button type="button" className="board-btn-input" onClick={() => navigate("/boardList")}>
             목록
           </button>
           <button
             type="button"
-            className="btnInput"
+            className="board-btn-input"
             style={{ backgroundColor: "rgb(172, 235, 77)" }}
             onClick={() => navigate(`/boardUpdate/${board.no}`)}
           >
@@ -123,12 +143,12 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
             <div id="answer-list">
               {answerList.map((answer) => (
                 <div key={answer.no} className="answer-box">
-                  <div className="border" style={{ marginTop: "20px", marginBottom: "20px" }}>
-                    <div className="inputbox1">
+                  <div className="board-border" style={{ marginTop: "20px", marginBottom: "20px" }}>
+                    <div className="board-input-box">
                       <label style={{ color: "black", fontSize: "30px" }}>A.</label>
                       <input
                         type="text"
-                        className="titleinput"
+                        className="board-title-input"
                         defaultValue={board.title ?? ""}
                         readOnly
                         disabled
@@ -150,7 +170,7 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
                     {editingAnswerNo === answer.no ? (
                       <div style={{ textAlign: "center", marginTop: "10px" }}>
                         <textarea
-                          className="textareaInput"
+                          className="board-textarea-input"
                           name="answercontent"
                           id="answercontent"
                           value={editedContent}
@@ -167,7 +187,7 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
                     ) : (
                       <div style={{ textAlign: "center", marginTop: "10px" }}>
                         <textarea
-                          className="textareaInput"
+                          className="board-textarea-input"
                           defaultValue={answer?.content ?? ""}
                           readOnly
                           disabled
@@ -198,39 +218,42 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
                     {(roles.isAdmin || roles.isTrainer) && (
                       <div style={{ marginTop: "10px" }}>
                         {editingAnswerNo === answer.no ? (
-                          <>
+                          
+                          <div className="answerBtn"> 
                             <button
-                              className="btnInput"
+                              className="board-btn-input"
                               style={{ marginRight: "10px", backgroundColor: "rgb(77, 235, 123)" }}
                               onClick={onSubmit}
                             >
                               저장
                             </button>
                             <button
-                              className="btnInput"
+                              className="board-btn-input"
                               style={{ backgroundColor: "rgb(235, 77, 77)" }}
-                              onClick={() => setEditingAnswerNo(null)} // 수정 취소
+                              onClick={cancle} // 수정 취소
                             >
                               취소
                             </button>
-                          </>
+                     
+                          </div>
                         ) : (
-                          <>
+                     
+                           <div className="answerBtn">
                             <button
-                              className="btnInput"
+                              className="board-btn-input"
                               style={{ marginRight: "10px", backgroundColor: "rgb(235, 173, 77)" }}
                               onClick={() => startEditing(answer)} // 수정 시작
                             >
                               수정
                             </button>
                             <button
-                              className="btnInput"
+                              className="board-btn-input"
                               style={{ backgroundColor: "rgb(235, 77, 77)" }}
                               onClick={() => onRemove(answer.no)} // 삭제
                             >
                               삭제
                             </button>
-                          </>
+                            </div>
                         )}
                       </div>
                     )}
@@ -239,14 +262,14 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
               ))}
             </div>
           ) : roles.isAdmin ? (
-            <div className="border" style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <div className="board-border" style={{ marginTop: "20px", marginBottom: "20px" }}>
               <form onSubmit={answerInsert}>
-                <div className="inputbox1">
+                <div className="board-input-box">
                   <label style={{ color: "black", fontSize: "30px" }}>A.</label>
                   <input
                     type="text"
-                    className="titleinput"
-                    defaultValue={board.title ?? ''}
+                    className="board-title-input"
+                    defaultValue={board.title ?? ""}
                     readOnly
                     disabled
                     style={{
@@ -261,7 +284,7 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
                   <textarea
                     name="content"
                     id="content"
-                    className="textareaInput"
+                    className="board-textarea-input"
                     required
                     style={{
                       fontWeight: "bold",
@@ -270,13 +293,21 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
                     }}
                     rows="5"
                     cols="40"
-                    value={content}  // 상태 값을 사용
+                    value={content} // 상태 값을 사용
                     onChange={(e) => setContent(e.target.value)} // 상태 관리
                   ></textarea>
                 </div>
-                <button className="btnInput" type="submit">
+                <div
+                    className="answerBtn"
+                    style={{
+                
+                      marginRight: "30px",
+                    }}
+                  >
+                <button className="board-btn-input" style={{      border: "1px solid #cfcbcb"}} type="submit">
                   답변 등록
                 </button>
+                </div>
               </form>
             </div>
           ) : (

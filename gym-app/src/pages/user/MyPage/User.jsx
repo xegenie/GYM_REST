@@ -86,7 +86,9 @@ const User = () => {
             <Link to={`/myPage/ptList/${userNo}`}>
             <button>PT 이용 내역</button>
             </Link>
+            <Link to={`/myPage/boardList`}>
             <button>내 문의사항</button>
+            </Link>
           </div>
         </div>
         <div className="wrapper1">

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'; // js-cookie 임포트
 import UserInfoForm from '../../../components/MyPage/UserInfoForm'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LoginContext } from '../../../contexts/LoginContextProvider'
 import * as auth from '../../../apis/auth'
 import * as Swal from '../../../apis/alert'
@@ -12,9 +12,10 @@ import Footer from '../../../components/Footer/footer';
 const UserInfo = () => {
 
   // context
-  const { isLoading, isLogin, roles, logout, userInfo, setUserInfo } = useContext(LoginContext)
+  const { isLoading, isLogin, roles, logout, userInfo, setUserInfo, logoutSetting } = useContext(LoginContext)
 
   const navigate = useNavigate()
+  const [userNo, setUserNo] = useState(null);
 
   const updateUser = async (form) => {
     console.log(form);
@@ -48,7 +49,7 @@ const UserInfo = () => {
 
     try {
       response = await auth.remove(no)
-      console.log("sdfsdfsdf" + response)
+
     } catch (error) {
       console.log(error)
       console.log('회원 탈퇴 처리 중 에러가 발생하였습니다.');
@@ -59,12 +60,11 @@ const UserInfo = () => {
       Cookies.remove('remember-id'); // 쿠키에서 아이디 삭제
       Swal.alert("회원탈퇴 성공", "그동안 감사했습니다.🎁", "success",
         // 로그아웃 처리
-        () => { logout(true) })
+        () => { logoutSetting(true) })
       navigate("/")
     }
     else
-      Swal.alert("회원탈퇴 실패", "들어올 땐 마음대로 들어왔지만 나갈 때 그럴 수 없습니다..🎁", "error",
-        () => logout(true))
+      Swal.alert("회원탈퇴 실패", "들어올 땐 마음대로 들어왔지만 나갈 때 그럴 수 없습니다..🎁", "error")
   }
  // userInfo가 변경될 때마다 userNo 상태를 업데이트
   useEffect(() => {
@@ -83,6 +83,7 @@ const UserInfo = () => {
   
     // 로그인되어 있다면 userInfo를 확인
     if (userInfo && userInfo.no) {
+      setUserNo(userInfo.no);
       console.log('userNo:', userInfo.no);
     } else {
       console.log('userInfo가 없거나 userNo가 없습니다.');
@@ -91,14 +92,39 @@ const UserInfo = () => {
   return (
     <>
       <Header />
-      <div className="oswUserInfo" >
-        <h1>UserInfo</h1>
+      <div className='oswUser'>
+      <div className="container1">
+        <h1>마이페이지</h1>
         <hr />
+        <h1>마이페이지</h1>
+        <div className="button-group">
+          <br />
+          <div className='btnAll'>
+          <Link to="/User">
+            <button className="active">내 정보</button>
+            </Link>
+            <Link to={`/buyList/users/${userNo}`}>
+              <button>이용권 내역</button>
+            </Link>
+            <Link to={`/myPage/ptList/${userNo}`}>
+            <button>PT 이용 내역</button>
+            </Link>
+            <Link to={`/myPage/boardList`}>
+            <button>내 문의사항</button>
+            </Link>
+          </div>
+        </div>
+        </div>
+        <div className="wrapper1">
+      <div className="oswUserInfo" >
         <UserInfoForm userInfo={userInfo} updateUser={updateUser} removeUser={removeUser} />
+        </div>
+      </div>
       </div>
       <Footer />
     </>
   )
+
 }
 
 export default UserInfo;
