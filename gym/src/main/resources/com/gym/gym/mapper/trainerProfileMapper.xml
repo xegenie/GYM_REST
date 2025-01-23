@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT tp.*, f.no AS fileNo
         FROM trainer_profile tp
         JOIN files f ON tp.no = f.profile_no
-        WHERE tp.no = #{trainerNo}
+        WHERE tp.trainer_no = #{trainerNo}
     </select>
 
     <!-- 등록 -->

@@ -33,6 +33,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
 
   const [selectedStart, setSelectedStart] = useState({ year: selectedStartYear || getToday().year, month: selectedStartMonth || getToday().month, day: selectedStartDay || getToday().day });
   const [selectedEnd, setSelectedEnd] = useState({ year: selectedEndYear || getToday().year, month: selectedEndMonth || getToday().month, day: selectedEndDay || getToday().day });
+  const [trainerNo, setTrainerNo] = useState({})
 
   const chartRef = useRef(null);
 
@@ -92,26 +93,34 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
   // 주소 파라미터 처리하기
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+
     setSelectedStart({
       year: urlParams.get('startYear') || selectedStart.year,
       month: urlParams.get('startMonth') || selectedStart.month,
       day: urlParams.get('startDay') || selectedStart.day,
     });
+
     setSelectedEnd({
       year: urlParams.get('endYear') || selectedEnd.year,
       month: urlParams.get('endMonth') || selectedEnd.month,
       day: urlParams.get('endDay') || selectedEnd.day,
     });
+
+    // TrainerNo 상태 업데이트
+    const trainerNoParam = urlParams.get('trainerNo');
+    if (trainerNoParam) {
+      setTrainerNo(trainerNoParam);
+    }
   }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     const { year: startYear, month: startMonth, day: startDay } = selectedStart;
     const { year: endYear, month: endMonth, day: endDay } = selectedEnd;
-  
+
     const queryParams = new URLSearchParams({
-      trainerNo: selectedTrainer,
+      trainerNo,
       startYear,
       startMonth,
       startDay,
@@ -130,7 +139,7 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
     const today = getToday();
     setSelectedStart({ year: today.year, month: today.month, day: today.day });
     setSelectedEnd({ year: today.year, month: today.month, day: today.day });
-    const searchUrl = `salelist`;
+    const searchUrl = `saleList`;
     window.location.href = searchUrl;
   }
 
@@ -144,9 +153,9 @@ const Sales = ({ trainerUsers, salesList, selectedTrainer, fetchSalesData, selec
               <h2>매출 조회</h2>
             </div>
 
-            <form onSubmit={handleSubmit} action="salesList" method="GET" id="searchForm" style={{ display: 'flex', justifyContent: 'space-between', margin: '0 50px', marginBottom: '100px' }}>
+            <form onSubmit={handleSubmit} action="salesList" method="GET" id="searchForm" style={{ display: 'flex', justifyContent: 'space-between', padding: '0 30px', marginBottom: '100px' }}>
               <div>
-                <select className='select' name="trainerNo" style={{height: 30}} value={selectedTrainer} onChange={e => setSelectedTrainer(e.target.value)}>
+                <select className='select' name="trainerNo" style={{ height: 30 }} value={trainerNo} onChange={e => setTrainerNo(e.target.value)}>
                   <option value="">트레이너 이름</option>
                   {trainerUsers.map((trainerUser) => (
                     <option value={trainerUser.no} key={trainerUser.no}>

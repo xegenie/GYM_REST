@@ -64,7 +64,7 @@ const TrainerList = ({ trainerList = [], selectTrainer, keyword, onSearch }) => 
                         <span>함께하는 회원 수: &ensp;</span>
                         <span>{trainer.userCount ?? 0}</span>
                       </div>
-                      <button className="updateBtn" onClick={() => selectTrainer(trainer.no)}>
+                      <button className="updateBtn" onClick={() => selectTrainer(trainer.trainerNo)}>
                         수정
                       </button>
                     </div>

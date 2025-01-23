@@ -44,8 +44,8 @@ const ListContainer = () => {
   };
 
   // 선택
-  const selectTrainer = async (no) => {
-    navigate(`/admin/trainer/update?no=${no}`);
+  const selectTrainer = async (trainerNo) => {
+    navigate(`/admin/trainer/update?trainerNo=${trainerNo}`);
     
   }
   
