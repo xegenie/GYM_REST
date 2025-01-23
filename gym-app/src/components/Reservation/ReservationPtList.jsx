@@ -62,7 +62,7 @@ const ReservationPtList = ({ reservations, handlePageChange, page, fetchList, pt
               <button onClick={() => navigate('/User')}>내 정보</button>
               <button onClick={() => navigate(`/buyList/users/${userNo}`)}>이용권 내역</button>
               <button className="active" onClick={() => navigate(`/myPage/ptList/${userNo}`)}>PT 이용 내역</button>
-              <button onClick={() => navigate('/user/myPage/myBoardList')}>내 문의사항</button>
+              <button onClick={() => navigate('/myPage/BoardList')}>내 문의사항</button>
             </div>
 
             <div className="pt-count">

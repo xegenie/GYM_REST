@@ -214,7 +214,7 @@ const LoginContextProvider = ({ children }) => {
 
   return (
     // 컨텍스트 값 지정 ➡ value={ ?, ? }
-    <LoginContext.Provider value={ { pwLogout, isLogin, logout, login, userInfo, roles, isLoading, setUserInfo, autoLogin } }>
+    <LoginContext.Provider value={ { pwLogout, isLogin, logout, login, userInfo, roles, isLoading, setUserInfo, autoLogin,   logoutSetting } }>
       {children}
     </LoginContext.Provider>
   )

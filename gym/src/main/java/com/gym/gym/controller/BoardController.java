@@ -55,7 +55,7 @@ public class BoardController {
     // 목록
 
       @GetMapping()
-    public ResponseEntity<?> list(Option option, Page page) throws Exception {
+    public ResponseEntity<?> list( Option option, Page page) throws Exception {
 
     
         List<Board> boardList = boardService.boardlist(option, page);

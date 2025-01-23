@@ -316,14 +316,11 @@ public class UserController {
    }
    
 
-   @GetMapping("/user/myBoardList")
+   @GetMapping("/user/myBoardList/{no}")
    public ResponseEntity<?> boardList(
-     Option option, Page page, @AuthenticationPrincipal CustomUser user) {
-
-        if (user == null) {
-           log.info("왜안나옴? 뭐함?");
-        }
-         Long no = user.getNo();
+    @PathVariable("no") Long no,
+     Option option, Page page) {
+        log.info(no + "이거 나와 안나와");
          List<Board> boardList;
         try {
             boardList = boardService.myBoardlist(option, page, no);
@@ -341,6 +338,7 @@ public class UserController {
          log.info("보드나옴??" + response);
        
          return new ResponseEntity<> (response, HttpStatus.OK);
+         
         } catch (Exception e) {
             log.error("Error while fetching board list: " + e.getMessage());
             return new ResponseEntity<>("서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);

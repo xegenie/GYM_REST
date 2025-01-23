@@ -1,0 +1,91 @@
+.body {
+    background-color: #252222;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 100px;
+    padding-top: 150px;
+}
+.board-container {
+    display: flex;
+    flex-direction: column;
+    width: 1300px;
+    align-items: center; 
+    margin-top: 50px;
+    width: 1300px;
+}
+
+.board-btn-box {
+    display: flex; 
+    justify-content: flex-end; 
+    margin-bottom: 10px; 
+    gap: 10px;
+    
+}
+
+.answerBtn{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    
+}
+
+.board-btn-input {
+    padding: 3px 35px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    
+}
+
+.board-container {
+    text-align: left;
+}
+
+.board-header {
+    text-align: left;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.board-btn-input:hover {
+    filter: brightness(90%);
+}
+
+.board-border {
+    padding-top: 10px; 
+    width: 880px;
+    height: 500px; 
+    border: 1px solid black; 
+    background-color: white; 
+    border-radius: 8px;
+}
+
+.board-input-box {
+    margin: 3px; 
+    margin-left: 62px; 
+    margin-top: 20px;
+}
+
+.board-title-input {
+    font-size: 25px; 
+    height: 40px; 
+    width: 430px; 
+    border-radius: 5px; 
+    background-color: rgb(183, 185, 187); 
+    border: none;
+}
+
+.board-textarea-input {
+    padding: 30px; 
+    font-size: 15px; 
+    width: 750px;
+    height: 330px; 
+    resize: none; 
+    border-radius: 10px;
+}

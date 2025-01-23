@@ -24,4 +24,4 @@ export const AnswerDel = (no) => api.delete(`/answer/${no}`)
 // 답변 수정
 export const AnswerUp = (form) => api.put(`/answer`, form)
 
-export const myList = (pageNumber, rows) => api.get(`/user/myBoardList?page=${pageNumber}&rows=${rows}`)
+export const myList = (no, pageNumber, rows) => api.get(`/user/myBoardList/${no}?page=${pageNumber}&rows=${rows}`)

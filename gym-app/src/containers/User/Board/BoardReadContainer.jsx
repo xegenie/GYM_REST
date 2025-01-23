@@ -38,15 +38,15 @@ const BoardReadContainer = () => {
 
 
   const answerUpdate = async(form) =>{
-    console.info(form)
+    console.info("sdfdsf" + form)
     const response = await Boards.AnswerUp(form)
 
     const status = response.status
 
     if(status == 200){
-      Swal.alert("답변 수정 성공", "답변 수정에 성공했습니다.", "success" )
-      window.location.reload();
+     Swal.alert("답변 수정 성공", "답변이 수정되었습니다.", "success", () => location.reload()  );
     }
+   
     else{
       Swal.alert("답변 수정 실패", "잠시 후 다시 시도해주세요", "error", () => navigate(`/boardRead/${no}`))
     }
@@ -76,7 +76,7 @@ const BoardReadContainer = () => {
 
 
   return (
-    <BoardReadForm board={board}  answerList={answer} insertA={insertA} AnswerDelete={AnswerDelete} answerUpdate={answerUpdate}/>
+    <BoardReadForm board={board}  answerList={answer} insertA={insertA} AnswerDelete={AnswerDelete} answerUpdate={answerUpdate} getBoard={getBoard}/>
   )
 }
 
