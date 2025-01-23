@@ -1,12 +1,11 @@
-.oswAttendanceList .container {
+.godDoUser .container {
     margin: auto;
-    width: 1440px;
     height: 935px;
     display: flex;
+    width: 100%;
 }
 
-
-.ticketList .mainTitle {
+.godDoUser .ticketList .mainTitle {
     width: 100%;
     height: 100px;
     text-align: center;
@@ -15,26 +14,15 @@
     font-size: 1.2em;
 }
 
-.oswAttendanceList .main {
-    flex-grow: 1;
-    padding: 20px;
-    /* margin-left: 270px; 사이드바와 겹치지 않도록 조정 */
-}
-
-.oswAttendanceList .oswAttendanceList {
-    width: 250px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
+.godDoUser .main {
+    display: flex;
+    width: 100%;
 }
 
 /* 버튼 스타일 */
-.oswAttendanceList .button, 
-.oswAttendanceList .search button, 
-.oswAttendanceList .search-form button {
+.godDoUser .button, 
+.godDoUser .search button, 
+.godDoUser .search-form button {
     padding: 10px 20px;
     background-color: #008CBA;
     color: white;
@@ -46,24 +34,23 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
-.oswAttendanceList .button:hover, 
-.oswAttendanceList .search button:hover, 
-.oswAttendanceList .search-form button:hover {
+.godDoUser .button:hover, 
+.godDoUser .search button:hover, 
+.godDoUser .search-form button:hover {
     background-color: #005f73;
 }
 
 /* 검색바 스타일 */
-.oswAttendanceList .search {
+.godDoUser .search {
     width: 100%;
-    max-width: 1000px;
+    /* max-width: 1000px; */
     display: flex;
     justify-content: end;
-    margin-bottom: 30px;
-    margin-left: 47px;
+    margin-left: -30px;
 }
 
-.oswAttendanceList .search input[type="text"],
-.oswAttendanceList .search-form input[type="text"] {
+.godDoUser .search input[type="text"],
+.godDoUser .search-form input[type="text"] {
     padding: 8px;
     width: 200px;
     margin-right: 10px;
@@ -73,39 +60,66 @@
 }
 
 /* 리스트 및 테이블 스타일 */
-.oswAttendanceList .list {
+ .list {
     width: 100%;
     display: flex;
     justify-content: center;
     max-height: 550px;
 }
 
-.oswAttendanceList .attendance-table {
+table {
     width: 80%;
     border-collapse: collapse;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.oswAttendanceList .attendance-table th, 
-.oswAttendanceList .attendance-table td {
+table th, 
+table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 4px; /* 기존 8px에서 4px로 줄임 */
+    text-align: center;
+    font-size: 14px; /* 폰트 크기도 조정하여 가독성을 유지 */
+}
+
+table th {
+    background-color: #f4f4f4;
+    width: 30px;
+}
+
+ .list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-height: 550px;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table th, 
+table td {
+    border: 1px solid #ddd;
+    padding: 1px;
     text-align: center;
 }
 
-.oswAttendanceList .attendance-table th {
+table th {
     background-color: #f4f4f4;
 }
 
 /* 페이징 스타일 */
-.oswAttendanceList .pagination {
+.godDoUser .pagination {
     display: flex;
     justify-content: center;
     margin-top: 100px;
 }
 
-.oswAttendanceList .pagination a {
+.godDoUser .pagination a {
     margin: 0 5px;
     padding: 8px 16px;
     text-decoration: none;
@@ -116,33 +130,29 @@
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
-.oswAttendanceList .pagination a:hover {
+.godDoUser .pagination a:hover {
     background-color: #005f73;
     color: white;
 }
 
-.oswAttendanceList .pagination a.active {
+.godDoUser .pagination a.active {
     background-color: #008CBA;
     color: white;
     border: 1px solid #008CBA;
     pointer-events: none;
 }
 
-.oswAttendanceList .container {
-    margin: auto;
-    width: 1440px;
-    height: 935px;
-    display: flex;
-}
-
-.oswAttendanceList .inner {
-    width: 1100px;
+.godDoUser .inner {
     height: 900px;
+    width : 1100px;
     background-color: #E7ECEF;
     border-radius: 5%;
+    margin-top: 20px;
+    margin-left: 20px;
+    box-sizing: border-box;  /* padding과 border가 너비 계산에 포함되도록 설정 */
 }
 
-.oswAttendanceList .inner .title {
+.godDoUser .inner .title {
     width: 100%;
     height: 150px;
     display: flex;
@@ -150,8 +160,7 @@
     align-items: center;
 }
 
-
-.oswAttendanceList .mainTitle {
+.godDoUser .mainTitle {
     width: 100%;
     height: 100px;
     text-align: center;
@@ -159,6 +168,8 @@
     font-weight: bold;
     font-size: 1.2em;
 }
-.oswAttendanceList .attendance-table th:nth-child(3), 
-.oswAttendanceList .attendance-table td:nth-child(3) {
-    width: 100px; }
+
+.godDoUser .attendance-table th:nth-child(3), 
+.godDoUser .attendance-table td:nth-child(3) {
+    width: 80px; 
+}

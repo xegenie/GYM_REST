@@ -42,8 +42,9 @@ public class AttendanceController {
      * @param page
      * @return
      */
-    @GetMapping("/admin/attendance/list")
+    @GetMapping("admin/attendance/list")
     public ResponseEntity<?> list(Option option, Page page) throws Exception {
+        log.info("아무거나 ");
         List<Attendance> attendanceList = attendanceService.list(option, page);
         int result = attendanceService.listCount();
 
