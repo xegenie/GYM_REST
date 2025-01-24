@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import * as plan from '../apis/plan'
 import { LoginContext } from './LoginContextProvider';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import * as Swal from '../apis/alert'
 
 const DateContext = createContext();
 
@@ -23,6 +24,8 @@ const DateContextProvider = ({children}) => {
   const [isPlanInsertVisible, setIsPlanInsertVisible] = useState(false);
   const [isPlanInfoVisible, setIsPlanInfoVisible] = useState(false);
   const [isRsvInfoVisible, setIsRsvInfoVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const getDataListByDate = async (date) => {
     // console.log("getDataListByDate")
@@ -110,11 +113,37 @@ const DateContextProvider = ({children}) => {
   useEffect(() => {
     const fetchData = async () => {
       await autoLogin();
-      if (roles.isUser) {
-        await getDataListByDate(currentDate);
-      } else {
-        await getPlansbyDateUserNo(currentDate);
+
+      const params = new URLSearchParams(location.search);
+      const userNo = params.get('userNo');
+      try {
+        if (roles.isUser) {
+          if(userNo===null){
+            await getDataListByDate(currentDate);
+          } else {
+            Swal.alert('접근할 수 없습니다.', '접근할 권한이 없습니다.', 'warning', () => {
+                      navigate('/');
+                    });
+          }
+        } else if(roles.isTrainer) {
+          if(userNo != null) {
+            await getPlansbyDateUserNo(currentDate);
+          } else {
+            Swal.alert('접근할 수 없습니다.', '회원번호가 필요합니다.', 'warning', () => {
+                          navigate('/');
+            });
+          }
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          Swal.alert('접근 불가', '접근 가능 권한이 아닙니다.', 'warning', () => {
+            navigate('/');
+          });
+        } else {
+          console.error(error);
+        }
       }
+      
       setIsPlanInfoVisible(false);
       setIsRsvInfoVisible(false);
     };
