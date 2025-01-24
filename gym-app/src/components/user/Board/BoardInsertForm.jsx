@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from '../Board/css/BoardInsert.module.css'
+import { LoginContext } from '../../../contexts/LoginContextProvider'
+import * as Swal from '../../../apis/alert'
 
 const BoardInsertForm = ({insertBoard}) => {
 
  const navigate = useNavigate()
+   const { roles, isLogin, userInfo,isLoading } = useContext(LoginContext);
 
  const onInsert = (e) => {
   e.preventDefault()
@@ -16,6 +19,22 @@ const BoardInsertForm = ({insertBoard}) => {
 
   insertBoard({title, content})
 }
+useEffect(() => {
+    if (isLoading) {
+      // 로딩 중일 때는 아무 동작도 하지 않음
+      return;
+    }
+  
+    // 로딩 완료 후 로그인 여부 확인
+    if (!isLogin) {
+      Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => {
+        navigate('/login');
+      });
+      return;
+    }
+  
+  }, [isLoading,  navigate,isLogin]);
+
 
   return (
 

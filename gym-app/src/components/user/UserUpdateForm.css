@@ -1,11 +1,56 @@
-.godDo body {
+.user-update {
     background-color: #e9ecef;
     font-family: 'Arial', sans-serif;
     color: #333;
     margin: 0;
     padding: 0;
 }
-.godDo .wrapper {
+
+.user-update h2{
+    font-weight: bold;
+    font-size: 30px;
+}
+.user-update * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+.user-update .container {
+    margin: auto;
+    width: 1440px;
+    height: 935px;
+    display: flex;
+}
+
+.user-update .inner {
+    width: 1100px;
+    height: 900px;
+    background-color: #E7ECEF;
+    border-radius: 5%;
+}
+
+.user-update .main {
+    width: 1160px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F7F8F9;
+    flex-shrink: 0;
+}
+
+.user-update .inner .title {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-update .form-wrapper {
     max-width: 900px;
     margin: 50px auto;
     background-color: #302c2c;
@@ -13,13 +58,22 @@
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
-.godDo .button-group {
+
+.user-update .button-group {
     display: flex;
+    justify-content: center;
     background-color: #333;
     overflow: hidden;
     margin-bottom: 30px;
 }
-.godDo .button-group button {
+
+.user-update .form-container {
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+}
+
+.user-update .button-group button {
     flex: 1;
     padding: 15px 0;
     border: none;
@@ -29,14 +83,17 @@
     transition: background-color 0.3s, color 0.3s;
     font-size: 16px;
 }
-.godDo .button-group button:hover {
+
+.user-update .button-group button:hover {
     background-color: #81d4fa;
 }
-.godDo .button-group .active {
+
+.user-update .button-group .active {
     background-color: #7e57c2;
     color: rgb(0, 0, 0);
 }
-.godDo .info-table {
+
+.user-update .info-table {
     border-radius: 3px;
     overflow: hidden;
     width: 100%;
@@ -45,24 +102,30 @@
     text-align: center;
     color: #0a0a0a;
 }
-.godDo .info-table th, .godDo .info-table td {
+
+.user-update .info-table th, .user-update .info-table td {
     padding: 20px;
     text-align: center;
     border: 1px solid #dee2e6;
 }
-.godDo .info-table th {
+
+.user-update .info-table th {
     background-color: #9FD0D5;
-    color: #fff;
+    color: #000000;
+    font-weight: bold;
     width: 30%;
 }
-.godDo .info-table td {
+
+.user-update .info-table td {
     background-color: #f8f9fa;
     width: 70%;
 }
-.godDo .info-table tr:nth-child(even) td {
+
+.user-update .info-table tr:nth-child(even) td {
     background-color: #e9ecef;
 }
-.godDo .edit-button, .godDo .action-button {
+
+.user-update .edit-button, .user-update .action-button {
     display: inline-block;
     padding: 10px 20px;
     margin-top: 10px;
@@ -74,17 +137,20 @@
     font-size: 16px;
     cursor: pointer;
 }
-.godDo .edit-button:hover, .godDo .action-button:hover {
+
+.user-update .edit-button:hover, .user-update .action-button:hover {
     background-color: #81d4fa;
     color: #0a0a0a;
 }
-.godDo .main-text {
+
+.user-update .main-text {
     text-align: center;
     font-weight: 900;
     font-size: xx-large;
     padding-bottom: 10px;
 }
-.godDo input[type="text"] {
+
+.user-update input[type="text"] {
     width: 100%;
     padding: 10px;
     margin: 5px 0;

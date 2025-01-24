@@ -25,7 +25,7 @@ const ReservationInsertPage = () => {
     }
 
     if (!userInfo || userInfo.trainerNo != no || userInfo.trainerNo == 0) {
-      Swal.alert('잘못된 접근입니다.', '메인 화면으로 이동합니다.', 'warning', () => {
+      Swal.alert('PT이용권이 없습니다.', '이용권을 구매해 주세요.', 'warning', () => {
         navigate('/');
       });
       return;

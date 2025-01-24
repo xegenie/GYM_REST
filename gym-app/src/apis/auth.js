@@ -1,7 +1,7 @@
 import api from './api'
 
 // 회원 목록
-export const list = () => api.get('/user/list')
+export const list = (keyword, page) => api.get(`/user/list?keyword=${keyword}&pageNumber=${page}`)
 
 // 회원가입
 export const join = (data) => api.post(`/user`, data)

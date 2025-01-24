@@ -6,7 +6,6 @@
 }
 
 .godDoUser .ticketList .mainTitle {
-    width: 100%;
     height: 100px;
     text-align: center;
     line-height: 100px;
@@ -60,55 +59,55 @@
 }
 
 /* 리스트 및 테이블 스타일 */
- .list {
-    width: 100%;
+.godDoUser .list {
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     max-height: 550px;
 }
 
-table {
+.godDoUser table {
     width: 80%;
     border-collapse: collapse;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-table th, 
-table td {
+.godDoUser table th, 
+.godDoUser table td {
     border: 1px solid #ddd;
     padding: 4px; /* 기존 8px에서 4px로 줄임 */
     text-align: center;
     font-size: 14px; /* 폰트 크기도 조정하여 가독성을 유지 */
 }
 
-table th {
+.godDoUser table th {
     background-color: #f4f4f4;
     width: 30px;
 }
 
- .list {
-    width: 100%;
+.godDoUser .list {
+    width: 1200px;
     display: flex;
     justify-content: center;
     max-height: 550px;
 }
 
-table {
+.godDoUser table {
     width: 80%;
     border-collapse: collapse;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-table th, 
-table td {
+.godDoUser table th, 
+.godDoUser table td {
     border: 1px solid #ddd;
     padding: 1px;
     text-align: center;
 }
 
-table th {
+.godDoUser table th {
     background-color: #f4f4f4;
 }
 

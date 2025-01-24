@@ -138,6 +138,7 @@ public class JwtProvider {
                         user.setBirth(userInfo.getBirth());
                         user.setGender(userInfo.getGender());
                         user.setTrainerNo(userInfo.getTrainerNo());
+                        user.setUserAuth(userInfo.getUserAuth());
                     }
                 }catch(Exception e){
                     log.error(e.getMessage());

@@ -107,9 +107,11 @@ const BoardListForm = ({ option, boards, page, handlePageChange, setOption, onSe
                   </tr>
                 ))
               ) : (
-                <tr className="tabletr">
+               
+                <tr colSpan="4" className="tabletr">
                   <td colSpan="4">조회된 데이터가 없습니다.</td>
                 </tr>
+
               )}
             </tbody>
           </table>
@@ -159,6 +161,8 @@ const BoardListForm = ({ option, boards, page, handlePageChange, setOption, onSe
   >
     [마지막]
   </a>
+</div>
+<div style={{marginBottom: "220px"}}>
 </div>
 
         </div>

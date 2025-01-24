@@ -3,6 +3,8 @@ import UserUpdateForm from '../../components/user/UserUpdateForm'
 import { useNavigate, useParams } from 'react-router-dom'
 import * as auth from '../../apis/auth'
 import * as Swal from '../../apis/alert'
+import Header from '../../components/admin/Header/adminHeader'
+import AdminFooter from '../../components/admin/Header/adminFooter'
 
 const UserUpdateContainer = () => {
 
@@ -40,7 +42,13 @@ const UserUpdateContainer = () => {
     }, [])
 
   return (
+    <>
+      <Header />
    <UserUpdateForm user={user} getUpdate={getUpdate}/>
+   <AdminFooter />
+
+   </>
+   
   )
 }
 

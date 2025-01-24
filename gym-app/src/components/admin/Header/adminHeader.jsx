@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import './adminHeader.css';
+import { LoginContext } from '../../../contexts/LoginContextProvider';
+import * as Swal from '../../../apis/alert'
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
+
+  const { isLogin, userInfo, roles, isLoading } = useContext(LoginContext)
+  const navigate = useNavigate();
   const handleLogout = async () => {
     // 로그아웃 요청을 보낼 때 CSRF 토큰을 헤더에 포함시켜 보냅니다.
     try {
@@ -19,6 +25,41 @@ const Header = () => {
       console.error('로그아웃 실패:', error);
     }
   };
+
+    useEffect(() => {
+      if (isLoading) {
+        return;
+      }
+  
+      if (!isLogin) {
+        Swal.alert('로그인을 시도해주세요', '로그인 화면으로 이동합니다', 'warning', () => {
+          navigate('/login');
+        });
+        return;
+      }
+  
+      if (!userInfo) {
+        Swal.alert('잘못된 접근입니다.', '메인 화면으로 이동합니다.', 'warning', () => {
+          navigate('/');
+        });
+        return;
+      }
+  
+      console.log("권한 : " + roles.isUser);
+  
+      if (roles.isUser) {
+        Swal.alert('권한이 없습니다.', '메인 화면으로 이동합니다.', 'warning', () => {
+          navigate('/');
+        });
+        return;
+      }
+  
+    }, [isLoading, isLogin, userInfo, roles, navigate]);
+  
+    if (isLoading || !isLogin || !userInfo || roles.isUser) {
+      return null;
+    }
+  
 
   return (
     <div className='header'>

@@ -15,6 +15,8 @@ const LoginForm = () => {
     const storedId = Cookies.get('remember-id'); // 쿠키에서 저장된 아이디 가져오기
     const storedToken = localStorage.getItem('jwtToken'); // 로컬 스토리지에서 토큰 가져오기
 
+    console.log(rememberId)
+
     if (storedId) {
       setSavedId(storedId);
       setRememberId(true); // 아이디 저장 체크 활성화
@@ -47,8 +49,10 @@ const LoginForm = () => {
     // 로그인 처리
     login(id, password).then((token) => {
       if (autoLogin) {
+        console.log("이거나옴1")
         localStorage.setItem('jwtToken', token); // 자동 로그인: 로컬 스토리지에 토큰 저장
       } else {
+        console.log("이거나옴23")
         sessionStorage.setItem('jwtToken', token); // 세션 로그인: 세션 스토리지에 토큰 저장
       }
     });
