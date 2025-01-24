@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../contexts/LoginContextProvider";
 import '../Board/css/BoardRead.css';
@@ -6,7 +6,7 @@ import * as Swal from '../../../apis/alert'
 
 const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate }) => {
   const navigate = useNavigate();
-  const { roles } = useContext(LoginContext);
+  const { roles, userInfo,isLoading } = useContext(LoginContext);
 
   const [editingAnswerNo, setEditingAnswerNo] = useState(null); // 수정할 답변의 ID
   const [editedContent, setEditedContent] = useState(""); // 수정된 내용
@@ -20,6 +20,17 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
 
     insertA({ boardNo, content });
   };
+
+useEffect(() => {
+      if (isLoading) {
+        return;
+      }
+  
+
+
+     }, [isLoading]);
+  
+
 
   const onRemove = (force = false) => {
         Swal.confirm("답변 삭제", "정말로 삭제하시겠습니까?", "warning", (result) => {
@@ -125,15 +136,17 @@ const BoardReadForm = ({ board, answerList, insertA, AnswerDelete, answerUpdate 
           <button type="button" className="board-btn-input" onClick={() => navigate("/boardList")}>
             목록
           </button>
-          <button
-            type="button"
-            className="board-btn-input"
-            style={{ backgroundColor: "rgb(172, 235, 77)" }}
-            onClick={() => navigate(`/boardUpdate/${board.no}`)}
-          >
-            수정
-          </button>
-        </div>
+          {(roles.isAdmin || roles.isTrainer || board.userNo === userInfo?.no) && (
+    <button
+      type="button"
+      className="board-btn-input"
+      style={{ backgroundColor: "rgb(172, 235, 77)" }}
+      onClick={() => navigate(`/boardUpdate/${board.no}`)}
+    >
+      수정
+    </button>
+  )}
+</div>
 
         {/* 답변 섹션 */}
         <div className="answer-section">

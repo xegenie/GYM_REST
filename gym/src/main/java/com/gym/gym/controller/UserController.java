@@ -142,7 +142,9 @@ public class UserController {
     // 유저리스트
     // @PreAuthorize(" hasRole('ADMIN') or hasRole('USER') or hasRole('TRAINER')")
     @GetMapping("/user/list")
-    public ResponseEntity<?> userlist( @ModelAttribute Option option, @ModelAttribute Page page) throws Exception {
+    public ResponseEntity<?> userlist( @ModelAttribute Option option,  @RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber, @ModelAttribute Page page) throws Exception {
+        page.setPage(pageNumber);
+        
         List<Users> userList = userService.list(option,page);
 
             String pageUrl = UriComponentsBuilder.fromPath("user/board/boardList")
@@ -150,10 +152,12 @@ public class UserController {
                 .queryParam("code", option.getCode())
                 .queryParam("rows", page.getRows())
                 .queryParam("orderCode", option.getOrderCode())
+                .queryParam("page", page)
                 .build()
                 .toUriString();
         Map<String, Object> response = new HashMap<String, Object>();
-        response.put("pageUrl", pageUrl);
+        response.put("pagination", pageUrl);
+        response.put("page", page);
         response.put("list",userList);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

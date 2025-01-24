@@ -21,7 +21,7 @@ const LoginContextProvider = ({ children }) => {
 
   // 페이지 이동
   const navigate = useNavigate()
-
+  const storedToken = localStorage.getItem('jwtToken');
 
   // 🔐 로그인 함수
   const login = async (id, password) => {
@@ -47,7 +47,12 @@ const LoginContextProvider = ({ children }) => {
       if( status == 200 ) {
 
         // 💍 JWT 를 쿠키에 등록
+        if(storedToken){
         Cookies.set("jwt", jwt, { expires: 5 })  // 5일후 만료
+      }
+      else{
+        sessionStorage.setItem('jwt', jwt, { expires: 5 }); 
+      }
 
         // 로그인 세팅 -  loginSetting(🎫💍, 👩‍💼)
         loginSetting(authorization, data)
@@ -73,10 +78,13 @@ const LoginContextProvider = ({ children }) => {
 
     // JWT 쿠키 삭제
     Cookies.remove("jwt")
-
+    sessionStorage.removeItem("jwt")
     //  로그인 여부 : false
     setIsLogin(false)
     localStorage.removeItem("isLogin")
+
+
+    localStorage.removeItem('jwtToken');
 
     //  유저 정보 초기화
     setUserInfo(null)
@@ -99,7 +107,7 @@ const LoginContextProvider = ({ children }) => {
           
               setIsLoading(false)
               // 로그아웃 세팅
-              Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success",  () => navigate("/login"))
+              Swal.alert("로그아웃 성공", "로그아웃 되었습니다.", "success",  () => navigate("/"))
               logoutSetting()
               
               setIsLoading(true)
@@ -146,7 +154,7 @@ const LoginContextProvider = ({ children }) => {
     setIsLoading(true);
   
     // 쿠키에서 jwt 가져오기
-    const jwt = Cookies.get("jwt");
+    const jwt = Cookies.get("jwt") || sessionStorage.getItem("jwt");
   
     if (!jwt) {
       // JWT가 없는 경우 바로 로딩 종료

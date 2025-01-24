@@ -100,7 +100,7 @@ function Header() {
                          <p style={{ textAlign: 'center' }}>{userInfo?.name} 로그인이 필요합니다.</p>
                         <ul>
                             <li><Link to="/ranking">출석 랭킹</Link></li>
-                            <li><Link to="/user/ticket/choice">이용권 구매</Link></li>
+                            <li><Link to="/ticket/ChoiceTicket">이용권 구매</Link></li>
                             <li><Link to="/boardList">문의게시판</Link></li>
                         </ul>
                         

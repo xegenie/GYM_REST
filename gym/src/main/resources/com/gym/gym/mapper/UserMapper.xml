@@ -154,10 +154,18 @@
         WHERE code = #{code}
     </update>
 
-    <select id="count" resultType="int">
-        SELECT COUNT(*)
-        FROM users
-    </select>
+ <select id="count" resultType="int">
+    SELECT COUNT(*)
+    FROM users u
+    <where>
+        <if test="option.keyword != null and option.keyword != ''">
+            AND (
+                u.id LIKE CONCAT('%', #{option.keyword}, '%')
+                OR u.name LIKE CONCAT('%', #{option.keyword}, '%')
+            )
+        </if>
+    </where>
+</select>
 
     <update id="updateTrainerNo">
         UPDATE users

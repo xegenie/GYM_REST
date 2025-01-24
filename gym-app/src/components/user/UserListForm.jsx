@@ -2,20 +2,17 @@ import React, { useState, useEffect } from "react";
 import Sidebar from '../admin/Header/adminSidebar';
 import './userListForm.css';
 
-const UserListForm = ({ userList }) => {
-  const [keyword, setKeyword] = useState("");
-  const [page, setPage] = useState({ first: 1, last: 1, page: 1, start: 1, end: 1 });
-  const [message, setMessage] = useState("");
+const UserListForm = ({ userList,page, keyword, currentPage, handleSearch, handlePageChange, setKeyword }) => {
 
-  const handleSearch = (e) => {
+
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setPage({ ...page, page: 1 }); // 검색 시 첫 페이지로 초기화
+    handleSearch(keyword);
   };
 
-  const handlePageChange = (newPage) => {
-    setPage({ ...page, page: newPage });
+  const handlePageLinkClick = (pageNumber) => {
+    handlePageChange(pageNumber);
   };
-
   return (
     <div className="godDoUser">
       <div className="container">
@@ -29,7 +26,7 @@ const UserListForm = ({ userList }) => {
 
             {/* 검색창 */}
             <div className="search-container">
-              <form className="search" onSubmit={handleSearch}>
+              <form className="search" onSubmit={handleSearchSubmit}>
                 <input
                   type="text"
                   name="keyword"
@@ -46,14 +43,14 @@ const UserListForm = ({ userList }) => {
               <table>
                 <thead>
                   <tr >
-                    <th>ID</th>
-                    <th>이름</th>
-                    <th >이메일</th>
-                    <th >연락처</th>
-                    <th >권한</th>
-                    <th >담당 트레이너</th>
-                    <th >가입일자</th>
-                    <th>회원수정</th>
+                    <th style={{ width: "10%" }}>ID</th>
+                    <th style={{ width: "10%" }}>이름</th>
+                    <th style={{ width: "20%" }}>이메일</th>
+                    <th style={{ width: "15%" }}>연락처</th>
+                    <th style={{ width: "10%" }}>권한</th>
+                    <th style={{ width: "12%" }}>담당 트레이너</th>
+                    <th style={{ width: "13%" }}>가입일자</th>
+                    <th style={{ width: "10%" }}>회원수정</th>
                   </tr>
                 </thead>
                 <tbody >
@@ -65,7 +62,7 @@ const UserListForm = ({ userList }) => {
                     userList.map((user) => (
                       <tr key={user.no} >
                         <td >
-                          <a href={`read?no=${user.no}`}>{user.id}</a>
+                          {user.id}
                         </td>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
@@ -96,49 +93,38 @@ const UserListForm = ({ userList }) => {
             </div>
 
             {/* 페이지네이션 */}
+           
             <div className="pagination">
-              <a
-                href="#"
-                className="first"
-                onClick={() => handlePageChange(page.first)}
-              >
-                ≪
-              </a>
-              {page.page !== page.first && (
-                <a
-                  href="#"
-                  className="prev"
-                  onClick={() => handlePageChange(page.prev)}
-                >
-                  ＜
-                </a>
+              {page && (
+                <>
+                  <a href="#" onClick={() => handlePageLinkClick(page.first)}>
+                    ≪
+                  </a>
+                  {page.page !== page.first && (
+                    <a href="#" onClick={() => handlePageLinkClick(page.prev)}>
+                      ＜
+                    </a>
+                  )}
+                  {Array.from({ length: page.end - page.start + 1 }, (_, i) => page.start + i).map((no) => (
+                    <a
+                      href="#"
+                      key={no}
+                      className={currentPage === no ? "active" : ""}
+                      onClick={() => handlePageLinkClick(no)}
+                    >
+                      {no}
+                    </a>
+                  ))}
+                  {page.page !== page.last && (
+                    <a href="#" onClick={() => handlePageLinkClick(page.next)}>
+                      ＞
+                    </a>
+                  )}
+                  <a href="#" onClick={() => handlePageLinkClick(page.last)}>
+                    ≫
+                  </a>
+                </>
               )}
-              {[...Array(page.end - page.start + 1).keys()].map((no) => (
-                <a
-                  key={no + page.start}
-                  className={page.page === no + page.start ? "active" : ""}
-                  href="#"
-                  onClick={() => handlePageChange(no + page.start)}
-                >
-                  {no + page.start}
-                </a>
-              ))}
-              {page.page !== page.last && (
-                <a
-                  href="#"
-                  className="next"
-                  onClick={() => handlePageChange(page.next)}
-                >
-                  ＞
-                </a>
-              )}
-              <a
-                href="#"
-                className="first"
-                onClick={() => handlePageChange(page.last)}
-              >
-                ≫
-              </a>
             </div>
           </div>
         </div>
