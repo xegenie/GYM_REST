@@ -12,14 +12,13 @@ const NormalTicket = () => {
 
   const handleTicketChange = (selectedTicketNo) => {
     setTicketList(prevTicketList =>
-      prevTicketList.map(ticket =>
-        ticket.no === selectedTicketNo
-          ? { ...ticket, checked: !ticket.checked }
-          : ticket
-      )
+      prevTicketList.map(ticket => ({
+        ...ticket,
+        checked: ticket.no === selectedTicketNo ? !ticket.checked : false
+      }))
     );
   };
-  
+
 
   const requestPay = async () => {
     if (!isLogin) {
@@ -87,7 +86,7 @@ const NormalTicket = () => {
       alert('IAMPORT 라이브러리 로드 후 결제를 시도해주세요.');
     }
   };
-  
+
   return (
     <div className="ticketDetail">
       <div className="ticket-container" style={{ marginTop: '150px', marginBottom: '100px' }}>
