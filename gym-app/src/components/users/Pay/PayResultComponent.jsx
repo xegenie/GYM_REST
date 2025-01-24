@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { LoginContext } from '../../../contexts/LoginContextProvider';
 import { TicketContext } from '../../../contexts/TicketContextProvider';
-import './css/PayResultComponent.css'
+import '../Ticket/css/ChoiceTicket.css'
 
 const PayResultComponent = () => {
 
@@ -13,7 +13,7 @@ const PayResultComponent = () => {
 
 
   return (
-    <body className="payResult-fullBody">
+    <body className="ChoiceTicket">
       <div className="container">
         <div className="title d-flex flex-column justify-content-end align-items-center gap-5"
           style={{
