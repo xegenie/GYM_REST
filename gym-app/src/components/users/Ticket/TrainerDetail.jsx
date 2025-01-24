@@ -33,21 +33,20 @@ const TrainerDetail = () => {
     }
   };
 
-    // 컴포넌트 로드 시 데이터 가져오기
-    useEffect(() => {
-      if (trainerNo) {
-        fetchTrainerData(trainerNo);
-      }
-    }, [trainerNo]);
-  
+  // 컴포넌트 로드 시 데이터 가져오기
+  useEffect(() => {
+    if (trainerNo) {
+      fetchTrainerData(trainerNo);
+    }
+  }, [trainerNo]);
+
 
   const handleTicketChange = (selectedTicketNo) => {
     setTicketList(prevTicketList =>
-      prevTicketList.map(ticket =>
-        ticket.no === selectedTicketNo
-          ? { ...ticket, checked: !ticket.checked }
-          : ticket
-      )
+      prevTicketList.map(ticket => ({
+        ...ticket,
+        checked: ticket.no === selectedTicketNo ? !ticket.checked : false
+      }))
     );
   };
 
