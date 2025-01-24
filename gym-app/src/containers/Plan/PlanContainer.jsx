@@ -6,6 +6,8 @@ import RsvInfoModal from '../../components/users/Plan/RsvInfoModal'
 import * as plan from '../../apis/plan'
 import { useDate } from "../../contexts/DateContextProvider";
 import { LoginContext } from '../../contexts/LoginContextProvider'
+import * as Swal from '../../apis/alert'
+import { useNavigate } from 'react-router-dom'
 
 const PlanContainer = () => {
 
@@ -15,6 +17,8 @@ const PlanContainer = () => {
     isPlanInsertVisible, setIsPlanInsertVisible,
     isPlanInfoVisible, setIsPlanInfoVisible, 
     isRsvInfoVisible, setIsRsvInfoVisible } = useDate();
+
+  const navigate = useNavigate();
 
   // const [comment, setComment] = useState();
   // const [planList, setPlanList] = useState([]);
@@ -28,20 +32,45 @@ const PlanContainer = () => {
   useEffect(() => {
     const fetchData = async () => {
       await autoLogin();
-      if (roles.isUser) {
-        // console.log("PlanContainer roles isUser: " + roles.isUser);
-        await getDataList();
-      } else {
-        // console.log("PlanContainer roles isUser: " + roles.isUser);
-        await getPlansbyUserNo();
+      
+      const params = new URLSearchParams(location.search);
+      const userNo = params.get('userNo');
+      try {
+        if (roles.isUser) {
+          // console.log("PlanContainer roles isUser: " + roles.isUser);
+          if(userNo === null) {
+            await getDataList();
+          } else {
+            Swal.alert('접근할 수 없습니다.', '접근할 권한이 없습니다.', 'warning', () => {
+                      navigate('/');
+                    });
+          }
+        } else if(roles.isTrainer) {
+          if(userNo != null) {
+            await getPlansbyUserNo();
+          } else {
+            Swal.alert('접근할 수 없습니다.', '회원번호가 필요합니다.', 'warning', () => {
+              navigate('/');
+            });
+          }
+        }
+        const { times24Hour, times12Hour } = generateTimeLists();
+        setTimes24Hour(times24Hour);
+        setTimes12Hour(times12Hour);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          Swal.alert('접근 불가', '접근 가능 권한이 아닙니다.', 'warning', () => {
+            navigate('/');
+          });
+        } else {
+          console.error(error);
+        }
       }
-      const { times24Hour, times12Hour } = generateTimeLists();
-      setTimes24Hour(times24Hour);
-      setTimes12Hour(times12Hour);
+      
     };
 
     fetchData();
-  }, [])
+  }, [roles.isUser, roles.isTrainer])
   
   const generateTimeLists = () => {
     const times24Hour = [];
