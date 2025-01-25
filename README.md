@@ -7,7 +7,7 @@
 
 --- 
 
-<p>기존 MVC 패턴의 스프링부트 프로젝트를 REACT + REST API 로 전환 작업한 프로젝트입니다.</p>
+<p>기존 MVC 패턴의 스프링부트 프로젝트에 REACT + REST API 설계 전환 작업한 프로젝트입니다.</p>
 
 ![image](https://github.com/user-attachments/assets/96702d24-8757-4c48-81d3-583a5e83b7cc)
 
@@ -16,15 +16,16 @@
 
 # 📚 **프로젝트 목차**
 
-### 1. 프로젝트 요약 및 변경사항
-### 2. 학습포인트와 보완점
+### 1. 프로젝트 개요
+### 2. API 문서
+### 3. 학습포인트와 보완점
 
 
 
 ---
 
 
-# :gear: 1. **프로젝트 요약 및 변경사항**
+# :gear: 1. **프로젝트 개요**
 
 ### :bulb: 프로젝트 인원                 
 - 5명                             
@@ -43,15 +44,14 @@
   <img src="https://img.shields.io/badge/REST%20API-0052CC?style=flat-square&logo=apachesolr&logoColor=white">  
   <img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=black">  
   <img src="https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white">  
-</p> 
+</p>
 
 
-### :bulb: API 명세서
+# :gear: 2. **API 문서**
 
-# API 문서
 
 <details>
-<summary>## 사용자 컨트롤러</summary>
+<summary>User 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/user`
@@ -108,7 +108,7 @@
 </details>
 
 <details>
-<summary>## 계획 컨트롤러</summary>
+<summary>Plan 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/user/schedule`
@@ -141,7 +141,7 @@
 </details>
 
 <details>
-<summary>## 예약 컨트롤러</summary>
+<summary>Reservation 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/user/myPage/ptList/{no}`
@@ -174,7 +174,7 @@
 </details>
 
 <details>
-<summary>## 구매 목록 컨트롤러</summary>
+<summary>BuyList 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/buyList/admin/{no}/cancel`
@@ -232,7 +232,7 @@
 </details>
 
 <details>
-<summary>## 답변 컨트롤러</summary>
+<summary>Answer 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/answer`
@@ -257,7 +257,7 @@
 </details>
 
 <details>
-<summary>## 트레이너 프로필 컨트롤러</summary>
+<summary>TrainerProfile 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/admin/trainer/update`
@@ -290,7 +290,7 @@
 </details>
 
 <details>
-<summary>## 티켓 컨트롤러</summary>
+  <summary>Ticket 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/admin/ticket/update`
@@ -315,14 +315,7 @@
 </details>
 
 <details>
-<summary>## 결제 컨트롤러</summary>
-
-(엔드포인트 정의 필요.)
-
-</details>
-
-<details>
-<summary>## 홈 컨트롤러</summary>
+<summary>Home 컨트롤러</summary>
 
 ### POST
 - **엔드포인트:** `/login`
@@ -347,7 +340,7 @@
 </details>
 
 <details>
-<summary>## QR 코드 컨트롤러</summary>
+<summary>QR 컨트롤러</summary>
 
 ### POST
 - **엔드포인트:** `/generate-qr-code`
@@ -360,7 +353,7 @@
 </details>
 
 <details>
-<summary>## 출석 컨트롤러</summary>
+<summary>Attendance 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/user/attendance/check/{uuid}`
@@ -377,7 +370,7 @@
 </details>
 
 <details>
-<summary>## 랭킹 컨트롤러</summary>
+<summary>Ranking 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/ranking`
@@ -386,7 +379,7 @@
 </details>
 
 <details>
-<summary>## 파일 컨트롤러</summary>
+<summary>File 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/files/{profileNo}`
@@ -407,4 +400,14 @@
 </details>
 
 
+# :gear: 3. **학습포인트와 보완점**
+
+
+![image](https://github.com/user-attachments/assets/17a3cd02-571f-4991-9b17-d261b44f3eac)
+
+![image](https://github.com/user-attachments/assets/07c08431-5e3c-4c70-9808-5c33f86c6bb9)
+
+![image](https://github.com/user-attachments/assets/8106c7b5-7473-4382-94c7-55cdc7cddc87)
+
+![image](https://github.com/user-attachments/assets/257b7f0c-b76a-4aa1-8c87-3c93937c10bd)
 
