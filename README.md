@@ -50,7 +50,8 @@
 
 # API 문서
 
-## 사용자 컨트롤러
+<details>
+<summary>## 사용자 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/user`
@@ -104,9 +105,10 @@
 - **엔드포인트:** `/user/{no}`
 - **설명:** 특정 ID의 사용자를 삭제합니다.
 
----
+</details>
 
-## 계획 컨트롤러
+<details>
+<summary>## 계획 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/user/schedule`
@@ -136,9 +138,10 @@
 - **엔드포인트:** `/user/schedule/{year}/{month}/{day}`
 - **설명:** 특정 날짜의 사용자의 일정을 조회합니다.
 
----
+</details>
 
-## 예약 컨트롤러
+<details>
+<summary>## 예약 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/user/myPage/ptList/{no}`
@@ -168,9 +171,10 @@
 - **엔드포인트:** `/admin/reservation/calendar`
 - **설명:** 예약 캘린더를 조회합니다 (관리자 권한).
 
----
+</details>
 
-## 구매 목록 컨트롤러
+<details>
+<summary>## 구매 목록 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/buyList/admin/{no}/cancel`
@@ -192,9 +196,10 @@
 - **엔드포인트:** `/buyList/admin/sales`
 - **설명:** 판매 데이터를 조회합니다 (관리자 권한).
 
----
+</details>
 
-## 게시판 컨트롤러
+<details>
+<summary>## 게시판 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/board`
@@ -224,9 +229,10 @@
 - **엔드포인트:** `/board/{no}`
 - **설명:** 특정 ID의 게시판을 삭제합니다.
 
----
+</details>
 
-## 답변 컨트롤러
+<details>
+<summary>## 답변 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/answer`
@@ -248,9 +254,10 @@
 - **엔드포인트:** `/answer/{no}`
 - **설명:** 특정 ID의 답변을 삭제합니다.
 
----
+</details>
 
-## 트레이너 프로필 컨트롤러
+<details>
+<summary>## 트레이너 프로필 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/admin/trainer/update`
@@ -280,9 +287,10 @@
 - **엔드포인트:** `/admin/trainer/delete`
 - **설명:** 트레이너 프로필을 삭제합니다.
 
----
+</details>
 
-## 티켓 컨트롤러
+<details>
+<summary>## 티켓 컨트롤러</summary>
 
 ### PUT
 - **엔드포인트:** `/admin/ticket/update`
@@ -304,15 +312,17 @@
 - **엔드포인트:** `/admin/ticket/delete`
 - **설명:** 티켓을 삭제합니다.
 
----
+</details>
 
-## 결제 컨트롤러
+<details>
+<summary>## 결제 컨트롤러</summary>
 
 (엔드포인트 정의 필요.)
 
----
+</details>
 
-## 홈 컨트롤러
+<details>
+<summary>## 홈 컨트롤러</summary>
 
 ### POST
 - **엔드포인트:** `/login`
@@ -334,9 +344,10 @@
 - **엔드포인트:** `/`
 - **설명:** 홈페이지로 이동합니다.
 
----
+</details>
 
-## QR 코드 컨트롤러
+<details>
+<summary>## QR 코드 컨트롤러</summary>
 
 ### POST
 - **엔드포인트:** `/generate-qr-code`
@@ -346,9 +357,10 @@
 - **엔드포인트:** `/generate-qr-code/delete`
 - **설명:** 생성된 QR 코드를 삭제합니다.
 
----
+</details>
 
-## 출석 컨트롤러
+<details>
+<summary>## 출석 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/user/attendance/check/{uuid}`
@@ -362,17 +374,19 @@
 - **엔드포인트:** `/admin/attendance/list`
 - **설명:** 출석 목록을 조회합니다 (관리자 권한).
 
----
+</details>
 
-## 랭킹 컨트롤러
+<details>
+<summary>## 랭킹 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/ranking`
 - **설명:** 랭킹 정보를 조회합니다.
 
----
+</details>
 
-## 파일 컨트롤러
+<details>
+<summary>## 파일 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/files/{profileNo}`
@@ -389,5 +403,8 @@
 ### DELETE
 - **엔드포인트:** `/files/{no}`
 - **설명:** 파일 ID를 기준으로 파일을 삭제합니다.
+
+</details>
+
 
 
