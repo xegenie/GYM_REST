@@ -199,7 +199,7 @@
 </details>
 
 <details>
-<summary>## 게시판 컨트롤러</summary>
+<summary>Board 컨트롤러</summary>
 
 ### GET
 - **엔드포인트:** `/board`
