@@ -32,32 +32,362 @@
 ### :bulb: 프로젝트 기간
 - 2025-01-13 ~ 2024-01-22
 
-### :bulb: 사용 기술
-### :bulb: 사용 기술  
+### :bulb: 추가된 기술  
 <p>프론트엔드</p>  
-<p>  
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white">  
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white">  
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black">  
+<p>   
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black">  
 </p>  
 
 <p>백엔드</p>  
-<p>  
-  <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=java&logoColor=white">  
-  <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white">  
-  <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat-square&logo=springsecurity&logoColor=white">  
+<p>   
   <img src="https://img.shields.io/badge/REST%20API-0052CC?style=flat-square&logo=apachesolr&logoColor=white">  
   <img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=black">  
-</p>  
+  <img src="https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white">  
+</p> 
 
-<p>데이터베이스</p>  
-<p>  
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white">  
-  <img src="https://img.shields.io/badge/MyBatis-000000?style=flat-square&logo=databricks&logoColor=white">  
-</p>  
 
-<p>기타</p>  
-<p>  
-  <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=figma&logoColor=white">  
-</p>  
+### :bulb: API 명세서
+
+# API 문서
+
+## 사용자 컨트롤러
+
+### PUT
+- **엔드포인트:** `/user`
+- **설명:** 사용자 정보를 업데이트합니다.
+
+### POST
+- **엔드포인트:** `/user`
+- **설명:** 새로운 사용자를 생성합니다.
+
+### PUT
+- **엔드포인트:** `/admin/update`
+- **설명:** 관리자 정보를 업데이트합니다.
+
+### POST
+- **엔드포인트:** `/newPw`
+- **설명:** 새로운 비밀번호를 요청합니다.
+
+### POST
+- **엔드포인트:** `/findPw`
+- **설명:** 사용자의 비밀번호를 찾습니다.
+
+### POST
+- **엔드포인트:** `/findId`
+- **설명:** 사용자의 ID를 찾습니다.
+
+### POST
+- **엔드포인트:** `/changePw`
+- **설명:** 사용자의 비밀번호를 변경합니다.
+
+### POST
+- **엔드포인트:** `/admin/user/delete`
+- **설명:** 사용자를 삭제합니다 (관리자 권한).
+
+### GET
+- **엔드포인트:** `/user/myBoardList/{no}`
+- **설명:** 특정 ID로 사용자의 게시판 목록을 조회합니다.
+
+### GET
+- **엔드포인트:** `/user/list`
+- **설명:** 모든 사용자 목록을 조회합니다.
+
+### GET
+- **엔드포인트:** `/user/info`
+- **설명:** 로그인된 사용자 정보를 조회합니다.
+
+### GET
+- **엔드포인트:** `/admin/update/{no}`
+- **설명:** 특정 ID로 관리자 업데이트 정보를 조회합니다.
+
+### DELETE
+- **엔드포인트:** `/user/{no}`
+- **설명:** 특정 ID의 사용자를 삭제합니다.
+
+---
+
+## 계획 컨트롤러
+
+### GET
+- **엔드포인트:** `/user/schedule`
+- **설명:** 사용자의 일정을 조회합니다.
+
+### PUT
+- **엔드포인트:** `/user/schedule`
+- **설명:** 사용자의 일정을 업데이트합니다.
+
+### POST
+- **엔드포인트:** `/user/schedule`
+- **설명:** 사용자의 새로운 일정을 생성합니다.
+
+### DELETE
+- **엔드포인트:** `/user/schedule`
+- **설명:** 사용자의 일정을 삭제합니다.
+
+### PUT
+- **엔드포인트:** `/user/schedule/comment`
+- **설명:** 사용자의 일정에 댓글을 업데이트합니다.
+
+### POST
+- **엔드포인트:** `/user/schedule/comment`
+- **설명:** 사용자의 일정에 댓글을 추가합니다.
+
+### GET
+- **엔드포인트:** `/user/schedule/{year}/{month}/{day}`
+- **설명:** 특정 날짜의 사용자의 일정을 조회합니다.
+
+---
+
+## 예약 컨트롤러
+
+### GET
+- **엔드포인트:** `/user/myPage/ptList/{no}`
+- **설명:** 특정 ID로 사용자의 PT 목록을 조회합니다.
+
+### PUT
+- **엔드포인트:** `/user/myPage/ptList/{no}`
+- **설명:** 특정 ID로 사용자의 PT 목록을 업데이트합니다.
+
+### GET
+- **엔드포인트:** `/admin/reservation/list`
+- **설명:** 모든 예약 목록을 조회합니다 (관리자 권한).
+
+### PUT
+- **엔드포인트:** `/admin/reservation/list`
+- **설명:** 예약 목록을 업데이트합니다 (관리자 권한).
+
+### POST
+- **엔드포인트:** `/user/reservation/reservationInsert`
+- **설명:** 사용자의 새로운 예약을 추가합니다.
+
+### GET
+- **엔드포인트:** `/user/reservation/reservationInsert/{no}`
+- **설명:** 특정 ID로 예약 세부 정보를 조회합니다.
+
+### GET
+- **엔드포인트:** `/admin/reservation/calendar`
+- **설명:** 예약 캘린더를 조회합니다 (관리자 권한).
+
+---
+
+## 구매 목록 컨트롤러
+
+### PUT
+- **엔드포인트:** `/buyList/admin/{no}/cancel`
+- **설명:** 특정 ID의 구매를 취소합니다 (관리자 권한).
+
+### GET
+- **엔드포인트:** `/buyList/admin`
+- **설명:** 모든 구매 목록을 조회합니다 (관리자 권한).
+
+### POST
+- **엔드포인트:** `/buyList/admin`
+- **설명:** 새로운 구매를 추가합니다 (관리자 권한).
+
+### GET
+- **엔드포인트:** `/buyList/users/{userNo}`
+- **설명:** 특정 사용자 ID로 구매 목록을 조회합니다.
+
+### GET
+- **엔드포인트:** `/buyList/admin/sales`
+- **설명:** 판매 데이터를 조회합니다 (관리자 권한).
+
+---
+
+## 게시판 컨트롤러
+
+### GET
+- **엔드포인트:** `/board`
+- **설명:** 모든 게시판을 조회합니다.
+
+### PUT
+- **엔드포인트:** `/board`
+- **설명:** 게시판 정보를 업데이트합니다.
+
+### POST
+- **엔드포인트:** `/board`
+- **설명:** 새로운 게시판을 생성합니다.
+
+### GET
+- **엔드포인트:** `/board/answerUpdate`
+- **설명:** 게시판 답변 업데이트 정보를 조회합니다.
+
+### PUT
+- **엔드포인트:** `/board/answerUpdate`
+- **설명:** 게시판 답변을 업데이트합니다.
+
+### GET
+- **엔드포인트:** `/board/{no}`
+- **설명:** 특정 ID로 게시판 세부 정보를 조회합니다.
+
+### DELETE
+- **엔드포인트:** `/board/{no}`
+- **설명:** 특정 ID의 게시판을 삭제합니다.
+
+---
+
+## 답변 컨트롤러
+
+### GET
+- **엔드포인트:** `/answer`
+- **설명:** 모든 답변을 조회합니다.
+
+### PUT
+- **엔드포인트:** `/answer`
+- **설명:** 답변을 업데이트합니다.
+
+### POST
+- **엔드포인트:** `/answer`
+- **설명:** 새로운 답변을 추가합니다.
+
+### GET
+- **엔드포인트:** `/answer/{no}`
+- **설명:** 특정 ID로 답변 세부 정보를 조회합니다.
+
+### DELETE
+- **엔드포인트:** `/answer/{no}`
+- **설명:** 특정 ID의 답변을 삭제합니다.
+
+---
+
+## 트레이너 프로필 컨트롤러
+
+### PUT
+- **엔드포인트:** `/admin/trainer/update`
+- **설명:** 트레이너 프로필 정보를 업데이트합니다 (관리자 권한).
+
+### POST
+- **엔드포인트:** `/admin/trainer/insert`
+- **설명:** 새로운 트레이너 프로필을 추가합니다 (관리자 권한).
+
+### GET
+- **엔드포인트:** `/admin/trainer/trainerUsers`
+- **설명:** 트레이너의 사용자 목록을 조회합니다.
+
+### GET
+- **엔드포인트:** `/admin/trainer/select`
+- **설명:** 특정 트레이너 프로필 정보를 조회합니다.
+
+### GET
+- **엔드포인트:** `/admin/trainer/list`
+- **설명:** 모든 트레이너 목록을 조회합니다.
+
+### GET
+- **엔드포인트:** `/admin/trainer/getTrainerNo`
+- **설명:** 트레이너 ID를 조회합니다.
+
+### DELETE
+- **엔드포인트:** `/admin/trainer/delete`
+- **설명:** 트레이너 프로필을 삭제합니다.
+
+---
+
+## 티켓 컨트롤러
+
+### PUT
+- **엔드포인트:** `/admin/ticket/update`
+- **설명:** 티켓 정보를 업데이트합니다 (관리자 권한).
+
+### POST
+- **엔드포인트:** `/admin/ticket/insert`
+- **설명:** 새로운 티켓을 추가합니다 (관리자 권한).
+
+### GET
+- **엔드포인트:** `/admin/ticket/select`
+- **설명:** 티켓 정보를 조회합니다.
+
+### GET
+- **엔드포인트:** `/admin/ticket/list`
+- **설명:** 모든 티켓 목록을 조회합니다.
+
+### DELETE
+- **엔드포인트:** `/admin/ticket/delete`
+- **설명:** 티켓을 삭제합니다.
+
+---
+
+## 결제 컨트롤러
+
+(엔드포인트 정의 필요.)
+
+---
+
+## 홈 컨트롤러
+
+### POST
+- **엔드포인트:** `/login`
+- **설명:** 시스템에 로그인합니다.
+
+### GET
+- **엔드포인트:** `/join`
+- **설명:** 회원가입 페이지로 이동합니다.
+
+### POST
+- **엔드포인트:** `/join`
+- **설명:** 새로운 사용자를 등록합니다.
+
+### GET
+- **엔드포인트:** `/check/{id}`
+- **설명:** ID의 사용 가능 여부를 확인합니다.
+
+### GET
+- **엔드포인트:** `/`
+- **설명:** 홈페이지로 이동합니다.
+
+---
+
+## QR 코드 컨트롤러
+
+### POST
+- **엔드포인트:** `/generate-qr-code`
+- **설명:** QR 코드를 생성합니다.
+
+### POST
+- **엔드포인트:** `/generate-qr-code/delete`
+- **설명:** 생성된 QR 코드를 삭제합니다.
+
+---
+
+## 출석 컨트롤러
+
+### GET
+- **엔드포인트:** `/user/attendance/check/{uuid}`
+- **설명:** UUID를 기반으로 사용자의 출석을 확인합니다.
+
+### GET
+- **엔드포인트:** `/admin/attendance/userCount`
+- **설명:** 출석 중인 사용자 수를 조회합니다 (관리자 권한).
+
+### GET
+- **엔드포인트:** `/admin/attendance/list`
+- **설명:** 출석 목록을 조회합니다 (관리자 권한).
+
+---
+
+## 랭킹 컨트롤러
+
+### GET
+- **엔드포인트:** `/ranking`
+- **설명:** 랭킹 정보를 조회합니다.
+
+---
+
+## 파일 컨트롤러
+
+### GET
+- **엔드포인트:** `/files/{profileNo}`
+- **설명:** 프로필 번호를 기준으로 파일을 조회합니다.
+
+### GET
+- **엔드포인트:** `/files/{no}/thumbnail`
+- **설명:** 파일 ID를 기준으로 썸네일을 조회합니다.
+
+### GET
+- **엔드포인트:** `/files/{no}/download`
+- **설명:** 파일 ID를 기준으로 파일을 다운로드합니다.
+
+### DELETE
+- **엔드포인트:** `/files/{no}`
+- **설명:** 파일 ID를 기준으로 파일을 삭제합니다.
+
+
