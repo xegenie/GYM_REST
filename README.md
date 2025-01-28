@@ -403,7 +403,13 @@
 # :gear: 3. **학습포인트와 보완점**
 
 
+1. 왜 리액트를 사용하는가?
+   
+
+
 ![image](https://github.com/user-attachments/assets/17a3cd02-571f-4991-9b17-d261b44f3eac)
+
+
 
 ![image](https://github.com/user-attachments/assets/07c08431-5e3c-4c70-9808-5c33f86c6bb9)
 
