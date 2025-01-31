@@ -48,9 +48,11 @@ const LoginContextProvider = ({ children }) => {
 
         // 💍 JWT 를 쿠키에 등록
         if(storedToken){
+          console.log("뭐임?")
         Cookies.set("jwt", jwt, { expires: 5 })  // 5일후 만료
       }
       else{
+        console.log("뭐임?세션")
         sessionStorage.setItem('jwt', jwt, { expires: 5 }); 
       }
 
