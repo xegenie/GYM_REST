@@ -74,23 +74,20 @@ public class AttendanceController {
     public ResponseEntity<?> showAttendancePage(@PathVariable("uuid") String uuid, @AuthenticationPrincipal CustomUser customUser) throws Exception {
 
         Long userNo = customUser.getNo();
-        log.info("sdfsdf"+ uuid);
-        log.info("fdsgfdg"+ customUser);
 
         if (userNo == null) {
-            log.info("fdsgfdg"+ customUser);
             return ResponseEntity.badRequest().body(new AttendanceResponse("사용자 번호가 제공되지 않았습니다."));
         }
         
         // QR 코드가 제공되지 않았을 때 처리
         if (uuid == null || uuid.isEmpty()) {
-            log.info("fdsgfdg"+ customUser);
             return ResponseEntity.badRequest().body(new AttendanceResponse("QR 코드가 제공되지 않았습니다."));
         }
         Attendance attendance = new Attendance();
         attendance.setQrId(uuid);
         attendance.setUserNo(userNo);
         attendanceService.insertAttendance(attendance);
+        // 여기서 출석 체크 확인
 
         QRcode qRcode = attendanceService.selectQRcode(null);
 
@@ -101,41 +98,7 @@ public class AttendanceController {
          return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
     
-    // 출석 체크 (등록)
-    // @PostMapping("user/attendance/check")
-    // public ResponseEntity<?> insertAttendance(@RequestBody QRcode qrcode)
-    // throws Exception {
     
-
-    //     // 새로운 UUID 생성
-    //     log.info("zzzz" + qrcode);
-
-
-    //     // user_no가 null일 경우 처리
-    //     if (userNo == null) {
-    //         return ResponseEntity.badRequest().body(new AttendanceResponse("사용자 번호가 제공되지 않았습니다."));
-    //     }
-
-    //     QR 코드가 제공되지 않았을 때 처리
-    //     if (qrId == null || qrId.isEmpty()) {
-    //         return ResponseEntity.badRequest().body(new AttendanceResponse("QR 코드가 제공되지 않았습니다."));
-    //     }
-
-    //     Attendance attendance = new Attendance();
-    //     attendance.setQrId(qrId);
-    //     attendance.setUserNo(userNo);
-    //     attendanceService.insertAttendance(attendance);
-
-    //     QRcode qRcode = attendanceService.selectQRcode(null);
-
-    //     if (qRcode != null && qRcode.getUuid().equals(qrId)) {
-    //         return ResponseEntity.ok(new AttendanceResponse("출석 체크가 완료되었습니다."));
-    //     }
-
-    //     return ResponseEntity.badRequest().body(new AttendanceResponse("유효하지 않은 QR 코드입니다."));
-    // }
-
-
     // 출석 내역 조회 응답 클래스
     public static class AttendanceListResponse {
         private List<Attendance> attendanceList;
