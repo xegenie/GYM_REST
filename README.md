@@ -42,7 +42,7 @@
 <p>백엔드</p>  
 <p>   
   <img src="https://img.shields.io/badge/REST%20API-0052CC?style=flat-square&logo=apachesolr&logoColor=white">  
-  <img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=black">  
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
   <img src="https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white">  
 </p>
 
