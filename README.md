@@ -17,8 +17,7 @@
 # 📚 **프로젝트 목차**
 
 ### 1. 프로젝트 개요
-### 2. API 문서
-### 3. 학습포인트와 보완점
+### 3. 학습포인트
 
 
 
@@ -45,9 +44,6 @@
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
   <img src="https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white">  
 </p>
-
-
-# :gear: 2. **API 문서**
 
 
 
